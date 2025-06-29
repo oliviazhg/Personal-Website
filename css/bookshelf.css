@@ -1,0 +1,381 @@
+/* Bookshelf Page Specific Styles */
+
+/* Page Hero */
+.page-hero {
+  padding: 8rem 0 4rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  animation: fadeInUp 1s ease;
+  font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  opacity: 0.9;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+/* Reading Stats */
+.reading-stats {
+  padding: 3rem 0;
+  background: #f8f9fa;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #666;
+  font-weight: 500;
+}
+
+/* Book Categories */
+.book-categories {
+  padding: 2rem 0;
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.category-tab {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.category-tab:hover {
+  background: #007bff;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.category-tab.active {
+  background: #007bff;
+  color: white;
+}
+
+/* Books Grid */
+.books-grid {
+  padding: 4rem 0;
+  background: #f8f9fa;
+}
+
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.book-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.book-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.book-cover {
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-placeholder {
+  font-size: 4rem;
+  opacity: 0.8;
+}
+
+.book-rating {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.stars {
+  color: #ffc107;
+  font-size: 1rem;
+}
+
+.book-content {
+  padding: 1.5rem;
+}
+
+.book-content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+}
+
+.author {
+  color: #007bff;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.description {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.book-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background: #e9ecef;
+  color: #495057;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.book-status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.book-status.reading {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.book-status.completed {
+  background: #d1edff;
+  color: #0c5460;
+}
+
+.book-status.toread {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Currently Reading Section */
+.currently-reading {
+  padding: 4rem 0;
+  background: white;
+}
+
+.reading-progress {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+.progress-book {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover-small {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.progress-info {
+  flex: 1;
+}
+
+.progress-info h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #333;
+  font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+}
+
+.progress-info .author {
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Filter Animation */
+.book-card {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+.book-card.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1rem;
+  }
+  
+  .category-tabs {
+    gap: 0.5rem;
+  }
+  
+  .category-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .books-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .book-card {
+    margin: 0 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .progress-book {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-hero {
+    padding: 6rem 0 3rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .book-content {
+    padding: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .progress-book {
+    padding: 1.5rem;
+  }
+}
+
+/* Typography - Serif Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+}
+
+/* Section Titles */
+.section-title {
+  font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+}
+
+/* Progress Info Headers */
+.progress-info h3 {
+  font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+} 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olivia's Personal Website</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav class="top-nav">
+    <div class="container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="brain-dump.html" class="nav-link">Brain Dump</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section with 3D Scene -->
+  <section class="hero">
+    <div id="loading">story loading...</div>
+    <canvas id="webgl"></canvas>
+    <div id="error" style="display: none; color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+      Error loading 3D scene. Check console for details.
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <p>I'm a passionate individual who loves exploring the intersection of technology, creativity, and human experience. This website serves as my digital playground where I share my projects, thoughts, and creations.</p>
+          
+          <p>When I'm not coding or creating, you can find me reading books that expand my worldview, experimenting with different art forms, or diving deep into interesting topics that catch my attention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brain Dump - Olivia's Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/brain-dump.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav class="top-nav">
+    <div class="container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="brain-dump.html" class="nav-link">Brain Dump</a>
+    </div>
+  </nav>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-title">Brain Dump</h1>
+      <p class="page-subtitle">Random thoughts, ideas, and creative explorations</p>
+    </div>
+  </section>
+
+  <!-- Thought Categories -->
+  <section class="thought-categories">
+    <div class="container">
+      <div class="category-tabs">
+        <button class="category-tab active" data-category="all">All Thoughts</button>
+        <button class="category-tab" data-category="tech">Technology</button>
+        <button class="category-tab" data-category="creative">Creative</button>
+        <button class="category-tab" data-category="philosophy">Philosophy</button>
+        <button class="category-tab" data-category="random">Random</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thoughts Grid -->
+  <section class="thoughts-grid">
+    <div class="container">
+      <div class="thoughts-container">
+        <!-- Technology Thoughts -->
+        <div class="thought-card" data-category="tech">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-15</span>
+            <span class="thought-category">Technology</span>
+          </div>
+          <h3>The Future of Web Development</h3>
+          <p class="thought-content">
+            WebAssembly is going to revolutionize how we build web applications. The ability to run near-native performance code in the browser opens up incredible possibilities for complex applications, games, and creative tools.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">WebAssembly</span>
+            <span class="tag">Performance</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="tech">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-12</span>
+            <span class="thought-category">Technology</span>
+          </div>
+          <h3>AI and Creative Coding</h3>
+          <p class="thought-content">
+            How can we use AI to enhance creative coding rather than replace it? The idea of AI as a collaborative tool that helps us explore new creative possibilities is fascinating. Maybe it's not about AI generating art, but AI helping us discover new algorithms and techniques.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">AI</span>
+            <span class="tag">Creative Coding</span>
+          </div>
+        </div>
+
+        <!-- Creative Thoughts -->
+        <div class="thought-card" data-category="creative">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-10</span>
+            <span class="thought-category">Creative</span>
+          </div>
+          <h3>Generative Art and Mathematics</h3>
+          <p class="thought-content">
+            There's something beautiful about the intersection of mathematics and art. When you create generative art, you're essentially translating mathematical concepts into visual experiences. It's like making the abstract tangible.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Generative Art</span>
+            <span class="tag">Mathematics</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="creative">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-08</span>
+            <span class="thought-category">Creative</span>
+          </div>
+          <h3>Color Theory in Code</h3>
+          <p class="thought-content">
+            I've been experimenting with different color spaces in my creative coding projects. RGB is intuitive, but HSV and LAB offer interesting possibilities for creating more harmonious color palettes programmatically.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Color Theory</span>
+            <span class="tag">Programming</span>
+          </div>
+        </div>
+
+        <!-- Philosophy Thoughts -->
+        <div class="thought-card" data-category="philosophy">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-05</span>
+            <span class="thought-category">Philosophy</span>
+          </div>
+          <h3>Digital Minimalism</h3>
+          <p class="thought-content">
+            In a world of constant digital stimulation, there's something powerful about creating digital experiences that are intentionally minimal and focused. Sometimes less code creates more impact.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Minimalism</span>
+            <span class="tag">Design</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="philosophy">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-03</span>
+            <span class="thought-category">Philosophy</span>
+          </div>
+          <h3>The Art of Learning</h3>
+          <p class="thought-content">
+            Learning to code is like learning a new language, but it's also like learning to think in a completely different way. It's not just about syntax, it's about problem-solving and logical thinking.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Learning</span>
+            <span class="tag">Programming</span>
+          </div>
+        </div>
+
+        <!-- Random Thoughts -->
+        <div class="thought-card" data-category="random">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-01</span>
+            <span class="thought-category">Random</span>
+          </div>
+          <h3>Why Do We Debug?</h3>
+          <p class="thought-content">
+            Debugging is like being a detective in your own code. You have clues (error messages), suspects (variables), and you're trying to figure out what went wrong. It's actually kind of fun when you think about it that way.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Debugging</span>
+            <span class="tag">Problem Solving</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="random">
+          <div class="thought-header">
+            <span class="thought-date">2023-12-30</span>
+            <span class="thought-category">Random</span>
+          </div>
+          <h3>The Beauty of Comments</h3>
+          <p class="thought-content">
+            Good comments in code are like poetry - they explain the "why" behind the "what". They tell the story of your thinking process and help others (and future you) understand the reasoning behind your decisions.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Code Quality</span>
+            <span class="tag">Documentation</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="tech">
+          <div class="thought-header">
+            <span class="thought-date">2023-12-28</span>
+            <span class="thought-category">Technology</span>
+          </div>
+          <h3>3D on the Web</h3>
+          <p class="thought-content">
+            Three.js has opened up so many possibilities for 3D on the web. It's amazing how accessible 3D graphics have become. You can create immersive experiences without needing specialized 3D software or expensive licenses.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Three.js</span>
+            <span class="tag">3D Graphics</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="creative">
+          <div class="thought-header">
+            <span class="thought-date">2023-12-25</span>
+            <span class="thought-category">Creative</span>
+          </div>
+          <h3>Procedural Generation</h3>
+          <p class="thought-content">
+            There's something magical about procedural generation. You write algorithms that create infinite variations of content - landscapes, music, art. It's like having a creative partner that never runs out of ideas.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Procedural</span>
+            <span class="tag">Generation</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="philosophy">
+          <div class="thought-header">
+            <span class="thought-date">2023-12-22</span>
+            <span class="thought-category">Philosophy</span>
+          </div>
+          <h3>Code as Art</h3>
+          <p class="thought-content">
+            When you write code that creates art, you're essentially creating art about creating art. It's meta-art. The code itself can be beautiful, and the output it produces can be beautiful. It's art on multiple levels.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Code Art</span>
+            <span class="tag">Meta</span>
+          </div>
+        </div>
+
+        <div class="thought-card" data-category="random">
+          <div class="thought-header">
+            <span class="thought-date">2023-12-20</span>
+            <span class="thought-category">Random</span>
+          </div>
+          <h3>The Joy of Breaking Things</h3>
+          <p class="thought-content">
+            Sometimes the best way to learn is to break things intentionally. When you understand why something breaks, you understand how it works. It's like reverse engineering your own code.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Learning</span>
+            <span class="tag">Experimentation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Thought -->
+  <section class="featured-thought">
+    <div class="container">
+      <h2 class="section-title">Featured Thought</h2>
+      <div class="featured-content">
+        <div class="featured-thought-card">
+          <div class="thought-header">
+            <span class="thought-date">2024-01-20</span>
+            <span class="thought-category">Philosophy</span>
+          </div>
+          <h3>The Intersection of Technology and Humanity</h3>
+          <p class="thought-content">
+            As we build more sophisticated digital experiences, I can't help but think about the human element. Technology should enhance our humanity, not replace it. When I create interactive art or build user interfaces, I'm not just writing code - I'm creating experiences that people will interact with, feel, and remember. The most successful digital experiences are the ones that feel human, even though they're built with code.
+          </p>
+          <p class="thought-content">
+            Maybe that's why I'm drawn to creative coding and interactive art. It's a way to inject humanity into technology, to create digital experiences that evoke emotion and connection. The code becomes a medium for human expression, just like paint or clay.
+          </p>
+          <div class="thought-tags">
+            <span class="tag">Humanity</span>
+            <span class="tag">Technology</span>
+            <span class="tag">Art</span>
+            <span class="tag">Connection</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/brain-dump.js"></script>
+  <script type="module" src="js/brain-dump-background.js"></script>
+</body>
+</html> 
