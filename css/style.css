@@ -14,6 +14,11 @@ body {
   overflow-x: hidden;
 }
 
+body.no-scroll, html.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
 /* Container */
 .container {
   max-width: 1200px;

@@ -265,11 +265,12 @@ async function init() {
   console.log('Attempting to load cloud model from:', cloudModelUrl);
 
   // Load the background cloud model
+  let cloudModel = null; // Store reference to cloud model globally
   const loader = new GLTFLoader();
   loader.load(
     cloudModelUrl,
     function (gltf) {
-      const cloudModel = gltf.scene;
+      cloudModel = gltf.scene;
       console.log('Cloud model loaded successfully:', cloudModel);
       
       // Position the cloud model in the background
@@ -295,6 +296,31 @@ async function init() {
       console.error('Error loading cloud model:', error);
     }
   );
+
+  // Mouse position for cloud rotation
+  let mouseX = 0;
+  let mouseY = 0;
+  let mouseInfluenceX = 0;
+  let mouseInfluenceY = 0;
+  let mouseMoving = false;
+  let lastMouseMoveTime = 0;
+  const MOUSE_INFLUENCE_DECAY = 0.07; // Lower decay for a more gradual, smooth return
+  const MOUSE_INFLUENCE_AMOUNT_X = 0.02; // Max radians to influence X (reduced)
+  const MOUSE_INFLUENCE_AMOUNT_Y = 0.03; // Max radians to influence Y (reduced)
+  // Gradually interpolate mouse influence ramp-up
+  let targetMouseInfluenceX = 0;
+  let targetMouseInfluenceY = 0;
+  const MOUSE_INFLUENCE_RAMP = 0.08; // How quickly the influence ramps up
+
+  // Add event listener for mouse movement to rotate cloud
+  window.addEventListener('mousemove', function(event) {
+    // Normalize mouse position to range [-1, 1]
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    // Set target influence based on mouse movement
+    mouseMoving = true;
+    lastMouseMoveTime = Date.now();
+  });
 
   // Fallback: if model fails to load, create a simple cube after 5 seconds
   setTimeout(() => {
@@ -393,14 +419,42 @@ async function init() {
       }
     });
     
-    // Rotate the cloud model around different axes
-    const cloudModel = scene.children.find(child => child.type === 'Group' && child !== scene.children.find(c => c.name === 'Sketchfab_Scene'));
+    // Gradually interpolate mouse influence toward target
+    targetMouseInfluenceY = mouseX * MOUSE_INFLUENCE_AMOUNT_Y;
+    targetMouseInfluenceX = mouseY * MOUSE_INFLUENCE_AMOUNT_X;
+    mouseInfluenceX += (targetMouseInfluenceX - mouseInfluenceX) * MOUSE_INFLUENCE_RAMP;
+    mouseInfluenceY += (targetMouseInfluenceY - mouseInfluenceY) * MOUSE_INFLUENCE_RAMP;
+    
+    // Restore original cloud model animation, add subtle mouse influence only while moving
     if (cloudModel) {
-      // Rotate around different axes based on time
       const time = Date.now() * 0.001;
-      cloudModel.rotation.x = Math.sin(time * 0.3) * 0.1; // Gentle X rotation
-      cloudModel.rotation.y += 0.005; // Back to original speed
-      cloudModel.rotation.z = Math.cos(time * 0.2) * 0.05; // Gentle Z rotation
+      // Base animation
+      const baseX = Math.sin(time * 0.3) * 0.1;
+      const baseZ = Math.cos(time * 0.2) * 0.05;
+      // Y rotation accumulates
+      cloudModel.rotation.y += 0.005;
+
+      // If mouse is moving, apply influence
+      let influenceX = 0;
+      let influenceY = 0;
+      if (mouseMoving) {
+        influenceX = mouseInfluenceX;
+        influenceY = mouseInfluenceY;
+        // If no mousemove for 100ms, start fading influence
+        if (Date.now() - lastMouseMoveTime > 100) {
+          mouseMoving = false;
+        }
+      } else {
+        // Fade out influence smoothly
+        mouseInfluenceX *= (1 - MOUSE_INFLUENCE_DECAY);
+        mouseInfluenceY *= (1 - MOUSE_INFLUENCE_DECAY);
+        influenceX = mouseInfluenceX;
+        influenceY = mouseInfluenceY;
+      }
+
+      cloudModel.rotation.x = baseX + influenceX;
+      cloudModel.rotation.z = baseZ;
+      cloudModel.rotation.y += influenceY; // Add a little to Y for subtle effect
     }
     
     renderer.render(scene, camera);
