@@ -45,6 +45,12 @@
   z-index: 1;
 }
 
+.projects-grid > .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
 /* New Projects Layout */
 .projects-layout {
   position: relative;
@@ -54,8 +60,12 @@
 .project-list {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0;
   width: 60%;
+  height: 80vh;
+  min-height: 500px;
+  max-height: 900px;
   padding-right: 8rem;
   padding-left: 0;
   margin-left: -2rem;
@@ -73,7 +83,7 @@
 
 .project-name {
   font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #2c3e50;
   margin-bottom: 0.5rem;
@@ -107,20 +117,38 @@
   color: #495057;
 }
 
+.project-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+
+.project-title-row .project-name {
+  margin-bottom: 0;
+}
+
+.project-title-row .project-description {
+  font-size: 0.75rem;
+  color: #888;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  opacity: 0.8;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+
 /* Project Image Display */
 .project-image-display {
   position: fixed;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
-  width: 500px;
-  height: 600px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100vh;
+  background: transparent;
+  border-radius: 0;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,13 +248,9 @@
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
   .project-image-display {
-    position: relative;
-    top: 0;
     height: 400px;
   }
-  
   .project-name {
     font-size: 2rem;
   }
@@ -236,26 +260,20 @@
   .page-title {
     font-size: 2.5rem;
   }
-  
   .page-subtitle {
     font-size: 1rem;
   }
-  
   .projects-layout {
     gap: 2rem;
     padding: 0 1rem;
   }
-  
   .project-list {
     gap: 2rem;
   }
-  
   .project-name {
     font-size: 1.8rem;
   }
-  
   .project-image-display {
-    height: 300px;
   }
 }
 
@@ -263,20 +281,21 @@
   .page-hero {
     padding: 6rem 0 3rem;
   }
-  
   .page-title {
     font-size: 2rem;
   }
-  
   .project-name {
     font-size: 1.5rem;
   }
-  
   .project-description {
     font-size: 0.9rem;
   }
-  
   .project-image-display {
-    height: 250px;
   }
+} 
+
+.top-nav, .top-nav * {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
 } 

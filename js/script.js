@@ -307,20 +307,21 @@ async function init() {
   const MOUSE_INFLUENCE_DECAY = 0.07; // Lower decay for a more gradual, smooth return
   const MOUSE_INFLUENCE_AMOUNT_X = 0.02; // Max radians to influence X (reduced)
   const MOUSE_INFLUENCE_AMOUNT_Y = 0.03; // Max radians to influence Y (reduced)
-  // Gradually interpolate mouse influence ramp-up
-  let targetMouseInfluenceX = 0;
-  let targetMouseInfluenceY = 0;
-  const MOUSE_INFLUENCE_RAMP = 0.08; // How quickly the influence ramps up
 
   // Add event listener for mouse movement to rotate cloud
   window.addEventListener('mousemove', function(event) {
     // Normalize mouse position to range [-1, 1]
     mouseX = (event.clientX / window.innerWidth) * 2 - 1;
     mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    // Set target influence based on mouse movement
+    // Target influence based on mouse movement
+    mouseTargetInfluenceY = mouseX * MOUSE_INFLUENCE_AMOUNT_Y;
+    mouseTargetInfluenceX = mouseY * MOUSE_INFLUENCE_AMOUNT_X;
     mouseMoving = true;
     lastMouseMoveTime = Date.now();
   });
+  // Initialize target influence variables
+  let mouseTargetInfluenceX = 0;
+  let mouseTargetInfluenceY = 0;
 
   // Fallback: if model fails to load, create a simple cube after 5 seconds
   setTimeout(() => {
@@ -419,11 +420,9 @@ async function init() {
       }
     });
     
-    // Gradually interpolate mouse influence toward target
-    targetMouseInfluenceY = mouseX * MOUSE_INFLUENCE_AMOUNT_Y;
-    targetMouseInfluenceX = mouseY * MOUSE_INFLUENCE_AMOUNT_X;
-    mouseInfluenceX += (targetMouseInfluenceX - mouseInfluenceX) * MOUSE_INFLUENCE_RAMP;
-    mouseInfluenceY += (targetMouseInfluenceY - mouseInfluenceY) * MOUSE_INFLUENCE_RAMP;
+    // Gradually interpolate mouse influence toward the target (lerp)
+    mouseInfluenceX += (mouseTargetInfluenceX - mouseInfluenceX) * 0.08;
+    mouseInfluenceY += (mouseTargetInfluenceY - mouseInfluenceY) * 0.08;
     
     // Restore original cloud model animation, add subtle mouse influence only while moving
     if (cloudModel) {
