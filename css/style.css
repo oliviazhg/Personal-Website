@@ -73,6 +73,15 @@ body.no-scroll, html.no-scroll {
   color: #007bff;
 }
 
+/* Override for top navigation */
+.top-nav .nav-link {
+  color: #FFFDFF !important;
+}
+
+.top-nav .nav-link:hover {
+  color: #FFFDFF !important;
+}
+
 .nav-link::after {
   content: '';
   position: absolute;
@@ -754,7 +763,7 @@ h1, h2, h3, h4, h5, h6 {
 .top-nav .nav-link:focus,
 .top-nav .nav-link:active {
   text-decoration: none !important;
-  color: #111 !important;
+  color: #FFFDFF !important;
 }
 
 .top-nav .nav-link::after {
@@ -772,7 +781,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .top-nav .nav-link {
   font-size: 1rem;
-  color: #111;
+  color: #FFFDFF;
   text-decoration: none !important;
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-weight: 500;
@@ -784,4 +793,12 @@ h1, h2, h3, h4, h5, h6 {
 .top-nav .nav-link:focus {
   text-shadow: none;
 }
-  
+
+/* Force menu link colors - final override */
+.top-nav a.nav-link,
+.top-nav a.nav-link:visited,
+.top-nav a.nav-link:hover,
+.top-nav a.nav-link:focus,
+.top-nav a.nav-link:active {
+  color: #FFFDFF !important;
+}

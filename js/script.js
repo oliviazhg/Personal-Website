@@ -43,7 +43,7 @@ async function init() {
       }
       animate();
       
-      document.getElementById('loading').style.display = 'none';
+      // Loading element removed
       console.log('Simple Three.js scene created successfully');
       return;
       
@@ -70,266 +70,193 @@ async function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio); // Use high DPI for crisp rendering
   
-  // Set up the scene
-  scene.background = new THREE.Color(0xf8f9fa); // Light grey background
+  // Set up the scene with image background
+  const textureLoader = new THREE.TextureLoader();
+  const backgroundTexture = textureLoader.load('./assets/bg_pics/4.jpg');
+  scene.background = backgroundTexture;
 
   console.log('Canvas element:', document.getElementById('webgl'));
   console.log('Renderer created:', renderer);
 
-  // Function to load GLTF model
-  function loadModel(modelUrl) {
-    console.log(`Loading GLTF model from:`, modelUrl);
-    
-    const gltfLoader = new GLTFLoader();
-    console.log('GLTFLoader created, starting load...');
-    console.log('GLTFLoader instance:', gltfLoader);
-    
-    gltfLoader.load(
-      modelUrl,
-      function (gltf) {
-        console.log('GLTF model loaded successfully:', gltf);
-        console.log('GLTF scene:', gltf.scene);
-        console.log('GLTF animations:', gltf.animations);
-        console.log('GLTF cameras:', gltf.cameras);
-        
-        const model = gltf.scene;
-        console.log('Model scene:', model);
-        console.log('Model children:', model.children);
-        
-        // Debug: Check what's actually in the model
-        console.log('Model children details:');
-        model.children.forEach((child, index) => {
-          console.log(`Child ${index}:`, child);
-          console.log(`Child ${index} type:`, child.type);
-          console.log(`Child ${index} visible:`, child.visible);
-          if (child.geometry) {
-            console.log(`Child ${index} geometry:`, child.geometry);
-          }
-          if (child.material) {
-            console.log(`Child ${index} material:`, child.material);
-          }
-        });
-        
-        // Adjust scale and position for better visibility
-        model.traverse((child) => {
-          if (child.isMesh) {
-            console.log('Found mesh:', child);
-            console.log('Mesh geometry:', child.geometry);
-            console.log('Mesh bounding box:', child.geometry.boundingBox);
-            
-            // Get the actual bounding box dimensions
-            if (child.geometry.boundingBox) {
-              const box = child.geometry.boundingBox;
-              console.log('Bounding box min:', box.min);
-              console.log('Bounding box max:', box.max);
-              console.log('Bounding box size:', {
-                x: box.max.x - box.min.x,
-                y: box.max.y - box.min.y,
-                z: box.max.z - box.min.z
-              });
-            }
-            
-            console.log('Mesh position:', child.position);
-            console.log('Mesh vertices count:', child.geometry.attributes.position.count);
-            console.log('Mesh indices count:', child.geometry.index ? child.geometry.index.count : 'No indices');
-            
-            // Use a wireframe mesh material with grayscale gradient
-            const gradientMaterial = new THREE.ShaderMaterial({
-              uniforms: {
-                time: { value: 0 }
-              },
-              vertexShader: `
-                varying vec3 vPosition;
-                void main() {
-                  vPosition = position;
-                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-              `,
-              fragmentShader: `
-                uniform float time;
-                varying vec3 vPosition;
-                
-                // Simple noise function for random gradients
-                float noise(vec3 p) {
-                  return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
-                }
-                
-                void main() {
-                  // Create multiple gradient patterns
-                  float gradient1 = (vPosition.y + 1.0) * 0.5; // Vertical gradient
-                  float gradient2 = (vPosition.x + 1.0) * 0.5; // Horizontal gradient
-                  float gradient3 = (vPosition.z + 1.0) * 0.5; // Depth gradient
-                  
-                  // Add radial gradient for center highlight
-                  float distanceFromCenter = length(vPosition.xy);
-                  float radialGradient = 1.0 - smoothstep(0.0, 1.0, distanceFromCenter);
-                  
-                  // Add noise-based random gradients
-                  float noiseGradient1 = noise(vPosition * 2.0 + time * 0.1);
-                  float noiseGradient2 = noise(vPosition * 3.0 - time * 0.15);
-                  float noiseGradient3 = noise(vPosition * 1.5 + time * 0.2);
-                  
-                  // Combine gradients with different weights
-                  float combinedGradient = (
-                    gradient1 * 0.25 +
-                    gradient2 * 0.15 +
-                    gradient3 * 0.1 +
-                    radialGradient * 0.2 +
-                    noiseGradient1 * 0.1 +
-                    noiseGradient2 * 0.1 +
-                    noiseGradient3 * 0.1
-                  );
-                  
-                  // Add subtle animation
-                  float animatedGradient = combinedGradient + sin(time * 0.5) * 0.05;
-                  animatedGradient = clamp(animatedGradient, 0.0, 1.0);
-                  
-                  // Convert to grayscale color with lighter grey range
-                  // Map 0.0-1.0 to 0.5-0.9 to use slightly lighter greys
-                  float adjustedGradient = 0.5 + (animatedGradient * 0.4);
-                  
-                  // Super subtle blue tinge
-                  vec3 color = vec3(adjustedGradient * 0.98, adjustedGradient * 0.99, adjustedGradient);
-                  
-                  gl_FragColor = vec4(color, 0.8);
-                }
-              `,
-              wireframe: true,
-              transparent: true,
-              opacity: 0.8
-            });
-            
-            child.material = gradientMaterial;
-            console.log('Replaced material for:', child);
-          }
-        });
-        
-        // Don't center the model - just use the original position
-        console.log('Model original position:', model.position);
-        console.log('Model scale:', model.scale);
-        
-        // Increase the size of the head model
-        model.scale.set(6, 6, 6); // Scale up the head model to make it larger
-        
-        // Center the head model in the middle of the page
-        model.position.set(0, -14, 0); // Moved down to Y = -8
-        
-        // Ensure camera is positioned to center the view
-        camera.position.set(0, 0, 50); // Center camera position
-        
-        scene.add(model);
-        document.getElementById('loading').style.display = 'none';
-        console.log('Model added to scene successfully');
-        console.log('Scene children count:', scene.children.length);
-        console.log('Model position:', model.position);
-        console.log('Model scale:', model.scale);
-        console.log('Total scene children:', scene.children.length);
-        
-        // Additional debugging for the mannequin
-        console.log('Male head model details:');
-        console.log('Model visible:', model.visible);
-        console.log('Model children count:', model.children.length);
-        model.children.forEach((child, index) => {
-          console.log(`Male head child ${index}:`, child.type, child.visible);
-        });
-      },
-      function (progress) {
-        console.log('Loading progress:', (progress.loaded / progress.total * 100) + '%');
-      },
-      function (error) {
-        console.error('Error loading GLTF model:', error);
-        console.error('Error details:', {
-          message: error.message,
-          type: error.type,
-          target: error.target,
-          stack: error.stack
-        });
-        document.getElementById('error').style.display = 'block';
-        document.getElementById('loading').style.display = 'none';
-      }
-    );
-  }
+  // Global variables for point cloud and mouse interaction
+  let pointCloud = null;
+  let originalPositions = null;
+  const mouse = new THREE.Vector2(-9999, -9999); // Initialize off-screen to prevent initial swirl
+  const raycaster = new THREE.Raycaster();
+  raycaster.params.Points.threshold = 0.5; // Increase detection radius
 
-  // Load a model - change the URL and format as needed
-  const modelUrl = './assets/models/male_head/scene.gltf';
-  // Try with absolute path as fallback
-  const modelUrlAbsolute = '/assets/models/male_head/scene.gltf';
+  // Variables for drag rotation
+  let isDragging = false;
+  let previousMousePosition = { x: 0, y: 0 };
+  let rotation = { x: 0.314159, y: 0 }; // Start angled down 25 degrees
 
-  console.log('Attempting to load model from:', modelUrl);
+  // Load XYZ point cloud
+  async function loadPointCloud(url) {
+    console.log('Loading point cloud from:', url);
 
-  // Try loading the model, with fallback to simple cube
-  loadModel(modelUrl);
+    try {
+      const response = await fetch(url);
+      const text = await response.text();
+      const lines = text.trim().split('\n');
 
-  // Load the background cloud model
-  const cloudModelUrl = './assets/models/xr_lower_austria_sculpture__winter_point_cloud/scene.gltf';
-  console.log('Attempting to load cloud model from:', cloudModelUrl);
+      const positions = [];
+      const colors = [];
 
-  // Load the background cloud model
-  let cloudModel = null; // Store reference to cloud model globally
-  const loader = new GLTFLoader();
-  loader.load(
-    cloudModelUrl,
-    function (gltf) {
-      cloudModel = gltf.scene;
-      console.log('Cloud model loaded successfully:', cloudModel);
-      
-      // Position the cloud model in the background
-      cloudModel.position.set(0, -270, -100); // Moved a tiny bit down (Y = -270)
-      cloudModel.scale.set(80, 80, 80); // Increased scale from 50 to 80
-      
-      // Make it semi-transparent
-      cloudModel.traverse((child) => {
-        if (child.isMesh) {
-          child.material.transparent = true;
-          child.material.opacity = 0.3; // Back to original opacity
-          child.material.color.setHex(0xffffff); // Make it white
+      // Define the color palette
+      const palette = [
+        { r: 0xFF/255, g: 0xFD/255, b: 0xFF/255 }, // FFFDFF
+        { r: 0xF0/255, g: 0xFF/255, b: 0xFF/255 }, // F0FFFF
+        { r: 0xD5/255, g: 0xE6/255, b: 0xF0/255 }, // D5E6F0
+        { r: 0xDB/255, g: 0xEB/255, b: 0xF7/255 }, // DBEBF7
+        { r: 0x93/255, g: 0x98/255, b: 0x9B/255 }, // 93989B
+        { r: 0xA6/255, g: 0x9C/255, b: 0x99/255 }, // A69C99
+        { r: 0xDD/255, g: 0xDC/255, b: 0xEC/255 }, // DDDCEC
+        { r: 0xDF/255, g: 0xE5/255, b: 0xE5/255 }  // DFE5E5
+      ];
+
+      lines.forEach(line => {
+        const parts = line.trim().split(/\s+/);
+        if (parts.length >= 3) {
+          const x = parseFloat(parts[0]);
+          const y = parseFloat(parts[1]);
+          const z = parseFloat(parts[2]);
+
+          positions.push(x, y, z);
+
+          // Use position-based noise to select colors with emphasis on greys for depth/contrast
+          const freq = 2.5;
+          const noise1 = Math.sin(x * freq) * Math.cos(y * freq);
+          const noise2 = Math.sin(y * freq + 2.5) * Math.cos(z * freq);
+          const noise3 = Math.sin(z * freq + 5.0) * Math.cos(x * freq);
+
+          // Combine noise to create a selector value
+          const selector = (noise1 + noise2 + noise3 + 3) / 6; // Normalize to 0-1
+
+          // Use depth (z) to bias towards grey colors for recessed areas
+          const depthBias = Math.abs(z * 0.5); // Use absolute value and reduce multiplier
+          let biasedSelector = (selector + depthBias) % 1.0;
+
+          // Ensure selector is in valid range
+          if (biasedSelector < 0) biasedSelector += 1.0;
+
+          // Pick primary and secondary colors based on biased selector
+          const index = biasedSelector * 7; // 0-7 range (8 colors)
+          const primaryIdx = Math.min(Math.floor(index), 7);
+          const secondaryIdx = Math.min(primaryIdx + 1, 7);
+          const blend = Math.max(0, Math.min(1, index - primaryIdx)); // Clamp blend
+
+          // Blend between two adjacent colors in the palette
+          const primary = palette[primaryIdx];
+          const secondary = palette[secondaryIdx];
+
+          const r = primary.r * (1 - blend) + secondary.r * blend;
+          const g = primary.g * (1 - blend) + secondary.g * blend;
+          const b = primary.b * (1 - blend) + secondary.b * blend;
+
+          colors.push(r, g, b);
         }
       });
-      
+
+      console.log(`Loaded ${positions.length / 3} points`);
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+      // Store original positions for animation
+      originalPositions = new Float32Array(positions);
+
+      const material = new THREE.PointsMaterial({
+        size: 0.01,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8
+      });
+
+      pointCloud = new THREE.Points(geometry, material);
+
+      // Calculate bounding box to center the model
+      geometry.computeBoundingBox();
+      const box = geometry.boundingBox;
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+
+      // Center and scale the point cloud
+      pointCloud.position.set(-center.x, -center.y - 7, -center.z); // Moved up from -10 to -5
+
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const scale = 30 / maxDim;
+      pointCloud.scale.set(scale, scale, scale);
+
+      scene.add(pointCloud);
+      console.log('Point cloud added to scene');
+
+    } catch (error) {
+      console.error('Error loading point cloud:', error);
+    }
+  }
+
+  // Load the point cloud model
+  const modelUrl = `./assets/models/ptcloudtest.xyz?v=${Date.now()}`;
+  loadPointCloud(modelUrl);
+
+  // Load the background cloud point cloud
+  const cloudModelUrl = './assets/models/xr_lower_austria_sculpture__winter_point_cloud/scene.xyz';
+  console.log('Attempting to load cloud point cloud from:', cloudModelUrl);
+
+  // Load the background cloud model
+  let cloudModel = null; // Store reference globally
+
+  async function loadBackgroundCloud(url) {
+    try {
+      const response = await fetch(url);
+      const text = await response.text();
+      const lines = text.trim().split('\n');
+
+      const positions = [];
+      const colors = [];
+
+      lines.forEach(line => {
+        const parts = line.trim().split(/\s+/);
+        if (parts.length >= 3) {
+          positions.push(
+            parseFloat(parts[0]),
+            parseFloat(parts[1]),
+            parseFloat(parts[2])
+          );
+          colors.push(1, 1, 1); // White
+        }
+      });
+
+      console.log(`Loaded ${positions.length / 3} background cloud points`);
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: 0.02,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.3
+      });
+
+      cloudModel = new THREE.Points(geometry, material);
+      cloudModel.position.set(0, -270, -100);
+      cloudModel.scale.set(80, 80, 80);
+
       scene.add(cloudModel);
-      console.log('Cloud model added to scene');
-    },
-    function (progress) {
-      console.log('Loading cloud model progress:', (progress.loaded / progress.total * 100) + '%');
-    },
-    function (error) {
-      console.error('Error loading cloud model:', error);
+      console.log('Background cloud point cloud added to scene');
+
+    } catch (error) {
+      console.error('Error loading background cloud:', error);
     }
-  );
+  }
 
-  // Mouse position for cloud rotation
-  let mouseX = 0;
-  let mouseY = 0;
-  let mouseInfluenceX = 0;
-  let mouseInfluenceY = 0;
-  let mouseMoving = false;
-  let lastMouseMoveTime = 0;
-  const MOUSE_INFLUENCE_DECAY = 0.07; // Lower decay for a more gradual, smooth return
-  const MOUSE_INFLUENCE_AMOUNT_X = 0.02; // Max radians to influence X (reduced)
-  const MOUSE_INFLUENCE_AMOUNT_Y = 0.03; // Max radians to influence Y (reduced)
+  loadBackgroundCloud(cloudModelUrl);
 
-  // Add event listener for mouse movement to rotate cloud
-  window.addEventListener('mousemove', function(event) {
-    // Normalize mouse position to range [-1, 1]
-    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    // Target influence based on mouse movement
-    mouseTargetInfluenceY = mouseX * MOUSE_INFLUENCE_AMOUNT_Y;
-    mouseTargetInfluenceX = mouseY * MOUSE_INFLUENCE_AMOUNT_X;
-    mouseMoving = true;
-    lastMouseMoveTime = Date.now();
-  });
-  // Initialize target influence variables
-  let mouseTargetInfluenceX = 0;
-  let mouseTargetInfluenceY = 0;
 
-  // Fallback: if model fails to load, create a simple cube after 5 seconds
-  setTimeout(() => {
-    if (document.getElementById('loading').style.display !== 'none') {
-      console.log('Model loading taking too long, creating fallback scene...');
-      createFallbackScene();
-    }
-  }, 3000); // Reduced to 3 seconds
+  // Fallback removed - loading element no longer exists
 
   // Add ambient light for overall illumination
   const ambientLight = new THREE.AmbientLight(0xffffff, 12.0); // Much brighter ambient light
@@ -340,56 +267,42 @@ async function init() {
   light.position.set(5, 5, 5).normalize();
   scene.add(light);
 
-  // Add mouse interaction for head rotation
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
-  let isRotatingHead = false;
-  let headModel = null;
-  let previousMousePosition = { x: 0, y: 0 };
-  
-  // Mouse event handlers for head rotation
-  function onMouseDown(event) {
+  // Mouse tracking for particle interaction and drag rotation
+  window.addEventListener('mousemove', onMouseMove);
+  window.addEventListener('mousedown', onMouseDown);
+  window.addEventListener('mouseup', onMouseUp);
+
+  function onMouseMove(event) {
+    // Convert mouse position to normalized device coordinates (-1 to +1)
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(scene.children, true);
-    
-    // Check if we clicked on the head model
-    for (let intersect of intersects) {
-      if (intersect.object.name === 'Sketchfab_Scene' || 
-          intersect.object.parent?.name === 'Sketchfab_Scene' ||
-          intersect.object.parent?.parent?.name === 'Sketchfab_Scene') {
-        isRotatingHead = true;
-        headModel = scene.children.find(child => child.name === 'Sketchfab_Scene');
-        previousMousePosition = { x: event.clientX, y: event.clientY };
-        break;
-      }
-    }
-  }
-  
-  function onMouseMove(event) {
-    if (isRotatingHead && headModel) {
+
+    // Handle drag rotation
+    if (isDragging && pointCloud) {
       const deltaX = event.clientX - previousMousePosition.x;
       const deltaY = event.clientY - previousMousePosition.y;
-      
-      // Rotate the head based on mouse movement
-      headModel.rotation.y += deltaX * 0.01;
-      headModel.rotation.x += deltaY * 0.01;
-      
-      previousMousePosition = { x: event.clientX, y: event.clientY };
+
+      rotation.y += deltaX * 0.005; // Horizontal rotation
+      rotation.x += deltaY * 0.005; // Vertical rotation
+
+      previousMousePosition = {
+        x: event.clientX,
+        y: event.clientY
+      };
     }
   }
-  
-  function onMouseUp() {
-    isRotatingHead = false;
-    headModel = null;
+
+  function onMouseDown(event) {
+    isDragging = true;
+    previousMousePosition = {
+      x: event.clientX,
+      y: event.clientY
+    };
   }
-  
-  // Add event listeners for head rotation
-  window.addEventListener('mousedown', onMouseDown);
-  window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('mouseup', onMouseUp);
+
+  function onMouseUp(event) {
+    isDragging = false;
+  }
 
   // Add window resize handler
   window.addEventListener('resize', onWindowResize);
@@ -412,50 +325,88 @@ async function init() {
 
   function animate() {
     requestAnimationFrame(animate);
-    
-    // Update shader time uniform for gradient animation
-    scene.traverse((child) => {
-      if (child.isMesh && child.material && child.material.uniforms && child.material.uniforms.time) {
-        child.material.uniforms.time.value = Date.now() * 0.001;
-      }
-    });
-    
-    // Gradually interpolate mouse influence toward the target (lerp)
-    mouseInfluenceX += (mouseTargetInfluenceX - mouseInfluenceX) * 0.08;
-    mouseInfluenceY += (mouseTargetInfluenceY - mouseInfluenceY) * 0.08;
-    
-    // Restore original cloud model animation, add subtle mouse influence only while moving
+
+    // Apply drag rotation to point cloud
+    if (pointCloud) {
+      pointCloud.rotation.x = rotation.x;
+      pointCloud.rotation.y = rotation.y;
+    }
+
+    // Rotate the cloud model around different axes (much slower)
     if (cloudModel) {
       const time = Date.now() * 0.001;
-      // Base animation
-      const baseX = Math.sin(time * 0.3) * 0.1;
-      const baseZ = Math.cos(time * 0.2) * 0.05;
-      // Y rotation accumulates
-      cloudModel.rotation.y += 0.005;
+      cloudModel.rotation.x = Math.sin(time * 0.3) * 0.1; // Gentle X rotation
+      cloudModel.rotation.y += 0.0005; // Much slower Y rotation
+      cloudModel.rotation.z = Math.cos(time * 0.2) * 0.05; // Gentle Z rotation
+    }
 
-      // If mouse is moving, apply influence
-      let influenceX = 0;
-      let influenceY = 0;
-      if (mouseMoving) {
-        influenceX = mouseInfluenceX;
-        influenceY = mouseInfluenceY;
-        // If no mousemove for 100ms, start fading influence
-        if (Date.now() - lastMouseMoveTime > 100) {
-          mouseMoving = false;
+    // Apply swirl effect to point cloud based on mouse proximity
+    if (pointCloud && originalPositions) {
+      raycaster.setFromCamera(mouse, camera);
+
+      const positions = pointCloud.geometry.attributes.position.array;
+      const time = Date.now() * 0.001;
+
+      // Create a plane at the point cloud's Z position for intersection
+      const intersectPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+      const intersectPoint = new THREE.Vector3();
+      raycaster.ray.intersectPlane(intersectPlane, intersectPoint);
+
+      // Transform intersection point to point cloud's local space
+      const localPoint = pointCloud.worldToLocal(intersectPoint.clone());
+
+      const radius = 0.3;
+      let needsUpdate = false;
+
+      // Process all particles every frame
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = originalPositions[i];
+        const y = originalPositions[i + 1];
+        const z = originalPositions[i + 2];
+
+        // Calculate distance from mouse (in local space)
+        const dx = x - localPoint.x;
+        const dy = y - localPoint.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Apply swirl effect within radius
+        if (distance < radius) {
+          needsUpdate = true;
+          const influence = 1 - (distance / radius);
+          const angle = influence * Math.PI * 2 * Math.sin(time * 2);
+          const swirl = influence * 0.1;
+
+          // Rotate particles around mouse position
+          const cos = Math.cos(angle);
+          const sin = Math.sin(angle);
+
+          const rotatedX = dx * cos - dy * sin;
+          const rotatedY = dx * sin + dy * cos;
+
+          positions[i] = localPoint.x + rotatedX + Math.sin(time * 3 + i) * swirl;
+          positions[i + 1] = localPoint.y + rotatedY + Math.cos(time * 3 + i) * swirl;
+          positions[i + 2] = z + Math.sin(time * 2 + i) * swirl * 0.5;
+        } else {
+          // Always return to original position
+          const diffX = x - positions[i];
+          const diffY = y - positions[i + 1];
+          const diffZ = z - positions[i + 2];
+
+          // Check if particle needs to move back
+          if (Math.abs(diffX) > 0.0001 || Math.abs(diffY) > 0.0001 || Math.abs(diffZ) > 0.0001) {
+            needsUpdate = true;
+            positions[i] += diffX * 0.1;
+            positions[i + 1] += diffY * 0.1;
+            positions[i + 2] += diffZ * 0.1;
+          }
         }
-      } else {
-        // Fade out influence smoothly
-        mouseInfluenceX *= (1 - MOUSE_INFLUENCE_DECAY);
-        mouseInfluenceY *= (1 - MOUSE_INFLUENCE_DECAY);
-        influenceX = mouseInfluenceX;
-        influenceY = mouseInfluenceY;
       }
 
-      cloudModel.rotation.x = baseX + influenceX;
-      cloudModel.rotation.z = baseZ;
-      cloudModel.rotation.y += influenceY; // Add a little to Y for subtle effect
+      if (needsUpdate) {
+        pointCloud.geometry.attributes.position.needsUpdate = true;
+      }
     }
-    
+
     renderer.render(scene, camera);
   }
   animate();
@@ -464,12 +415,11 @@ async function init() {
 // Fallback scene function
 function createFallbackScene() {
   console.log('Creating fallback scene...');
-  document.getElementById('loading').style.display = 'none';
-  
+
   // Hide the canvas
   const canvas = document.getElementById('webgl');
   canvas.style.display = 'none';
-  
+
   // Create a simple 3D-looking scene with CSS
   const fallbackDiv = document.createElement('div');
   fallbackDiv.style.cssText = `
@@ -484,7 +434,7 @@ function createFallbackScene() {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     animation: rotate 4s linear infinite;
   `;
-  
+
   // Add CSS animation
   const style = document.createElement('style');
   style.textContent = `
@@ -494,10 +444,9 @@ function createFallbackScene() {
     }
   `;
   document.head.appendChild(style);
-  
+
   document.body.appendChild(fallbackDiv);
-  document.getElementById('loading').style.display = 'none';
-  
+
   console.log('Fallback scene created');
 }
 
