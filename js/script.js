@@ -72,7 +72,28 @@ async function init() {
   
   // Set up the scene with image background
   const textureLoader = new THREE.TextureLoader();
-  const backgroundTexture = textureLoader.load('./assets/bg_pics/4.jpg');
+  const backgroundTexture = textureLoader.load(
+    './assets/bg_pics/4.jpg',
+    function(texture) {
+      console.log('Background image loaded successfully');
+    },
+    undefined,
+    function(error) {
+      console.error('Error loading background image:', error);
+      // Fallback to gradient background
+      const canvas = document.createElement('canvas');
+      canvas.width = 2;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 256);
+      gradient.addColorStop(0, '#DDDCEC');
+      gradient.addColorStop(1, '#DEE4E4');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 2, 256);
+      const fallbackTexture = new THREE.CanvasTexture(canvas);
+      scene.background = fallbackTexture;
+    }
+  );
   scene.background = backgroundTexture;
 
   console.log('Canvas element:', document.getElementById('webgl'));
@@ -102,7 +123,6 @@ async function init() {
       const positions = [];
       const colors = [];
 
-<<<<<<< HEAD
       // Define the color palette
       const palette = [
         { r: 0xFF/255, g: 0xFD/255, b: 0xFF/255 }, // FFFDFF
@@ -115,8 +135,6 @@ async function init() {
         { r: 0xDF/255, g: 0xE5/255, b: 0xE5/255 }  // DFE5E5
       ];
 
-=======
->>>>>>> 9d977889e1c468b1bc04df3c7d90da4c6ed62d28
       lines.forEach(line => {
         const parts = line.trim().split(/\s+/);
         if (parts.length >= 3) {
@@ -126,7 +144,6 @@ async function init() {
 
           positions.push(x, y, z);
 
-<<<<<<< HEAD
           // Use position-based noise to select colors with emphasis on greys for depth/contrast
           const freq = 2.5;
           const noise1 = Math.sin(x * freq) * Math.cos(y * freq);
@@ -158,32 +175,6 @@ async function init() {
           const b = primary.b * (1 - blend) + secondary.b * blend;
 
           colors.push(r, g, b);
-=======
-          // Create smooth gradient blends using multiple sine waves
-          // Use continuous functions instead of discrete regions
-          const freq1 = 2.5, freq2 = 3.7, freq3 = 4.3;
-
-          // Red channel - combination of position-based waves
-          const r = (Math.sin(x * freq1 + y * 0.5) * 0.5 + 0.5) *
-                    (Math.cos(z * freq2) * 0.3 + 0.7);
-
-          // Green channel - different frequency combinations
-          const g = (Math.sin(y * freq2 + z * 0.7) * 0.5 + 0.5) *
-                    (Math.cos(x * freq3) * 0.3 + 0.7);
-
-          // Blue channel - yet another combination
-          const b = (Math.sin(z * freq3 + x * 0.3) * 0.5 + 0.5) *
-                    (Math.cos(y * freq1) * 0.3 + 0.7);
-
-          // Add some variation with combined position influence
-          const variation = Math.sin(x * y * z * 10) * 0.1;
-
-          colors.push(
-            Math.max(0, Math.min(1, r + variation)),
-            Math.max(0, Math.min(1, g + variation)),
-            Math.max(0, Math.min(1, b + variation))
-          );
->>>>>>> 9d977889e1c468b1bc04df3c7d90da4c6ed62d28
         }
       });
 
