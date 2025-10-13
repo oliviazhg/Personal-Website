@@ -6,72 +6,161 @@
   <title>Projects - Olivia's Portfolio</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/projects.css" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Navigation Menu -->
-  <nav class="top-nav">
-    <div class="container">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="projects.html" class="nav-link">Projects</a>
-    </div>
-  </nav>
-
   <!-- Background 3D Scene -->
   <canvas class="background-canvas" id="backgroundWebgl"></canvas>
 
-  <!-- Projects Grid -->
-  <section class="projects-grid">
+  <!-- Top Navigation -->
+  <nav class="top-nav-projects">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Projects Gallery -->
+  <section class="projects-gallery">
     <div class="container">
-      <div class="projects-layout">
-        <!-- Project List -->
-        <div class="project-list">
-          <div class="project-item" data-project="personal-website">
-            <h3 class="project-name"><span class="project-number">01</span> Personal Website</h3>
+      <div class="gallery-grid">
+
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/somatic-bloom.jpg" alt="Somatic Bloom" class="project-img">
           </div>
-          
-          <div class="project-item" data-project="responsive-dashboard">
-            <h3 class="project-name"><span class="project-number">02</span> Responsive Dashboard</h3>
-          </div>
-          
-          <div class="project-item" data-project="3d-head-model">
-            <h3 class="project-name"><span class="project-number">03</span> 3D Head Model Viewer</h3>
-          </div>
-          
-          <div class="project-item" data-project="point-cloud">
-            <h3 class="project-name"><span class="project-number">04</span> Point Cloud Visualization</h3>
-          </div>
-          
-          <div class="project-item" data-project="generative-art">
-            <h3 class="project-name"><span class="project-number">05</span> Generative Art</h3>
-          </div>
-          
-          <div class="project-item" data-project="audio-visualizer">
-            <h3 class="project-name"><span class="project-number">06</span> Audio Visualizer</h3>
-          </div>
-          
-          <div class="project-item" data-project="ai-text-generator">
-            <h3 class="project-name"><span class="project-number">07</span> AI Text Generator</h3>
-          </div>
-          
-          <div class="project-item" data-project="ar-experience">
-            <h3 class="project-name"><span class="project-number">08</span> AR Experience</h3>
+          <div class="project-info">
+            <h3 class="project-title">somatic bloom</h3>
+            <p class="project-date">2025</p>
+            <p class="project-keywords">cyborgism, affective computing, multisensory interfaces, biosignal processing, kinetic headpiece</p>
           </div>
         </div>
-        
-        <!-- Project Image Display -->
-        <div class="project-image-display">
-          <div class="project-image-container">
-            <div class="project-image-placeholder">
-              <span>Hover over a project to see its preview</span>
-            </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/sonophoresis.jpg" alt="Sonophoresis" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">sonophoresis</h3>
+            <p class="project-date">2025</p>
+            <p class="project-keywords">closed-loop drug delivery, ultrasonic transdermal therapy, wearable medical devices, human augmentation</p>
           </div>
         </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/supernumerary-finger.jpg" alt="Supernumerary Finger" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">supernumerary finger</h3>
+            <p class="project-date">2025</p>
+            <p class="project-keywords">human augmentation, EMG signal processing, brain plasticity, intuitive prosthetic control</p>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/body-armour.jpg" alt="Body Armour" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">body armour</h3>
+            <p class="project-date">2025</p>
+            <p class="project-keywords">fashion technology, responsive wearables, kinetic fashion, social commentary</p>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/mind-garden.jpg" alt="Mind Garden" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">mind garden</h3>
+            <p class="project-date">2024</p>
+            <p class="project-keywords">kinetic sculpture, interactive installation, art-tech</p>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/prism.jpg" alt="Prism" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">prism</h3>
+            <p class="project-date">2024–present</p>
+            <p class="project-keywords">Art-tech collective, collaborative infrastructure, creative sandbox, experimental projects, community building</p>
+          </div>
+        </div>
+
+        <!-- Project 7 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/neurosurgery-robot.jpg" alt="Neurosurgery Robot R&D" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">neurosurgery robot r&d</h3>
+            <p class="project-date">2024</p>
+            <p class="project-keywords">medical robotics, soft actuators, ergonomic design, clinical user research</p>
+          </div>
+        </div>
+
+        <!-- Project 8 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/single-print-finger.jpg" alt="Single-Print Prosthetic Finger" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">single-print prosthetic finger</h3>
+            <p class="project-date">2024</p>
+            <p class="project-keywords">additive manufacturing, kinematic optimization, biomechanical design, accessible prosthetics</p>
+          </div>
+        </div>
+
+        <!-- Project 9 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/finger-joint-optimization.jpg" alt="Prosthetic Finger Joint Optimization" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">prosthetic finger joint optimization</h3>
+            <p class="project-date">2024</p>
+            <p class="project-keywords">bayesian optimization, genetic algorithms, biomechanical simulation, parametric design</p>
+          </div>
+        </div>
+
+        <!-- Project 10 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/pill-e.jpg" alt="Pill-E" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">pill-e</h3>
+            <p class="project-date">2022</p>
+            <p class="project-keywords">automated dispensing, assistive robotics, medication adherence</p>
+          </div>
+        </div>
+
+        <!-- Project 11 -->
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="assets/projects/llc-converter.jpg" alt="LLC Resonant Converter" class="project-img">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">llc resonant converter</h3>
+            <p class="project-date">2024</p>
+            <p class="project-keywords">high-frequency power electronics, PCB design, resonant topology</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <script src="js/projects.js"></script>
   <script type="module" src="js/projects-background.js"></script>
 </body>
-</html> 
+</html>

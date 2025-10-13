@@ -105,11 +105,118 @@ async function init() {
   const mouse = new THREE.Vector2(-9999, -9999); // Initialize off-screen to prevent initial swirl
   const raycaster = new THREE.Raycaster();
   raycaster.params.Points.threshold = 0.5; // Increase detection radius
+  let textSprites = []; // Store text sprites for orbiting text
 
   // Variables for drag rotation
   let isDragging = false;
   let previousMousePosition = { x: 0, y: 0 };
-  let rotation = { x: 0.314159, y: 0 }; // Start angled down 25 degrees
+  let rotation = { x: 0.0872665, y: 0 }; // Start angled down 5 degrees
+
+  // Variables for random orbit angle changes (reduced to -2 to +2 degrees to keep letters on screen)
+  const maxAngle = (2 * Math.PI) / 180; // 2 degrees in radians
+  let orbitRotationX = (Math.random() * 2 - 1) * maxAngle;
+  let orbitRotationY = (Math.random() * 2 - 1) * maxAngle;
+  let orbitRotationZ = (Math.random() * 2 - 1) * maxAngle;
+  let targetOrbitRotationX = orbitRotationX;
+  let targetOrbitRotationY = orbitRotationY;
+  let targetOrbitRotationZ = orbitRotationZ;
+  let lastAngleChange = Date.now();
+
+  // Variables for animated wavy circle
+  let wavePhase = 0; // Phase offset for the wave animation
+  let waveSpeed = 0.0002; // How fast the wave pattern shifts
+
+  // Variables for dynamic circle radius
+  const minRadius = 20; // Current radius (minimum)
+  const maxRadius = 25; // Maximum radius
+  let currentRadius = minRadius;
+  let targetRadius = minRadius + Math.random() * (maxRadius - minRadius);
+  let lastRadiusChange = Date.now();
+
+  // Circle center position (independent of point cloud)
+  const circleCenter = { x: 0, y: 10, z: 0 }; // Y=10 to position it higher on screen
+
+  // Function to create orbiting text sprites
+  function createOrbitingText() {
+    const text = "hello! i'm olivia, an engineer & creative technologist. welcome to my website! ";
+    const repeatCount = 4; // Repeat the sentence 8 times to fill the circle
+    const fullText = text.repeat(repeatCount);
+    const chars = Array.from(fullText).reverse(); // Reverse so text reads correctly when facing outward
+    const angleStep = (Math.PI * 2) / chars.length;
+
+    console.log('Creating text sprites for characters:', chars.length);
+
+    chars.forEach((char, index) => {
+      // Skip pure whitespace for cleaner look
+      if (char.trim() === '') return;
+
+      const word = char; // Treat each character as a "word"
+      // Create canvas for text
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = 512;
+      canvas.height = 256;
+
+      // Clear canvas to fully transparent
+      context.clearRect(0, 0, 512, 256);
+
+      // Draw text with transparent background
+      context.fillStyle = '#FFFFFF';
+      context.font = '500 64px "JetBrains Mono", "Courier New", monospace';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.fillText(word, 256, 128);
+
+      console.log(`Drawing word: "${word}" at index ${index}`);
+
+      // Measure text to create tight-fitting canvas
+      context.font = '500 64px "JetBrains Mono", "Courier New", monospace';
+      const metrics = context.measureText(word);
+      const textWidth = metrics.width;
+      const textHeight = 64;
+
+      // Create smaller canvas that fits the text exactly
+      const tightCanvas = document.createElement('canvas');
+      const tightContext = tightCanvas.getContext('2d');
+      const padding = 10;
+      tightCanvas.width = textWidth + padding * 2;
+      tightCanvas.height = textHeight + padding * 2;
+
+      // Clear and draw text on tight canvas
+      tightContext.clearRect(0, 0, tightCanvas.width, tightCanvas.height);
+      tightContext.fillStyle = '#FFFFFF';
+      tightContext.font = '500 64px "JetBrains Mono", "Courier New", monospace';
+      tightContext.textAlign = 'center';
+      tightContext.textBaseline = 'middle';
+      tightContext.fillText(word, tightCanvas.width / 2, tightCanvas.height / 2);
+
+      // Create texture from tight canvas
+      const texture = new THREE.CanvasTexture(tightCanvas);
+      texture.premultiplyAlpha = false;
+
+      // Use Mesh with PlaneGeometry instead of Sprite so we can control rotation
+      const aspectRatio = tightCanvas.width / tightCanvas.height;
+      const planeGeometry = new THREE.PlaneGeometry(1 * aspectRatio, 1);
+      const planeMaterial = new THREE.MeshBasicMaterial({
+        map: texture,
+        transparent: true,
+        opacity: 0.95,
+        side: THREE.DoubleSide,
+        depthTest: true,
+        alphaTest: 0.1 // Don't render pixels below 10% opacity
+      });
+      const textMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+
+      // Store initial angle for this mesh
+      textMesh.userData.angle = index * angleStep;
+      textMesh.userData.index = index;
+
+      scene.add(textMesh);
+      textSprites.push(textMesh); // Still using same array name for compatibility
+    });
+
+    console.log(`Created ${textSprites.length} text sprites`);
+  }
 
   // Load XYZ point cloud
   async function loadPointCloud(url) {
@@ -212,6 +319,15 @@ async function init() {
       scene.add(pointCloud);
       console.log('Point cloud added to scene');
 
+      // Create orbiting text around the point cloud
+      console.log('About to call createOrbitingText...');
+      try {
+        createOrbitingText();
+        console.log('createOrbitingText completed');
+      } catch (textError) {
+        console.error('Error creating orbiting text:', textError);
+      }
+
     } catch (error) {
       console.error('Error loading point cloud:', error);
     }
@@ -276,7 +392,6 @@ async function init() {
 
   loadBackgroundCloud(cloudModelUrl);
 
-
   // Fallback removed - loading element no longer exists
 
   // Add ambient light for overall illumination
@@ -303,8 +418,8 @@ async function init() {
       const deltaX = event.clientX - previousMousePosition.x;
       const deltaY = event.clientY - previousMousePosition.y;
 
-      rotation.y += deltaX * 0.005; // Horizontal rotation
-      rotation.x += deltaY * 0.005; // Vertical rotation
+      rotation.y += deltaX * 0.005; // Horizontal rotation (unrestricted)
+      rotation.x += deltaY * 0.005; // Vertical rotation (unrestricted for head model)
 
       previousMousePosition = {
         x: event.clientX,
@@ -347,10 +462,17 @@ async function init() {
   function animate() {
     requestAnimationFrame(animate);
 
-    // Apply drag rotation to point cloud
+    // Apply drag rotation to point cloud and sync text orbit angles
     if (pointCloud) {
       pointCloud.rotation.x = rotation.x;
       pointCloud.rotation.y = rotation.y;
+
+      // Sync orbit rotation with point cloud rotation when dragging, but constrain to ±2 degrees
+      if (isDragging) {
+        const pitchLimit = (2 * Math.PI) / 180; // 2 degrees in radians
+        targetOrbitRotationX = Math.max(-pitchLimit, Math.min(pitchLimit, rotation.x));
+        targetOrbitRotationY = rotation.y; // Y rotation (yaw) can follow freely
+      }
     }
 
     // Rotate the cloud model around different axes (much slower)
@@ -359,6 +481,152 @@ async function init() {
       cloudModel.rotation.x = Math.sin(time * 0.3) * 0.1; // Gentle X rotation
       cloudModel.rotation.y += 0.0005; // Much slower Y rotation
       cloudModel.rotation.z = Math.cos(time * 0.2) * 0.05; // Gentle Z rotation
+    }
+
+    // Animate orbiting text sprites in 3D with random angle changes
+    if (pointCloud && textSprites.length > 0) {
+      const time = Date.now() * 0.001;
+      const currentTime = Date.now();
+      const orbitSpeed = 0.1; // Much slower rotation speed
+
+      // Animate the wave phase continuously
+      wavePhase += waveSpeed;
+
+      // Change target orbit angles randomly every 10-15 seconds (but not when dragging)
+      if (!isDragging && currentTime - lastAngleChange > 10000 + Math.random() * 5000) {
+        targetOrbitRotationX = (Math.random() * 2 - 1) * maxAngle;
+        targetOrbitRotationY = (Math.random() * 2 - 1) * maxAngle;
+        targetOrbitRotationZ = (Math.random() * 2 - 1) * maxAngle;
+        lastAngleChange = currentTime;
+      }
+
+      // Change target radius randomly every 8-12 seconds
+      if (currentTime - lastRadiusChange > 8000 + Math.random() * 4000) {
+        targetRadius = minRadius + Math.random() * (maxRadius - minRadius);
+        lastRadiusChange = currentTime;
+      }
+
+      // Very slowly interpolate to target angles (faster when dragging)
+      const interpolationSpeed = isDragging ? 0.1 : 0.005;
+      orbitRotationX += (targetOrbitRotationX - orbitRotationX) * interpolationSpeed;
+      orbitRotationY += (targetOrbitRotationY - orbitRotationY) * interpolationSpeed;
+      orbitRotationZ += (targetOrbitRotationZ - orbitRotationZ) * interpolationSpeed;
+
+      // Gradually interpolate radius
+      currentRadius += (targetRadius - currentRadius) * 0.002;
+
+      textSprites.forEach((sprite) => {
+        const angle = sprite.userData.angle + time * orbitSpeed;
+
+        // Position sprites in 3D circle with vertical variation (animated wave)
+        let x = Math.cos(angle) * currentRadius;
+        let y = Math.sin(angle * 2 + wavePhase) * 0.5; // Add vertical movement (height variation) with animated phase - reduced amplitude
+        let z = Math.sin(angle) * currentRadius;
+
+        // Apply rotation transformations for random orbit angles
+        // Rotate around X axis
+        let y1 = y * Math.cos(orbitRotationX) - z * Math.sin(orbitRotationX);
+        let z1 = y * Math.sin(orbitRotationX) + z * Math.cos(orbitRotationX);
+
+        // Rotate around Y axis
+        let x2 = x * Math.cos(orbitRotationY) + z1 * Math.sin(orbitRotationY);
+        let z2 = -x * Math.sin(orbitRotationY) + z1 * Math.cos(orbitRotationY);
+
+        // Rotate around Z axis
+        let x3 = x2 * Math.cos(orbitRotationZ) - y1 * Math.sin(orbitRotationZ);
+        let y3 = x2 * Math.sin(orbitRotationZ) + y1 * Math.cos(orbitRotationZ);
+
+        // Calculate final position using circleCenter instead of pointCloud position
+        const finalX = circleCenter.x + x3;
+        const finalY = circleCenter.y + y3;
+        const finalZ = circleCenter.z + z2;
+
+        // Convert 3D position to screen space to check mouse proximity
+        const spritePosition = new THREE.Vector3(finalX, finalY, finalZ);
+        spritePosition.project(camera);
+
+        // Calculate distance from mouse in screen space
+        const dx = spritePosition.x - mouse.x;
+        const dy = spritePosition.y - mouse.y;
+        const distanceToMouse = Math.sqrt(dx * dx + dy * dy);
+
+        // Apply displacement if mouse is close
+        const displacementRadius = 0.2; // Screen space radius for mouse interaction
+        let displacement = 0;
+        if (distanceToMouse < displacementRadius) {
+          const influence = 1 - (distanceToMouse / displacementRadius);
+          displacement = influence * 5; // Larger displacement amount
+        }
+
+        // Apply displacement in the direction away from mouse
+        sprite.position.x = finalX + dx * displacement;
+        sprite.position.y = finalY + dy * displacement;
+        sprite.position.z = finalZ;
+
+        // Calculate tangent direction at this point on the wavy path
+        // Take a small step forward along the path
+        const deltaAngle = 0.05;
+        const nextAngle = angle + deltaAngle;
+
+        // Calculate next position on the path (before transformations) using animated wave
+        const nextX = Math.cos(nextAngle) * currentRadius;
+        const nextY = Math.sin(nextAngle * 2 + wavePhase) * 0.5; // Reduced amplitude
+        const nextZ = Math.sin(nextAngle) * currentRadius;
+
+        // Apply same rotation transformations to next position
+        let nextY1 = nextY * Math.cos(orbitRotationX) - nextZ * Math.sin(orbitRotationX);
+        let nextZ1 = nextY * Math.sin(orbitRotationX) + nextZ * Math.cos(orbitRotationX);
+        let nextX2 = nextX * Math.cos(orbitRotationY) + nextZ1 * Math.sin(orbitRotationY);
+        let nextZ2 = -nextX * Math.sin(orbitRotationY) + nextZ1 * Math.cos(orbitRotationY);
+        let nextX3 = nextX2 * Math.cos(orbitRotationZ) - nextY1 * Math.sin(orbitRotationZ);
+        let nextY3 = nextX2 * Math.sin(orbitRotationZ) + nextY1 * Math.cos(orbitRotationZ);
+
+        // Calculate world position of next point using circleCenter
+        const nextWorldX = circleCenter.x + nextX3;
+        const nextWorldY = circleCenter.y + nextY3;
+        const nextWorldZ = circleCenter.z + nextZ2;
+
+        // Tangent vector = direction from current position to next position
+        const tangentX = nextWorldX - sprite.position.x;
+        const tangentY = nextWorldY - sprite.position.y;
+        const tangentZ = nextWorldZ - sprite.position.z;
+
+        // Normalize tangent
+        const tangentLength = Math.sqrt(tangentX * tangentX + tangentY * tangentY + tangentZ * tangentZ);
+        const normTangentX = tangentX / tangentLength;
+        const normTangentY = tangentY / tangentLength;
+        const normTangentZ = tangentZ / tangentLength;
+
+        // Calculate the normal vector (pointing outward from the curve)
+        // The normal is perpendicular to the tangent
+        // For a circular path, the outward normal points from center to the letter position
+        const normalX = sprite.position.x - circleCenter.x;
+        const normalY = sprite.position.y - circleCenter.y;
+        const normalZ = sprite.position.z - circleCenter.z;
+
+        // Normalize the normal vector
+        const normalLength = Math.sqrt(normalX * normalX + normalY * normalY + normalZ * normalZ);
+        const normNormalX = normalX / normalLength;
+        const normNormalY = normalY / normalLength;
+        const normNormalZ = normalZ / normalLength;
+
+        // Orient the letter to face outward along the normal
+        // Calculate yaw (Y-axis rotation) - direction in XZ plane
+        const yaw = Math.atan2(normNormalX, normNormalZ);
+
+        // Calculate pitch (X-axis rotation) - vertical tilt
+        const horizontalLength = Math.sqrt(normNormalX * normNormalX + normNormalZ * normNormalZ);
+        const pitch = Math.atan2(normNormalY, horizontalLength);
+
+        // Calculate roll (Z-axis rotation) to align letter's vertical with the tangent
+        // Use the tangent vector to determine how the letter should be rotated around the normal
+        const roll = Math.atan2(normTangentY, Math.sqrt(normTangentX * normTangentX + normTangentZ * normTangentZ));
+
+        // Apply rotations (using negative roll)
+        sprite.rotation.y = yaw;
+        sprite.rotation.x = -pitch;
+        sprite.rotation.z = -roll;
+      });
     }
 
     // Apply swirl effect to point cloud based on mouse proximity

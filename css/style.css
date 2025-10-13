@@ -802,3 +802,51 @@ h1, h2, h3, h4, h5, h6 {
 .top-nav a.nav-link:active {
   color: #FFFDFF !important;
 }
+
+/* Bottom Left Info Section */
+.bottom-left-info {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 1000;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.bottom-left-info * {
+  pointer-events: auto;
+}
+
+.info-description {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #FFFFFF;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.info-links {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.info-link {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: font-weight 0.2s;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: inline-block;
+}
+
+.info-link:hover {
+  font-weight: 500;
+}
