@@ -33,7 +33,7 @@ async function initBackground() {
   // Set up the scene with image background (same as home page)
   const textureLoader = new THREE.TextureLoader();
   const backgroundTexture = textureLoader.load(
-    './assets/bg_pics/4.jpg',
+    './assets/bg_pics/13.png',
     function(texture) {
       console.log('Background image loaded successfully');
     },
@@ -114,11 +114,11 @@ async function initBackground() {
   loadBackgroundCloud(cloudModelUrl);
 
   // Add ambient light for overall illumination
-  const ambientLight = new THREE.AmbientLight(0xffffff, 12.0);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Subtle ambient light
   scene.add(ambientLight);
 
   // Add directional light for shadows and depth
-  const light = new THREE.DirectionalLight(0xffffff, 15.0);
+  const light = new THREE.DirectionalLight(0xffffff, 2.0); // Moderate directional light
   light.position.set(5, 5, 5).normalize();
   scene.add(light);
 
@@ -128,6 +128,15 @@ async function initBackground() {
 
   function animate() {
     requestAnimationFrame(animate);
+
+    // Rotate the cloud model around different axes (slower than home page)
+    if (cloudModel) {
+      const time = Date.now() * 0.001;
+      cloudModel.rotation.x = Math.sin(time * 0.15) * 0.1; // Half speed: 0.3 -> 0.15
+      cloudModel.rotation.y += 0.00025; // Half speed: 0.0005 -> 0.00025
+      cloudModel.rotation.z = Math.cos(time * 0.1) * 0.05; // Half speed: 0.2 -> 0.1
+    }
+
     renderer.render(scene, camera);
   }
   animate();

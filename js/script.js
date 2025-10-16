@@ -73,9 +73,11 @@ async function init() {
   // Set up the scene with image background
   const textureLoader = new THREE.TextureLoader();
   const backgroundTexture = textureLoader.load(
-    './assets/bg_pics/4.jpg',
+    './assets/bg_pics/13.png',
     function(texture) {
       console.log('Background image loaded successfully');
+      // Set the color space to sRGB for correct color representation
+      texture.colorSpace = THREE.SRGBColorSpace;
     },
     undefined,
     function(error) {
@@ -110,25 +112,25 @@ async function init() {
   // Variables for drag rotation
   let isDragging = false;
   let previousMousePosition = { x: 0, y: 0 };
-  let rotation = { x: 0.0872665, y: 0 }; // Start angled down 5 degrees
+  let rotation = { x: 0.174533, y: 0 }; // Start at 10 degrees pitch
 
-  // Variables for random orbit angle changes (reduced to -2 to +2 degrees to keep letters on screen)
-  const maxAngle = (2 * Math.PI) / 180; // 2 degrees in radians
-  let orbitRotationX = (Math.random() * 2 - 1) * maxAngle;
-  let orbitRotationY = (Math.random() * 2 - 1) * maxAngle;
-  let orbitRotationZ = (Math.random() * 2 - 1) * maxAngle;
-  let targetOrbitRotationX = orbitRotationX;
-  let targetOrbitRotationY = orbitRotationY;
-  let targetOrbitRotationZ = orbitRotationZ;
-  let lastAngleChange = Date.now();
+  // Variables for orbit angle changes
+  let orbitRotationX = 0;
+  let orbitRotationY = 0;
+  let orbitRotationZ = 0;
+  let targetOrbitRotationX = 0;
+  let targetOrbitRotationY = 0;
+  let targetOrbitRotationZ = 0;
 
   // Variables for animated wavy circle
   let wavePhase = 0; // Phase offset for the wave animation
   let waveSpeed = 0.0002; // How fast the wave pattern shifts
+  let waveAmplitude = 0; // Current wave amplitude
+  let targetWaveAmplitude = 0; // Target wave amplitude
 
   // Variables for dynamic circle radius
   const minRadius = 20; // Current radius (minimum)
-  const maxRadius = 25; // Maximum radius
+  const maxRadius = 22; // Maximum radius
   let currentRadius = minRadius;
   let targetRadius = minRadius + Math.random() * (maxRadius - minRadius);
   let lastRadiusChange = Date.now();
@@ -162,7 +164,7 @@ async function init() {
 
       // Draw text with transparent background
       context.fillStyle = '#FFFFFF';
-      context.font = '500 64px "JetBrains Mono", "Courier New", monospace';
+      context.font = '700 64px "JetBrains Mono", "Courier New", monospace';
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText(word, 256, 128);
@@ -170,7 +172,7 @@ async function init() {
       console.log(`Drawing word: "${word}" at index ${index}`);
 
       // Measure text to create tight-fitting canvas
-      context.font = '500 64px "JetBrains Mono", "Courier New", monospace';
+      context.font = '700 64px "JetBrains Mono", "Courier New", monospace';
       const metrics = context.measureText(word);
       const textWidth = metrics.width;
       const textHeight = 64;
@@ -185,7 +187,7 @@ async function init() {
       // Clear and draw text on tight canvas
       tightContext.clearRect(0, 0, tightCanvas.width, tightCanvas.height);
       tightContext.fillStyle = '#FFFFFF';
-      tightContext.font = '500 64px "JetBrains Mono", "Courier New", monospace';
+      tightContext.font = '700 64px "JetBrains Mono", "Courier New", monospace';
       tightContext.textAlign = 'center';
       tightContext.textBaseline = 'middle';
       tightContext.fillText(word, tightCanvas.width / 2, tightCanvas.height / 2);
@@ -298,7 +300,7 @@ async function init() {
         size: 0.01,
         vertexColors: true,
         transparent: true,
-        opacity: 0.8
+        opacity: 1.0
       });
 
       pointCloud = new THREE.Points(geometry, material);
@@ -395,11 +397,11 @@ async function init() {
   // Fallback removed - loading element no longer exists
 
   // Add ambient light for overall illumination
-  const ambientLight = new THREE.AmbientLight(0xffffff, 12.0); // Much brighter ambient light
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Subtle ambient light
   scene.add(ambientLight);
 
   // Add directional light for shadows and depth
-  const light = new THREE.DirectionalLight(0xffffff, 15.0); // Much brighter directional light
+  const light = new THREE.DirectionalLight(0xffffff, 2.0); // Moderate directional light
   light.position.set(5, 5, 5).normalize();
   scene.add(light);
 
@@ -492,13 +494,19 @@ async function init() {
       // Animate the wave phase continuously
       wavePhase += waveSpeed;
 
-      // Change target orbit angles randomly every 10-15 seconds (but not when dragging)
-      if (!isDragging && currentTime - lastAngleChange > 10000 + Math.random() * 5000) {
-        targetOrbitRotationX = (Math.random() * 2 - 1) * maxAngle;
-        targetOrbitRotationY = (Math.random() * 2 - 1) * maxAngle;
-        targetOrbitRotationZ = (Math.random() * 2 - 1) * maxAngle;
-        lastAngleChange = currentTime;
+      // When not dragging, gradually move towards resting state (zero orbit angle and wave amplitude)
+      if (!isDragging) {
+        targetOrbitRotationX = 0;
+        targetOrbitRotationY = 0;
+        targetOrbitRotationZ = 0;
+        targetWaveAmplitude = 0;
+      } else {
+        targetWaveAmplitude = 0.5;
       }
+
+      // Gradually interpolate wave amplitude with bouncy easing
+      const waveSpeedFactor = isDragging ? 0.08 : 0.04;
+      waveAmplitude += (targetWaveAmplitude - waveAmplitude) * waveSpeedFactor;
 
       // Change target radius randomly every 8-12 seconds
       if (currentTime - lastRadiusChange > 8000 + Math.random() * 4000) {
@@ -506,21 +514,21 @@ async function init() {
         lastRadiusChange = currentTime;
       }
 
-      // Very slowly interpolate to target angles (faster when dragging)
-      const interpolationSpeed = isDragging ? 0.1 : 0.005;
+      // Interpolate to target angles with smooth, bouncy easing (faster when dragging)
+      const interpolationSpeed = isDragging ? 0.15 : 0.03;
       orbitRotationX += (targetOrbitRotationX - orbitRotationX) * interpolationSpeed;
       orbitRotationY += (targetOrbitRotationY - orbitRotationY) * interpolationSpeed;
       orbitRotationZ += (targetOrbitRotationZ - orbitRotationZ) * interpolationSpeed;
 
-      // Gradually interpolate radius
-      currentRadius += (targetRadius - currentRadius) * 0.002;
+      // Gradually interpolate radius with fluid motion
+      currentRadius += (targetRadius - currentRadius) * 0.01;
 
       textSprites.forEach((sprite) => {
         const angle = sprite.userData.angle + time * orbitSpeed;
 
         // Position sprites in 3D circle with vertical variation (animated wave)
         let x = Math.cos(angle) * currentRadius;
-        let y = Math.sin(angle * 2 + wavePhase) * 0.5; // Add vertical movement (height variation) with animated phase - reduced amplitude
+        let y = Math.sin(angle * 2 + wavePhase) * waveAmplitude; // Add vertical movement (height variation) with animated phase
         let z = Math.sin(angle) * currentRadius;
 
         // Apply rotation transformations for random orbit angles
@@ -570,7 +578,7 @@ async function init() {
 
         // Calculate next position on the path (before transformations) using animated wave
         const nextX = Math.cos(nextAngle) * currentRadius;
-        const nextY = Math.sin(nextAngle * 2 + wavePhase) * 0.5; // Reduced amplitude
+        const nextY = Math.sin(nextAngle * 2 + wavePhase) * waveAmplitude;
         const nextZ = Math.sin(nextAngle) * currentRadius;
 
         // Apply same rotation transformations to next position

@@ -35,9 +35,32 @@ async function initBackground() {
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
-  
-  // Set up the scene
-  scene.background = new THREE.Color(0xf8f9fa); // Light grey background
+
+  // Set up the scene with image background
+  const textureLoader = new THREE.TextureLoader();
+  const backgroundTexture = textureLoader.load(
+    './assets/bg_pics/13.png',
+    function(texture) {
+      console.log('Background image loaded successfully');
+    },
+    undefined,
+    function(error) {
+      console.error('Error loading background image:', error);
+      // Fallback to gradient background
+      const canvas = document.createElement('canvas');
+      canvas.width = 2;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 256);
+      gradient.addColorStop(0, '#DDDCEC');
+      gradient.addColorStop(1, '#DEE4E4');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 2, 256);
+      const fallbackTexture = new THREE.CanvasTexture(canvas);
+      scene.background = fallbackTexture;
+    }
+  );
+  scene.background = backgroundTexture;
 
   console.log('Background canvas element:', document.getElementById('backgroundWebgl'));
   console.log('Background renderer created:', renderer);
@@ -79,11 +102,11 @@ async function initBackground() {
   );
 
   // Add ambient light for overall illumination
-  const ambientLight = new THREE.AmbientLight(0xffffff, 12.0);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Subtle ambient light
   scene.add(ambientLight);
 
   // Add directional light for shadows and depth
-  const light = new THREE.DirectionalLight(0xffffff, 15.0);
+  const light = new THREE.DirectionalLight(0xffffff, 2.0); // Moderate directional light
   light.position.set(5, 5, 5).normalize();
   scene.add(light);
 
