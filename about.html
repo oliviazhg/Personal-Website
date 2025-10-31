@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/about.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-about">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+    </div>
+  </nav>
+
+  <!-- About Content -->
+  <section class="about-content">
+    <div class="container">
+      <h1 class="about-title">About Me</h1>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/oliviaszheng/" target="_blank" class="social-link">LinkedIn</a>
+        <span class="separator">|</span>
+        <a href="https://x.com/oliviazhg" target="_blank" class="social-link">X</a>
+      </div>
+      <div class="about-text">
+        <p>Hello! I'm Olivia, a mechatronics engineering student at the University of Waterloo. My current obsession and rabbit-holes: technology that interfaces with/augments the human sensory system. This includes neurotech, bionics, wearables, and other multi-sensory interfaces.</p>
+
+        <p>Currently, I'm working on a wearable for closed-loop sonophoresis at the MIT Media Lab, where I'm involved in PCB capture and design, biosignal processing (EMG/EEG), and designing for human-machine interfaces. I'm also developing a supernumerary finger system under the supervision of Prof. Arash Arami at UWaterloo, where we're exploring human augmentation through EMG-based control and intuitive brain-computer interfaces. Our team is developing a sixth finger(s) that users can control naturally via muscle signals or other body parts, both independently and dependently, investigating how the brain adapts to controlling additional limbs.</p>
+
+        <p>Previously, I also created <a href="https://x.com/oliviazhg/status/1978937304698761636" target="_blank" class="content-link">Somatic Bloom</a>, a pair of headpieces that use biosignals (EMG) to translate emotions into expressive blooming motions on the other person's headpiece—a prototype exploration for empathy, motivated by a desire to explore tech as a means of connection rather than isolation, especially on the hardware front. This was completed during the Augmentation Lab Residency in Cambridge, MA, 2025.</p>
+
+        <p>My professional experience includes the following:</p>
+        <ul class="experience-list">
+          <li>Worked on the iPhone 17 and other future tech work on the iPhone Product Design team at Apple, 2025</li>
+          <li>Designed & prototyped a neurosurgery robot for third ventricle biopsy and ventriculostomy at the CREATE Lab at EPFL, 2024</li>
+          <li>Designed & implemented firmware architecture for custom high-voltage subsystems on ship hull cleaning/inspection robots at Fleet Robotics, 2023</li>
+          <li>Developed software & control systems for deep sea robots that selectively harvest battery metals from the sea floor as opposed to dredging at Impossible Metals, 2023</li>
+          <li>Worked on edge computing solutions, bringing up chips and boards featuring at-memory compute at Untether AI (acquired by AMD), 2022</li>
+        </ul>
+
+        <p>I also founded <a href="https://prismcollective.ca/" target="_blank" class="content-link">PRISM Collective</a>, Waterloo's largest creative tech collective of interdisciplinary engineers, artists, and scientists. We work on public-facing interactive installations, and provide community, resources, and mentorship for anyone curious about this space. Previous projects include a bass-playing robot, motion-generated music, an LED matrix that simulates waterbending, and kinetic sculptures, and have been featured at THEMUSEUM in Kitchener, and on stage at the Socratica Symposium in 2025.</p>
+
+        <p>I'm driven by creativity, curiosity, impact, and a love for the 'what ifs'—the out-of-the-box ideas. My path has taken me through social justice work in menstrual equity, underwater robotics advancing green tech, medical technology, and now the human augmentation, neurotech, and biosignals space. If you vibe with any of this, or if you would like to work together on anything, please feel free to contact me at olivia.s.zheng@gmail.com, or any of my socials!</p>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="js/about-background.js"></script>
+  <script src="js/about-scroll.js"></script>
+</body>
+</html>

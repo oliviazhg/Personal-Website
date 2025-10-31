@@ -1,5 +1,20 @@
 /* Projects Page Specific Styles */
 
+/* Background Image */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../assets/bg_pics/13.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -2;
+}
+
 /* Background Canvas */
 .background-canvas {
   position: fixed;
@@ -22,6 +37,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.top-nav-projects.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
 }
 
 .top-nav-projects .nav-container {
@@ -41,8 +62,49 @@
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.top-nav-projects .nav-link:visited {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
 .top-nav-projects .nav-link:hover {
   font-weight: 500;
+  text-decoration: none;
+}
+
+/* Page Notice */
+.page-notice {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.page-notice p {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #FFFFFF;
+  line-height: 1.6;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.notice-link {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: font-weight 0.15s ease-in, text-decoration-thickness 0.15s ease-in;
+}
+
+.notice-link:hover {
+  font-weight: 500;
+  text-decoration-thickness: 2px;
 }
 
 /* Projects Gallery */

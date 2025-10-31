@@ -30,31 +30,8 @@ async function initBackground() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
 
-  // Set up the scene with image background (same as home page)
-  const textureLoader = new THREE.TextureLoader();
-  const backgroundTexture = textureLoader.load(
-    './assets/bg_pics/13.png',
-    function(texture) {
-      console.log('Background image loaded successfully');
-    },
-    undefined,
-    function(error) {
-      console.error('Error loading background image:', error);
-      // Fallback to gradient background
-      const canvas = document.createElement('canvas');
-      canvas.width = 2;
-      canvas.height = 256;
-      const ctx = canvas.getContext('2d');
-      const gradient = ctx.createLinearGradient(0, 0, 0, 256);
-      gradient.addColorStop(0, '#DDDCEC');
-      gradient.addColorStop(1, '#DEE4E4');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, 2, 256);
-      const fallbackTexture = new THREE.CanvasTexture(canvas);
-      scene.background = fallbackTexture;
-    }
-  );
-  scene.background = backgroundTexture;
+  // Make the renderer background transparent since we're using CSS background
+  renderer.setClearColor(0x000000, 0);
 
   console.log('Background canvas element:', document.getElementById('backgroundWebgl'));
   console.log('Background renderer created:', renderer);
