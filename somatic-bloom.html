@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Somatic Bloom - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/somatic-bloom.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Somatic Bloom</h1>
+        <p class="project-subtitle">2025</p>
+      </header>
+
+      <!-- Left Column: Content Sections -->
+      <div class="content-column">
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>Somatic Bloom is a bidirectional affective computing system that captures facial electromyography (EMG) signals and translates them into kinetic and photonic output on a wearable interface. The project investigates biosignal-driven human-computer interaction paradigms designed to augment co-present social dynamics through real-time emotion transduction.</p>
+        </section>
+
+        <!-- Biosignal Processing -->
+        <section class="project-section">
+          <h2 class="section-title">Biosignal Processing</h2>
+
+          <h3 class="subsection-title">Electrode Configuration & Acquisition</h3>
+          <p>The system employs 10mm flat pellet Ag/AgCl electrodes with 0.5% saline base gel in bipolar configurations targeting specific facial action units (FACS). Electrode placement follows standardized action unit topology:</p>
+          <ul class="project-list">
+            <li><strong>AU1 & AU2</strong> (corrugator supercilii): Inner and outer brow lowering, associated with anger and concentration</li>
+            <li><strong>AU12 & AU13</strong> (zygomaticus major): Lip corner pulling, associated with positive affect</li>
+            <li><strong>Reference electrode</strong>: Positioned anterior to the right ear, assuming bilateral facial symmetry</li>
+          </ul>
+
+          <h3 class="subsection-title">Frequency Domain Filtering</h3>
+          <ul class="project-list">
+            <li><strong>High-pass filtering</strong>: Differential cutoff frequencies applied per muscle group—30 Hz for corrugator supercilii, 20 Hz for orbicularis oculi and zygomaticus major—to eliminate motion artifacts and DC drift.</li>
+            <li><strong>Notch filtering via spectrum interpolation</strong>: Electromagnetic interference at 50 Hz and harmonics is attenuated through magnitude approximation by interpolating the amplitude spectrum using stable neighboring frequency components, preserving informative sEMG bandwidth.</li>
+            <li><strong>Low-pass filtering</strong>: 500 Hz cutoff based on Boxtel et al.'s demonstration that signal power above this threshold is negligible, preventing aliasing and high-frequency artifact contamination.</li>
+            <li><strong>Signal winsorization</strong>: Statistical outlier management applied to prevent extreme values from distorting amplitude calculations.</li>
+          </ul>
+
+          <h3 class="subsection-title">Feature Extraction & Dimensionality Reduction</h3>
+          <p><strong>Root Mean Square (RMS) Calculation</strong>: Temporal windows of raw sEMG are processed to extract RMS values, representing the power of the EMG signal:</p>
+          <p class="equation">RMS = √(1/n Σ(x_i²))</p>
+          <p>RMS is selected over Mean Absolute Value (MAV) as it better represents signal power characteristics relevant to muscle activation intensity.</p>
+
+          <p><strong>Real-time Principal Component Analysis (Primary Classification Method)</strong>: PCA serves as the core emotion inference engine. During an initial calibration session, users perform targeted facial expressions corresponding to each emotion class. Multi-channel EMG data is collected and projected into principal component space, establishing emotion-specific cluster boundaries. These mappings define decision regions in the reduced-dimensional feature space.</p>
+
+          <p>During real-time operation, incoming binned temporal data undergoes identical PCA transformation. The projected coordinates are classified against the pre-established emotion cluster boundaries, enabling robust expression recognition. This supervised dimensionality reduction approach preserves discriminative variance while reducing computational complexity and improving generalization across variable muscle activation patterns.</p>
+
+          <p><strong>Spike Detection Algorithm (Supplementary)</strong>: Real-time threshold-based detection identifies rapid amplitude increases in RMS envelopes as a secondary validation mechanism. Thresholds are empirically determined through calibration protocols at system initialization. Temporal consistency requirements prevent false positive triggering from transient artifacts.</p>
+        </section>
+
+        <!-- System Architecture -->
+        <section class="project-section">
+          <h2 class="section-title">System Architecture & Hardware Integration</h2>
+
+          <h3 class="subsection-title">Signal Acquisition Chain</h3>
+          <ul class="project-list">
+            <li><strong>Electrodes</strong>: 10mm Ag/AgCl pre-gelled, single-use, bipolar configuration</li>
+            <li><strong>Acquisition board</strong>: OpenBCI Cyton (8-channel, 24-bit ADC, 250 Hz sampling rate)</li>
+            <li><strong>Wireless transmission</strong>: OpenBCI USB dongle for serial communication</li>
+          </ul>
+
+          <h3 class="subsection-title">Actuation & Control System</h3>
+          <ul class="project-list">
+            <li><strong>Processing</strong>: OpenBCI GUI handles preprocessing and serial data streaming to ESP32 microcontroller</li>
+            <li><strong>Microcontroller</strong>: ESP32 serves as the embedded control system, managing real-time motor trajectories and LED pattern generation</li>
+            <li><strong>Motor control</strong>: I2C protocol drives four micro servo motors enabling independent petal actuation in the kinetic headpiece</li>
+            <li><strong>Photonic output</strong>: Addressable LED strips provide synchronized visual feedback</li>
+            <li><strong>Power distribution</strong>: 12V battery with buck converter to 5V rail for consistent voltage regulation across all subsystems</li>
+          </ul>
+
+          <h3 class="subsection-title">Communication Protocol</h3>
+          <p>Current implementation uses serial communication; planned migration to MQTT for improved latency, scalability, and bidirectional data flow in multi-user configurations.</p>
+        </section>
+
+        <!-- Mechanical Design -->
+        <section class="project-section">
+          <h2 class="section-title">Mechanical Design & Motion Control</h2>
+
+          <h3 class="subsection-title">Kinetic Architecture</h3>
+          <p>The headpiece employs tendon-driven actuation mechanisms where individual petals are independently addressable, enabling complex morphological transformations through coordinated servo control.</p>
+
+          <ul class="project-list">
+            <li><strong>Motion synthesis</strong>: Sinusoidal trajectory planning generates smooth, organic motion profiles that enhance visual fluidity and mechanical longevity. Velocity and acceleration profiles are optimized for aesthetic appeal while maintaining mechanical constraints of the servo-tendon system.</li>
+            <li><strong>Affective expression mapping</strong>: The design philosophy draws from affective robotics principles, where the kinetic behavior of the petals is mapped to detected emotional states. Each emotion class triggers distinct petal configurations and movement patterns, creating a legible physical vocabulary of affect.</li>
+            <li><strong>Design philosophy</strong>: Aesthetically, the headpiece is inspired by Iris van Herpen's computational haute couture and organic architectural forms, creating a wearable that bridges technical function and artistic expression.</li>
+          </ul>
+        </section>
+
+        <!-- Future Development -->
+        <section class="project-section">
+          <h2 class="section-title">Future Tech Development</h2>
+
+          <h3 class="subsection-title">Multimodal Biosensing Expansion</h3>
+          <ul class="project-list">
+            <li><strong>Electroencephalography (EEG)</strong>: Frontal cortex monitoring for cognitive load and attention detection</li>
+            <li><strong>Photoplethysmography (PPG)</strong>: Heart rate variability analysis for arousal state classification</li>
+            <li><strong>Galvanic Skin Response (GSR)</strong>: Electrodermal activity measurement for sympathetic nervous system activation</li>
+          </ul>
+
+          <h3 class="subsection-title">Advanced Classification Framework</h3>
+          <p>Expand emotion taxonomy beyond basic valence to include:</p>
+          <ul class="project-list">
+            <li><strong>Cognitive states</strong>: concentration, confusion, curiosity</li>
+            <li><strong>Affective nuance</strong>: genuine vs. Duchenne vs. social smiling</li>
+            <li><strong>Arousal intensity</strong>: map biosignal amplitude to kinetic expression magnitude</li>
+          </ul>
+
+          <h3 class="subsection-title">Hardware Optimization</h3>
+          <p><strong>Custom Analog Front-End (AFE) Board</strong>: Design and fabricate a dedicated biosignal amplification PCB featuring:</p>
+          <ul class="project-list">
+            <li>Instrumentation amplifiers (e.g., INA128, AD8232) with high common-mode rejection ratio (CMRR >100 dB) to reject environmental interference</li>
+            <li>Programmable gain amplifier (PGA) stages enabling dynamic range adjustment (1000-10,000x gain) to accommodate inter-subject EMG amplitude variability</li>
+            <li>Active filtering topology: Multi-stage Sallen-Key or Multiple Feedback (MFB) filter implementations for precise band-pass characteristics (20-500 Hz) with steeper roll-off than digital alternatives</li>
+            <li>Right-leg drive (RLD) circuit for active common-mode noise cancellation, improving SNR by driving the body to analog ground potential</li>
+            <li>Low-noise power regulation: Dedicated LDO regulators (e.g., TPS7A4700) for analog supply rails to minimize switching noise coupling from digital circuitry</li>
+          </ul>
+
+          <p><strong>On-Board Calibration Storage</strong>:</p>
+          <ul class="project-list">
+            <li>EEPROM integration (e.g., 24LC256, I2C interface) for non-volatile storage of user-specific calibration parameters</li>
+            <li>Stored parameters: PCA transformation matrices, emotion cluster centroids and boundary coefficients, baseline RMS thresholds, and individualized gain settings</li>
+            <li>Fast session initialization: Eliminates repetitive calibration routines by loading personalized models at power-up, reducing setup time from minutes to seconds</li>
+            <li>Multi-user profiles: Addressable memory partitioning enables storage of multiple user calibration sets for shared device scenarios</li>
+          </ul>
+
+          <p><strong>Reusable Electrode Integration</strong>:</p>
+          <ul class="project-list">
+            <li>Mechanical mask design: 3D-printed or injection-molded conformable structure that positions spring-loaded dry electrodes (e.g., sintered Ag/AgCl discs) at precise FACS action unit locations</li>
+            <li>Quick-release mechanism: Tool-free attachment/detachment system for rapid donning without compromising electrode registration accuracy</li>
+          </ul>
+
+          <h3 class="subsection-title">Advanced Signal Processing</h3>
+          <p>Considerations for future implementation:</p>
+          <ul class="project-list">
+            <li>Topographic mapping: Spatial visualization of facial muscle activation patterns</li>
+            <li>Correlation analysis: Cross-channel coherence for expression validation</li>
+            <li>Granger causality testing: Temporal precedence analysis for improved artifact rejection and causal filtering</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Right Column: All Media -->
+      <div class="media-column">
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/somatic bloom/main.JPEG" alt="Somatic Bloom wearable headpiece" class="project-img">
+          <figcaption>Kinetic headpiece with EMG-driven actuation and photonic feedback</figcaption>
+        </figure>
+
+        <!-- Demo Video 1 -->
+        <figure class="project-media">
+          <video controls class="project-video">
+            <source src="assets/projects/somatic bloom/piece_showing_1x.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Camera revolving around dual headpiece interaction</figcaption>
+        </figure>
+
+        <!-- Dual Headpiece Interaction -->
+        <figure class="project-media">
+          <img src="assets/projects/somatic bloom/somatic_bloom_cropped_2.JPEG" alt="Two people facing each other wearing Somatic Bloom headpieces" class="project-img">
+          <figcaption>Bidirectional affective communication through EMG-driven wearables</figcaption>
+        </figure>
+
+        <!-- Demo Videos -->
+        <figure class="project-media">
+          <video controls class="project-video">
+            <source src="assets/projects/somatic bloom/goofy_wip.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Testing session showing electrical signal input from facial expressions</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <video controls class="project-video">
+            <source src="assets/projects/somatic bloom/goofy_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Demonstration of facial expression control driving partner's headpiece actuation</figcaption>
+        </figure>
+
+        <!-- Behind the Scenes -->
+        <figure class="project-media">
+          <img src="assets/projects/somatic bloom/behind_the_scenes.JPEG" alt="Behind the scenes of Somatic Bloom development" class="project-img">
+          <figcaption>Development process and hardware integration</figcaption>
+        </figure>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/somatic-bloom-background.js"></script>
+  <script src="js/somatic-bloom-scroll.js"></script>
+</body>
+</html>

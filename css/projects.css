@@ -138,10 +138,20 @@ body::before {
 .project-card {
   position: relative;
   transition: transform 0.3s ease;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+}
+
+/* Ensure visited links don't change color */
+.project-card:visited .project-title,
+.project-card:visited .project-date,
+.project-card:visited .project-keywords {
+  color: #FFFFFF;
 }
 
 /* Project Image Wrapper */
