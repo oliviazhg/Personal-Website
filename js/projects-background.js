@@ -36,8 +36,8 @@ async function initBackground() {
   console.log('Background canvas element:', document.getElementById('backgroundWebgl'));
   console.log('Background renderer created:', renderer);
 
-  // Load the background cloud point cloud
-  const cloudModelUrl = './assets/models/xr_lower_austria_sculpture__winter_point_cloud/scene.xyz';
+  // Load the background cloud point cloud (optimized version is 75% smaller)
+  const cloudModelUrl = './assets/models/xr_lower_austria_sculpture__winter_point_cloud/scene_optimized.xyz';
   console.log('Attempting to load cloud point cloud from:', cloudModelUrl);
 
   let cloudModel = null;

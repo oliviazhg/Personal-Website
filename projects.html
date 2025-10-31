@@ -7,9 +7,19 @@
   <link rel="preload" href="assets/bg_pics/13.png" as="image">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/projects.css" />
+  <link rel="stylesheet" href="css/loading.css" />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+
   <!-- Background 3D Scene -->
   <canvas class="background-canvas" id="backgroundWebgl"></canvas>
 
@@ -169,6 +179,7 @@
     </div>
   </section>
 
+  <script src="js/loading.js"></script>
   <script type="module" src="js/projects-background.js"></script>
   <script src="js/projects-scroll.js"></script>
 </body>

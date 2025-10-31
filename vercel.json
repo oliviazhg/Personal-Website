@@ -1,0 +1,39 @@
+{
+  "headers": [
+    {
+      "source": "/assets/models/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).xyz",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "src": "/assets/models/(.*).xyz",
+      "dest": "/assets/models/$1.xyz",
+      "headers": {
+        "Content-Type": "text/plain"
+      }
+    }
+  ]
+}

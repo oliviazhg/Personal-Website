@@ -1,5 +1,10 @@
 /* About Page Specific Styles */
 
+/* Ensure scrollbar is always visible to prevent layout shift */
+html {
+  overflow-y: scroll !important;
+}
+
 /* Background Image */
 body::before {
   content: '';

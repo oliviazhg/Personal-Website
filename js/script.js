@@ -140,7 +140,7 @@ async function init() {
 
   // Function to create orbiting text sprites
   function createOrbitingText() {
-    const text = "hello! i'm olivia, an engineer & creative technologist. welcome to my website! ";
+    const text = "hello! i'm olivia, an engineer & creative technologist. welcome to my website (work in progress)! ";
     const repeatCount = 4; // Repeat the sentence 8 times to fill the circle
     const fullText = text.repeat(repeatCount);
     const chars = Array.from(fullText).reverse(); // Reverse so text reads correctly when facing outward
@@ -329,6 +329,10 @@ async function init() {
       } catch (textError) {
         console.error('Error creating orbiting text:', textError);
       }
+
+      // Dispatch event to notify loading screen that point cloud is ready
+      window.dispatchEvent(new Event('pointCloudLoaded'));
+      console.log('Point cloud loaded event dispatched');
 
     } catch (error) {
       console.error('Error loading point cloud:', error);
