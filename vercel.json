@@ -26,14 +26,5 @@
         }
       ]
     }
-  ],
-  "routes": [
-    {
-      "src": "/assets/models/(.*).xyz",
-      "dest": "/assets/models/$1.xyz",
-      "headers": {
-        "Content-Type": "text/plain"
-      }
-    }
   ]
 }
