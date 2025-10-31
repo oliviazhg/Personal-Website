@@ -340,7 +340,7 @@ async function init() {
   }
 
   // Load the point cloud model
-  const modelUrl = `./assets/models/ptcloudtest.xyz?v=${Date.now()}`;
+  const modelUrl = `./assets/models/ptcloudtest_optimized.xyz?v=${Date.now()}`;
   loadPointCloud(modelUrl);
 
   // Load the background cloud point cloud
