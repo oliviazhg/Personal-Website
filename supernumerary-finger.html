@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supernumerary Finger - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/supernumerary-finger.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Supernumerary Finger</h1>
+        <p class="project-subtitle">Sept 2024 - Current</p>
+      </header>
+
+      <!-- Left Column: Content Sections -->
+      <div class="content-column">
+        <!-- Intro -->
+        <section class="project-section">
+          <h2 class="section-title">Introduction</h2>
+          <p>This project explores the design and fabrication of a supernumerary finger system from both an accessibility and augmentation lens. I'm working on this in collaboration with four other University of Waterloo fourth year mechatronics engineering students, with the guidance of Prof. Arash Arami.</p>
+        </section>
+
+        <!-- Background & Vision -->
+        <section class="project-section">
+          <h2 class="section-title">Background & Vision</h2>
+          <p>We envision this system as an extension of the human body with applications in professional work, from delicate surgical procedures, to assembling miniature electronics, to executing precision manufacturing tasks. We also envision it as a system that can re-enable capabilities for users who have lost strength in their hands. Studies of individuals born with polydactyly reveal the brain's surprising neuroplasticity in controlling supernumerary digits.</p>
+
+          <p>The technical challenge lies in intuitive control: how does a user control a sixth or seventh finger without cognitive overload? Various modalities have been explored—EMG sensors detecting muscle signals, IMU-based gesture recognition, and pressure sensors mapping natural hand movements.</p>
+
+          <p>Key areas of exploration include optimal mounting positions, force transmission efficiency, degrees of freedom versus complexity tradeoffs, and seamless integration with natural hand kinematics. The goal: augmentation that feels instinctive rather than robotic.</p>
+        </section>
+
+        <!-- Mechanical Design -->
+        <section class="project-section">
+          <h2 class="section-title">Mechanical Design</h2>
+
+          <h3 class="subsection-title">System Architecture & Actuation Strategy</h3>
+          <p>The selected design employs a single-cable tendon-driven system with passive elastic return, chosen through weighted decision matrix analysis across four candidate architectures. This configuration achieves an optimal balance of actuation force (objective weight 0.5), power efficiency (0.5), mass reduction (0.5), and control precision (0.2).</p>
+
+          <p><strong>Cable-Driven Actuation Mechanism</strong>: A single motorized Dyneema cable routed through PTFE-lined tubes provides flexion actuation. The cable threads through off-center pivot holes in each phalanx segment, inspired by CN101474794B's under-actuated finger design. This eccentric routing creates variable moment arms that enable controlled sequential joint closure mimicking natural finger kinematics.</p>
+
+          <p><strong>Passive Return System</strong>: Torsion springs embedded at each interphalangeal joint provide extension forces, eliminating the need for antagonistic cables. Spring constants (k ≈ 0.15-0.25 N·m/rad) are calibrated to balance rapid return motion against power requirements during flexion under load.</p>
+
+          <p><strong>Rotational Degree of Freedom</strong>: A second motor-driven cable and pulley system actuates abduction/adduction at the metacarpophalangeal (MCP) joint base, providing 90-120° rotation about the finger's longitudinal axis. This enables the supernumerary digit to reposition around objects during grasp formation.</p>
+
+          <h3 class="subsection-title">Structural Design & Material Selection</h3>
+          <ul class="project-list">
+            <li><strong>Phalanx Fabrication</strong>: Finger segments are 3D-printed in PLA or PETG using a combination of solid infill for high-stress regions (joint interfaces, cable routing channels) and honeycomb infill (30-40%) for the phalanx bodies to minimize mass while maintaining bending rigidity.</li>
+            <li><strong>Joint Architecture</strong>: Interphalangeal joints utilize precision-reamed hinge pins with flanged bushings to reduce friction and prevent lateral cable misalignment. Joint axes are positioned anatomically to approximate human finger flexion paths (DIP, PIP, MCP joint spacing ratios of approximately 1:1.6:2.3).</li>
+            <li><strong>Cable Management System</strong>: Drawing from US4921293A's multi-fingered robotic hand patent, cables are constrained within flexible PTFE tubes embedded in the finger structure. This maintains consistent cable length during articulation while providing lateral support to prevent bowstringing that would reduce mechanical advantage.</li>
+          </ul>
+
+          <h3 class="subsection-title">Performance Specifications</h3>
+          <ul class="project-list">
+            <li><strong>Range of Motion</strong>: 90-120° flexion per joint, 90-120° base rotation</li>
+            <li><strong>Lifting Capacity</strong>: 1 kg fingertip payload (design objective)</li>
+            <li><strong>Positional Accuracy</strong>: <1° angular error via encoder feedback</li>
+            <li><strong>System Mass</strong>: <300g (excluding battery), total system <500g</li>
+            <li><strong>Actuation Speed</strong>: Response time <1s from control input to motion completion</li>
+            <li><strong>Durability</strong>: >1000 actuation cycles without mechanical failure</li>
+          </ul>
+        </section>
+
+        <!-- Controls Design -->
+        <section class="project-section">
+          <h2 class="section-title">Controls Design</h2>
+
+          <h3 class="subsection-title">Biosignal Acquisition & Control Paradigm</h3>
+          <p>The system employs EMG-based muscle activity detection as the primary control modality, selected for its balance of signal fidelity, integration simplicity (SDK availability), and minimal spatial interference with hand function. Surface electrodes positioned on the forearm detect flexor and extensor muscle group activation patterns without impeding natural hand motion.</p>
+
+          <h3 class="subsection-title">Synergy-Based Control Architecture</h3>
+          <p>Inspired by WO2014186546A2's implicit grasp control patent, the system implements a data-driven synergy mapping approach that translates natural muscle activation patterns into supernumerary finger trajectories:</p>
+
+          <p><strong>Calibration Protocol</strong>: During initial setup, users perform a structured sequence of hand postures while EMG signals and desired supernumerary finger positions are recorded synchronously. This training dataset captures the user's natural muscle coordination strategies.</p>
+
+          <p><strong>Dimensionality Reduction via Principal Component Analysis (PCA)</strong>: Raw multi-channel EMG data undergoes PCA to identify dominant covariation patterns—the "bio-artificial synergies" that characterize how the user naturally coordinates muscle groups during manipulation tasks. This reduces the high-dimensional EMG space to 2-4 principal components that capture >90% of signal variance.</p>
+
+          <p><strong>Partial Least Squares Regression (PLSR) Mapping</strong>: A PLSR model is trained to map the low-dimensional EMG synergy space to supernumerary finger joint angles. PLSR is selected over standard linear regression because it explicitly maximizes covariance between predictor (EMG synergies) and response (finger angles) variables, improving generalization to novel postures.</p>
+
+          <p><strong>Real-Time Inference</strong>: During operation, streaming EMG signals are projected into the calibrated synergy space and fed through the PLSR model to generate target joint angles at 50-100 Hz update rates. A PID control loop commands servo motors to track these reference trajectories.</p>
+
+          <h3 class="subsection-title">Multimodal Sensing for State Estimation</h3>
+          <ul class="project-list">
+            <li><strong>Encoder Feedback</strong>: Incremental rotary encoders (12-bit resolution, 0.088° precision) mounted on each motor shaft provide ground-truth joint angle measurements for closed-loop position control.</li>
+            <li><strong>Flex Sensors</strong>: Resistive flex sensors bonded along the dorsal finger surface provide redundant angle measurements and enable detection of external contact forces through discrepancies between commanded and measured positions.</li>
+            <li><strong>Intent Detection</strong>: An IMU mounted on the user's elbow detects deliberate arm motion patterns (e.g., rapid pronation) that trigger discrete mode switches—freezing the supernumerary finger in a "hold and manipulate" configuration or releasing it to resume tracking.</li>
+          </ul>
+
+          <h3 class="subsection-title">Control Modes</h3>
+          <ul class="project-list">
+            <li><strong>Continuous Tracking Mode</strong>: Finger motion mirrors predicted grasp synergies in real-time</li>
+            <li><strong>Latched Grasp Mode</strong>: Finger maintains constant grip force while natural hand performs independent manipulation</li>
+            <li><strong>Direct Position Control</strong>: User cycles through predefined postures via EMG activation patterns exceeding calibrated thresholds</li>
+          </ul>
+        </section>
+
+        <!-- Haptics Design -->
+        <section class="project-section">
+          <h2 class="section-title">Haptics Design</h2>
+
+          <h3 class="subsection-title">Vibrotactile Feedback System</h3>
+          <p>The selected haptic interface employs eccentric rotating mass (ERM) vibration motors (Design A from decision matrix), chosen for optimal haptic richness (weight 5), response time (5), power efficiency (4), and size/weight constraints (4) among four candidate architectures.</p>
+
+          <p><strong>Actuator Configuration</strong>: 2-4 pancake-style ERM motors (10mm diameter, <5g each) are embedded in the dorsal wrist mount structure, positioned to create distinguishable vibration patterns without interfering with natural proprioception.</p>
+
+          <p><strong>Feedback Modalities</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Contact Detection</strong>: Single brief pulse (100ms, 200Hz) upon initial fingertip-object contact, detected via force-sensitive resistors (FSR) at the distal phalanx</li>
+            <li><strong>Grip Force Modulation</strong>: Continuous vibration intensity proportional to measured grip force from strain gauges bonded to the proximal phalanx structure</li>
+            <li><strong>Thermal Feedback</strong>: Distinct vibration cadence (pulsed 50ms on/off) if fingertip-mounted thermistor detects object temperatures outside safe handling range (5-50°C)</li>
+          </ul>
+
+          <h3 class="subsection-title">Sensor Suite Integration</h3>
+          <ul class="project-list">
+            <li><strong>Force-Sensitive Resistors (FSR)</strong>: Thin-film FSRs (Interlink FSR 402, 0.2-20N range) embedded in fingertip silicone padding detect contact pressure and trigger haptic acknowledgment. Voltage divider circuits with 10kΩ pull-down resistors provide analog output scaled to 0-3.3V for ADC acquisition.</li>
+            <li><strong>Strain Gauge Bridge</strong>: Wheatstone bridge configuration using 350Ω foil strain gauges (Omega SGD-3/350-XY13) bonded to the proximal phalanx inner surface measures bending moments proportional to grip force. Instrumentation amplifier (INA128) with gain ≈1000 amplifies differential output to measurable voltage range.</li>
+            <li><strong>Thermistor Sensing</strong>: NTC thermistor (10kΩ at 25°C, β=3950K) in thermal contact with fingertip provides temperature feedback via resistance measurement in a voltage divider network, linearized through Steinhart-Hart equation.</li>
+          </ul>
+
+          <h3 class="subsection-title">Latency Optimization</h3>
+          <p>Sensor polling, signal processing, and motor actuation execute on a dedicated real-time control loop (1kHz update rate on ESP32 microcontroller) to maintain end-to-end latency <50ms—below the threshold for perceptually synchronous sensorimotor feedback. Vibration commands are pre-computed in lookup tables to minimize computational delay.</p>
+        </section>
+      </div>
+
+      <!-- Right Column: All Media -->
+      <div class="media-column">
+        <!-- Demo Examples -->
+        <figure class="project-media">
+          <img src="assets/projects/supernumerary finger/demo_examples.jpg" alt="Supernumerary finger demonstration examples" class="project-img">
+          <figcaption>Various demonstration scenarios of supernumerary finger applications</figcaption>
+        </figure>
+
+        <!-- Design Ideas 1 -->
+        <figure class="project-media">
+          <img src="assets/projects/supernumerary finger/finger_design_ideas_1.jpg" alt="Finger design concepts and sketches" class="project-img">
+          <figcaption>Initial design exploration and mechanical architecture concepts</figcaption>
+        </figure>
+
+        <!-- Design Ideas 2 -->
+        <figure class="project-media">
+          <img src="assets/projects/supernumerary finger/finger_design_ideas_2.jpg" alt="Additional finger design iterations" class="project-img">
+          <figcaption>Detailed CAD models and actuator placement strategies</figcaption>
+        </figure>
+
+        <!-- Patents 1 -->
+        <figure class="project-media">
+          <img src="assets/projects/supernumerary finger/patents_1.jpg" alt="Patent research for cable routing" class="project-img">
+          <figcaption>Patent analysis: CN101474794B under-actuated finger mechanism</figcaption>
+        </figure>
+
+        <!-- Patents 2 -->
+        <figure class="project-media">
+          <img src="assets/projects/supernumerary finger/patents_2.jpg" alt="Patent research for multi-fingered hands" class="project-img">
+          <figcaption>Patent analysis: US4921293A cable management system</figcaption>
+        </figure>
+
+        <!-- Patents 3 -->
+        <figure class="project-media">
+          <img src="assets/projects/supernumerary finger/patents_3.jpg" alt="Patent research for synergy-based control" class="project-img">
+          <figcaption>Patent analysis: WO2014186546A2 implicit grasp control</figcaption>
+        </figure>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/supernumerary-finger-background.js"></script>
+  <script src="js/supernumerary-finger-scroll.js"></script>
+</body>
+</html>

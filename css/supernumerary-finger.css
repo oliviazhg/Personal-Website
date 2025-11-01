@@ -1,0 +1,383 @@
+/* Somatic Bloom Project Page Specific Styles */
+
+/* Override global font to use JetBrains Mono */
+* {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+  background: #1a1a1a !important;
+}
+
+/* Ensure scrollbar is always visible to prevent layout shift */
+html {
+  overflow-y: scroll !important;
+}
+
+/* Hide background image and canvas for clean document look */
+body::before {
+  display: none !important;
+}
+
+.background-canvas {
+  display: none !important;
+}
+
+/* Top Navigation */
+.top-nav-project {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.top-nav-project.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.top-nav-project .nav-container {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.top-nav-project .nav-link {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #CCCCCC;
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.top-nav-project .nav-link:visited {
+  color: #CCCCCC;
+  text-decoration: none;
+}
+
+.top-nav-project .nav-link:hover {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* Project Content */
+.project-content {
+  min-height: 100vh;
+  padding: 5rem 4rem 2rem 4rem;
+  position: relative;
+  z-index: 1;
+  background: #1a1a1a;
+}
+
+.project-content .container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 500px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* Left column for content sections */
+.content-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Right column for media */
+.media-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 6rem;
+}
+
+/* Header */
+.project-header {
+  grid-column: 1 / -1;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #333;
+}
+
+.project-title {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.project-subtitle {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #888888;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Media Elements */
+.project-media {
+  margin: 0;
+  width: 100%;
+}
+
+.project-img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #333;
+}
+
+.project-video {
+  width: 100%;
+  height: auto;
+  border: 1px solid #333;
+}
+
+figcaption {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #999999;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* Sections */
+.project-section {
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
+  padding: 1.25rem;
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.subsection-title {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #E0E0E0;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-section p {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #D0D0D0;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.project-section p:last-child {
+  margin-bottom: 0;
+}
+
+.project-section p strong {
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+/* Equation Styling */
+.equation {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #FFFFFF;
+  background: #0a0a0a;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #555;
+  margin: 1rem 0;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* Lists */
+.project-list {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #D0D0D0;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  margin-left: 1.25rem;
+  list-style-type: disc;
+}
+
+.project-list li {
+  margin-bottom: 0.35rem;
+}
+
+.project-list li:last-child {
+  margin-bottom: 0;
+}
+
+.project-list li strong {
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+/* Back Link */
+.back-link-container {
+  grid-column: 1 / -1;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #333;
+}
+
+.back-link {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #CCCCCC;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid #333;
+}
+
+.back-link:hover {
+  color: #FFFFFF;
+  border-color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .project-content {
+    padding: 5rem 3rem 2rem 3rem;
+  }
+
+  .project-content .container {
+    grid-template-columns: 1fr 450px;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .project-content .container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .media-column {
+    position: static;
+  }
+
+  .project-section {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-content {
+    padding: 5rem 2rem 2rem 2rem;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+  }
+
+  .project-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .section-title {
+    font-size: 0.9rem;
+  }
+
+  .subsection-title {
+    font-size: 0.8rem;
+  }
+
+  .project-section {
+    padding: 1rem;
+  }
+
+  .project-section p,
+  .project-list {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .equation {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-content {
+    padding: 5rem 1rem 2rem 1rem;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+  }
+
+  .project-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+  }
+
+  .subsection-title {
+    font-size: 0.75rem;
+  }
+
+  .project-section {
+    padding: 0.75rem;
+  }
+
+  .project-section p,
+  .project-list {
+    font-size: 0.7rem;
+  }
+
+  .equation {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .top-nav-project .nav-container {
+    gap: 1.5rem;
+  }
+
+  .top-nav-project .nav-link {
+    font-size: 0.75rem;
+  }
+}
