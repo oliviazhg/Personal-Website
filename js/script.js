@@ -343,8 +343,8 @@ async function init() {
   const modelUrl = `./assets/models/ptcloudtest_optimized.xyz?v=${Date.now()}`;
   loadPointCloud(modelUrl);
 
-  // Load the background cloud point cloud
-  const cloudModelUrl = './assets/models/xr_lower_austria_sculpture__winter_point_cloud/scene.xyz';
+  // Load the background cloud point cloud (optimized version)
+  const cloudModelUrl = './assets/models/xr_lower_austria_sculpture__winter_point_cloud/scene_optimized.xyz';
   console.log('Attempting to load cloud point cloud from:', cloudModelUrl);
 
   // Load the background cloud model
