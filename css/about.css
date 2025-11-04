@@ -5,6 +5,17 @@ html {
   overflow-y: scroll !important;
 }
 
+/* Override global font */
+* {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+  background: #ebeefd !important;
+  overflow-x: hidden;
+}
+
 /* Background Image */
 body::before {
   content: '';
@@ -13,22 +24,13 @@ body::before {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('../assets/bg_pics/13.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #ebeefd;
   z-index: -2;
 }
 
 /* Background Canvas */
 .background-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  pointer-events: none;
+  display: none !important;
 }
 
 /* Top Navigation */
@@ -38,10 +40,12 @@ body::before {
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: transparent;
+  border-bottom: none;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
@@ -58,131 +62,164 @@ body::before {
 
 .top-nav-about .nav-link {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 300;
-  color: #FFFFFF;
+  color: #2a2a2a;
   text-decoration: none;
-  transition: font-weight 0.2s;
+  transition: color 0.2s;
   letter-spacing: 0.02em;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .top-nav-about .nav-link:visited {
-  color: #FFFFFF;
+  color: #2a2a2a;
   text-decoration: none;
 }
 
 .top-nav-about .nav-link:hover {
-  font-weight: 500;
+  color: #000000;
   text-decoration: none;
 }
 
 /* About Content */
 .about-content {
   min-height: 100vh;
-  padding: 8rem 0;
+  padding: 5rem 2rem 3rem 2rem;
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .about-content .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 4rem;
+  padding: 0;
+}
+
+/* Header Section */
+.about-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #000000;
 }
 
 .about-title {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 2rem;
-  font-weight: 500;
-  color: #FFFFFF;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  margin-bottom: 1rem;
-  text-align: center;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .social-links {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 1rem;
-  margin-bottom: 2rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .social-link {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.95rem;
-  font-weight: 300;
-  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #000000;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: font-weight 0.1s ease-in, opacity 0.15s ease-in;
-  opacity: 0.8;
+  transition: color 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .social-link:hover {
-  font-weight: 500;
-  opacity: 1;
+  color: #3a3a3a;
 }
 
 .separator {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.85rem;
-  font-weight: 300;
-  color: #FFFFFF;
-  opacity: 0.6;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #000000;
 }
 
-.about-text {
-  background: rgba(140, 135, 155, 0.25);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 2rem;
+/* Content Sections */
+.about-section {
+  background: #ffffff;
+  border: 1px solid #000000;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
 }
 
-.about-text p {
+.about-section.with-image {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  grid-template-rows: auto 1fr;
+  gap: 0 2rem;
+  align-items: start;
+}
+
+.about-section.with-image .section-title {
+  grid-column: 1 / -1;
+}
+
+.about-section.with-image .about-text {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.about-section.with-image .profile-image-wrapper {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.section-title {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.9rem;
-  font-weight: 300;
-  color: #FFFFFF;
-  line-height: 1.8;
+  font-weight: 600;
+  color: #000000;
   margin-bottom: 1rem;
-  text-align: left;
-  /* text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.6); */
-  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #000000;
 }
 
-.about-text p:last-child {
+.about-section p {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #2a2a2a;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.about-section p:last-child {
   margin-bottom: 0;
 }
 
 .experience-list {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 300;
-  color: #FFFFFF;
-  line-height: 1.8;
-  margin-bottom: 1rem;
-  margin-left: 1.5rem;
-  text-align: left;
-  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  color: #2a2a2a;
+  line-height: 1.6;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-left: 1.25rem;
   list-style-type: disc;
+  list-style-position: outside;
+  text-align: left;
 }
 
 .experience-list li {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 300;
-  color: #FFFFFF;
-  line-height: 1.8;
-  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  color: #2a2a2a;
+  line-height: 1.6;
   margin-bottom: 0.5rem;
 }
 
@@ -192,51 +229,138 @@ body::before {
 
 .content-link {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  color: #FFFFFF;
+  color: #000000;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
-  transition: font-weight 0.15s ease-in, text-decoration-thickness 0.15s ease-in;
+  transition: color 0.2s;
 }
 
 .content-link:hover {
-  font-weight: 500;
-  text-decoration-thickness: 2px;
+  color: #3a3a3a;
+}
+
+/* Profile Image */
+.profile-image-wrapper {
+  width: 100%;
+  border: 1px solid #000000;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.profile-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(0.15) contrast(1.05);
+}
+
+.image-caption {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: #555555;
+  text-align: center;
+  padding: 0.5rem;
+  border-top: 1px solid #000000;
+  background: #ffffff;
+  font-style: italic;
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .about-section.with-image {
+    grid-template-columns: 1fr 220px;
+    gap: 0 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
-  .about-content .container {
-    padding: 0 2rem;
+  .about-content {
+    padding: 5rem 1.5rem 3rem 1.5rem;
   }
 
   .about-title {
     font-size: 1.5rem;
   }
 
-  .about-text {
-    padding: 1.5rem;
+  .social-link {
+    font-size: 0.7rem;
   }
 
-  .about-text p {
+  .about-section {
+    padding: 1.25rem;
+  }
+
+  .about-section.with-image {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1rem;
+  }
+
+  .about-section.with-image .section-title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .about-section.with-image .about-text {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .about-section.with-image .profile-image-wrapper {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .profile-image-wrapper {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .section-title {
     font-size: 0.85rem;
+  }
+
+  .about-section p,
+  .experience-list,
+  .experience-list li {
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
-  .about-content .container {
-    padding: 0 1.5rem;
+  .about-content {
+    padding: 5rem 1rem 3rem 1rem;
   }
 
   .about-title {
     font-size: 1.25rem;
   }
 
-  .about-text {
-    padding: 1.25rem;
+  .social-link {
+    font-size: 0.65rem;
   }
 
-  .about-text p {
+  .about-section {
+    padding: 1rem;
+  }
+
+  .profile-image-wrapper {
+    max-width: 100%;
+  }
+
+  .section-title {
     font-size: 0.8rem;
+  }
+
+  .about-section p,
+  .experience-list,
+  .experience-list li {
+    font-size: 0.7rem;
+  }
+
+  .image-caption {
+    font-size: 0.6rem;
   }
 }
