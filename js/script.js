@@ -140,7 +140,7 @@ async function init() {
 
   // Function to create orbiting text sprites
   function createOrbitingText() {
-    const text = "hello! i'm olivia, an engineer & creative technologist. welcome to my website (work in progress)! ";
+    const text = "hello! i'm olivia, an engineer & creative technologist. welcome to my website! ";
     const repeatCount = 4; // Repeat the sentence 8 times to fill the circle
     const fullText = text.repeat(repeatCount);
     const chars = Array.from(fullText).reverse(); // Reverse so text reads correctly when facing outward
@@ -163,7 +163,8 @@ async function init() {
       context.clearRect(0, 0, 512, 256);
 
       // Draw text with transparent background
-      context.fillStyle = '#FFFFFF';
+      // context.fillStyle = '#FFFFFF';
+      context.fillStyle = '#3e4b5e';
       context.font = '700 64px "JetBrains Mono", "Courier New", monospace';
       context.textAlign = 'center';
       context.textBaseline = 'middle';
@@ -186,7 +187,8 @@ async function init() {
 
       // Clear and draw text on tight canvas
       tightContext.clearRect(0, 0, tightCanvas.width, tightCanvas.height);
-      tightContext.fillStyle = '#FFFFFF';
+      // tightContext.fillStyle = '#FFFFFF';
+      tightContext.fillStyle = '#3e4b5e';
       tightContext.font = '700 64px "JetBrains Mono", "Courier New", monospace';
       tightContext.textAlign = 'center';
       tightContext.textBaseline = 'middle';
@@ -194,7 +196,7 @@ async function init() {
 
       // Create texture from tight canvas
       const texture = new THREE.CanvasTexture(tightCanvas);
-      texture.premultiplyAlpha = false;
+      texture.colorSpace = THREE.SRGBColorSpace;
 
       // Use Mesh with PlaneGeometry instead of Sprite so we can control rotation
       const aspectRatio = tightCanvas.width / tightCanvas.height;
@@ -202,9 +204,10 @@ async function init() {
       const planeMaterial = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
-        opacity: 0.95,
+        opacity: 0.7,
         side: THREE.DoubleSide,
         depthTest: true,
+        depthWrite: false,
         alphaTest: 0.1 // Don't render pixels below 10% opacity
       });
       const textMesh = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -232,17 +235,9 @@ async function init() {
       const positions = [];
       const colors = [];
 
-      // Define the color palette
-      const palette = [
-        { r: 0xFF/255, g: 0xFD/255, b: 0xFF/255 }, // FFFDFF
-        { r: 0xF0/255, g: 0xFF/255, b: 0xFF/255 }, // F0FFFF
-        { r: 0xD5/255, g: 0xE6/255, b: 0xF0/255 }, // D5E6F0
-        { r: 0xDB/255, g: 0xEB/255, b: 0xF7/255 }, // DBEBF7
-        { r: 0x93/255, g: 0x98/255, b: 0x9B/255 }, // 93989B
-        { r: 0xA6/255, g: 0x9C/255, b: 0x99/255 }, // A69C99
-        { r: 0xDD/255, g: 0xDC/255, b: 0xEC/255 }, // DDDCEC
-        { r: 0xDF/255, g: 0xE5/255, b: 0xE5/255 }  // DFE5E5
-      ];
+      // Two-color gradient: white to #3e4b5e
+      const colorStart = { r: 1.0, g: 1.0, b: 1.0 }; // White
+      const colorEnd = { r: 62 / 255, g: 75 / 255, b: 94 / 255 }; // #3e4b5e
 
       lines.forEach(line => {
         const parts = line.trim().split(/\s+/);
@@ -253,35 +248,31 @@ async function init() {
 
           positions.push(x, y, z);
 
-          // Use position-based noise to select colors with emphasis on greys for depth/contrast
-          const freq = 2.5;
+          // Use position-based noise to create gradient variation
+          const freq = 2.0;
           const noise1 = Math.sin(x * freq) * Math.cos(y * freq);
           const noise2 = Math.sin(y * freq + 2.5) * Math.cos(z * freq);
           const noise3 = Math.sin(z * freq + 5.0) * Math.cos(x * freq);
 
-          // Combine noise to create a selector value
-          const selector = (noise1 + noise2 + noise3 + 3) / 6; // Normalize to 0-1
+          // Combine noise to create a raw value
+          const noiseValue = (noise1 + noise2 + noise3) / 3; // Range: -1 to 1
 
-          // Use depth (z) to bias towards grey colors for recessed areas
-          const depthBias = Math.abs(z * 0.5); // Use absolute value and reduce multiplier
-          let biasedSelector = (selector + depthBias) % 1.0;
+          // Use depth (z) to influence the gradient
+          const depthInfluence = z * 0.4;
 
-          // Ensure selector is in valid range
-          if (biasedSelector < 0) biasedSelector += 1.0;
+          // Combine noise and depth, then normalize to 0-1 range
+          let gradientValue = (noiseValue + depthInfluence + 1) / 2;
 
-          // Pick primary and secondary colors based on biased selector
-          const index = biasedSelector * 7; // 0-7 range (8 colors)
-          const primaryIdx = Math.min(Math.floor(index), 7);
-          const secondaryIdx = Math.min(primaryIdx + 1, 7);
-          const blend = Math.max(0, Math.min(1, index - primaryIdx)); // Clamp blend
+          // Clamp to 0-1 range
+          gradientValue = Math.max(0, Math.min(1, gradientValue));
 
-          // Blend between two adjacent colors in the palette
-          const primary = palette[primaryIdx];
-          const secondary = palette[secondaryIdx];
+          // Apply a steeper power curve for rapid transition (less medium tones)
+          gradientValue = Math.pow(gradientValue, 2.5);
 
-          const r = primary.r * (1 - blend) + secondary.r * blend;
-          const g = primary.g * (1 - blend) + secondary.g * blend;
-          const b = primary.b * (1 - blend) + secondary.b * blend;
+          // Two-color interpolation
+          const r = colorStart.r * (1 - gradientValue) + colorEnd.r * gradientValue;
+          const g = colorStart.g * (1 - gradientValue) + colorEnd.g * gradientValue;
+          const b = colorStart.b * (1 - gradientValue) + colorEnd.b * gradientValue;
 
           colors.push(r, g, b);
         }
