@@ -129,8 +129,8 @@ async function init() {
   let targetWaveAmplitude = 0; // Target wave amplitude
 
   // Variables for dynamic circle radius
-  const minRadius = 20; // Current radius (minimum)
-  const maxRadius = 22; // Maximum radius
+  const minRadius = 20; // Current radius (minimum) - decreased for tighter spacing
+  const maxRadius = 22; // Maximum radius - decreased for tighter spacing
   let currentRadius = minRadius;
   let targetRadius = minRadius + Math.random() * (maxRadius - minRadius);
   let lastRadiusChange = Date.now();
@@ -140,8 +140,8 @@ async function init() {
 
   // Function to create orbiting text sprites
   function createOrbitingText() {
-    const text = "hello! i'm olivia, an engineer & creative technologist. welcome to my website! ";
-    const repeatCount = 4; // Repeat the sentence 8 times to fill the circle
+    const text = "hello! i'm olivia, welcome to my website! ";
+    const repeatCount = 6; // Repeat the sentence 8 times to fill the circle
     const fullText = text.repeat(repeatCount);
     const chars = Array.from(fullText).reverse(); // Reverse so text reads correctly when facing outward
     const angleStep = (Math.PI * 2) / chars.length;
@@ -152,55 +152,44 @@ async function init() {
       // Skip pure whitespace for cleaner look
       if (char.trim() === '') return;
 
-      const word = char; // Treat each character as a "word"
       // Create canvas for text
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
-      canvas.width = 512;
-      canvas.height = 256;
 
-      // Clear canvas to fully transparent
-      context.clearRect(0, 0, 512, 256);
+      // Set font and measure text
+      const fontSize = 64;
+      context.font = `600 ${fontSize}px "Instrument Serif", serif`;
+      const metrics = context.measureText(char);
+      const textWidth = Math.ceil(metrics.width);
+      const textHeight = Math.ceil(fontSize * 1.2); // 20% extra height for descenders
 
-      // Draw text with transparent background
-      // context.fillStyle = '#FFFFFF';
+      // Create tight-fitting canvas with power-of-2 dimensions for better GPU performance
+      const padding = 20;
+      canvas.width = Math.pow(2, Math.ceil(Math.log2(textWidth + padding * 2)));
+      canvas.height = Math.pow(2, Math.ceil(Math.log2(textHeight + padding * 2)));
+
+      // Enable font smoothing
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = 'high';
+
+      // Draw text
       context.fillStyle = '#3e4b5e';
-      context.font = '700 64px "JetBrains Mono", "Courier New", monospace';
+      context.font = `600 ${fontSize}px "Instrument Serif", serif`;
       context.textAlign = 'center';
       context.textBaseline = 'middle';
-      context.fillText(word, 256, 128);
+      context.fillText(char, canvas.width / 2, canvas.height / 2);
 
-      console.log(`Drawing word: "${word}" at index ${index}`);
-
-      // Measure text to create tight-fitting canvas
-      context.font = '700 64px "JetBrains Mono", "Courier New", monospace';
-      const metrics = context.measureText(word);
-      const textWidth = metrics.width;
-      const textHeight = 64;
-
-      // Create smaller canvas that fits the text exactly
-      const tightCanvas = document.createElement('canvas');
-      const tightContext = tightCanvas.getContext('2d');
-      const padding = 10;
-      tightCanvas.width = textWidth + padding * 2;
-      tightCanvas.height = textHeight + padding * 2;
-
-      // Clear and draw text on tight canvas
-      tightContext.clearRect(0, 0, tightCanvas.width, tightCanvas.height);
-      // tightContext.fillStyle = '#FFFFFF';
-      tightContext.fillStyle = '#3e4b5e';
-      tightContext.font = '700 64px "JetBrains Mono", "Courier New", monospace';
-      tightContext.textAlign = 'center';
-      tightContext.textBaseline = 'middle';
-      tightContext.fillText(word, tightCanvas.width / 2, tightCanvas.height / 2);
-
-      // Create texture from tight canvas
-      const texture = new THREE.CanvasTexture(tightCanvas);
+      // Create texture from canvas
+      const texture = new THREE.CanvasTexture(canvas);
       texture.colorSpace = THREE.SRGBColorSpace;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.generateMipmaps = false;
 
-      // Use Mesh with PlaneGeometry instead of Sprite so we can control rotation
-      const aspectRatio = tightCanvas.width / tightCanvas.height;
-      const planeGeometry = new THREE.PlaneGeometry(1 * aspectRatio, 1);
+      // Use Mesh with PlaneGeometry - increase size to match info-link appearance
+      const aspectRatio = canvas.width / canvas.height;
+      const planeSize = 2.4; // Increased to make text larger
+      const planeGeometry = new THREE.PlaneGeometry(planeSize * aspectRatio, planeSize);
       const planeMaterial = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,

@@ -35,11 +35,17 @@ body.home .loading-screen {
   width: 40px;
   height: 40px;
   animation: pulse 2s ease-in-out infinite;
+  /* Improve rendering quality */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  will-change: transform;
 }
 
 /* Rotating animation for non-home pages */
 .loading-star.rotating {
-  animation: rotate90 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: rotate360 0.8s linear infinite;
 }
 
 @keyframes pulse {
@@ -53,12 +59,22 @@ body.home .loading-screen {
   }
 }
 
-@keyframes rotate90 {
+/* Old 90-degree rotation */
+/* @keyframes rotate90 {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(90deg);
+  }
+} */
+
+@keyframes rotate360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
