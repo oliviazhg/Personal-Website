@@ -12,9 +12,8 @@
   let pageLoadComplete = false;
   let pointCloudLoadComplete = false;
 
-  // All pages: hide text and rotate star
+  // All pages: hide text
   loadingTextElement.style.display = 'none';
-  loadingStar.classList.add('rotating');
 
   // Text animation is considered "complete" immediately since there's no text
   textAnimationComplete = true;

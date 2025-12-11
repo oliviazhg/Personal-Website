@@ -10,8 +10,14 @@ html {
   overflow-y: scroll !important;
 }
 
+/* Background Canvas */
 .background-canvas {
-  display: none !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 /* Top Navigation */
@@ -44,7 +50,7 @@ html {
 .top-nav-projects .nav-link {
   font-family: 'Instrument Serif', serif;
   font-size: 1.5rem;
-  font-weight: 580;
+  font-weight: 800;
   color: #3e4b5e;
   text-decoration: none;
   transition: font-weight 0.2s, opacity 0.2s;
@@ -64,6 +70,15 @@ html {
   text-decoration: none;
   font-weight: 500;
   opacity: 1.0;
+}
+
+/* Remove blue underline effect */
+.top-nav-projects .nav-link::after {
+  content: none !important;
+}
+
+.top-nav-projects .nav-link:hover::after {
+  content: none !important;
 }
 
 /* Page Notice */
@@ -145,12 +160,12 @@ html {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding: 10px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 24px;
+  border-radius: 0;
   text-decoration: none;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -212,29 +227,40 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Year Labels - positioned outside mask but overlaying image area */
-.project-card .year-label-top {
+/* Bounding rectangle for year labels - matches image wrapper dimensions */
+.year-labels-container {
   position: absolute;
-  top: 40px;
-  left: 40px;
-  font-family: 'Instrument Serif', serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: #3e4b5e;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  height: 350px;
+  pointer-events: none;
   z-index: 10;
-  opacity: 0.44;
 }
 
-.project-card .year-label-bottom {
+/* Year Labels - positioned at corners of bounding rectangle */
+.year-labels-container .year-label-top {
   position: absolute;
-  top: 320px;
-  right: 40px;
+  top: 0;
+  left: 0;
   font-family: 'Instrument Serif', serif;
   font-size: 16px;
   font-weight: 700;
   color: #3e4b5e;
-  z-index: 10;
   opacity: 0.44;
+  pointer-events: none;
+}
+
+.year-labels-container .year-label-bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-family: 'Instrument Serif', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #3e4b5e;
+  opacity: 0.44;
+  pointer-events: none;
 }
 
 /* Project Image Wrapper */
@@ -242,18 +268,16 @@ html {
   width: 100%;
   height: 350px;
   overflow: visible;
-  margin: 0 0 30px 0;
+  margin: 0 0 20px 0;
   background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   position: relative;
   z-index: 1;
-  -webkit-mask-image: url('../assets/projects/proj_card_mask_filled.svg');
+  -webkit-mask-image: url('../assets/projects/proj_card_mask_tight.svg');
   -webkit-mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
-  mask-image: url('../assets/projects/proj_card_mask_filled.svg');
+  mask-image: url('../assets/projects/proj_card_mask_tight.svg');
   mask-size: 100% 100%;
   mask-repeat: no-repeat;
   mask-position: center;
@@ -280,7 +304,7 @@ html {
 
 .project-img {
   width: 100%;
-  height: 100%;
+  height: 350px;
   object-fit: cover;
   display: block;
   filter: none;
@@ -291,7 +315,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 0;
+  padding: 0 10px 10px 10px;
   background: transparent;
   position: relative;
   z-index: 1;

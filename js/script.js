@@ -163,28 +163,30 @@ async function init() {
       const textWidth = Math.ceil(metrics.width);
       const textHeight = Math.ceil(fontSize * 1.2); // 20% extra height for descenders
 
-      // Create tight-fitting canvas with power-of-2 dimensions for better GPU performance
+      // Create high-resolution canvas with power-of-2 dimensions for better GPU performance
       const padding = 20;
-      canvas.width = Math.pow(2, Math.ceil(Math.log2(textWidth + padding * 2)));
-      canvas.height = Math.pow(2, Math.ceil(Math.log2(textHeight + padding * 2)));
+      const scale = 2; // Render at 2x resolution for better quality
+      canvas.width = Math.pow(2, Math.ceil(Math.log2((textWidth + padding * 2) * scale)));
+      canvas.height = Math.pow(2, Math.ceil(Math.log2((textHeight + padding * 2) * scale)));
 
-      // Enable font smoothing
+      // Enable font smoothing and high-quality rendering
       context.imageSmoothingEnabled = true;
       context.imageSmoothingQuality = 'high';
-
-      // Draw text
-      context.fillStyle = '#3e4b5e';
-      context.font = `600 ${fontSize}px "Instrument Serif", serif`;
+      context.font = `600 ${fontSize * scale}px "Instrument Serif", serif`;
       context.textAlign = 'center';
       context.textBaseline = 'middle';
+
+      // Improve text rendering quality
+      context.fillStyle = '#3e4b5e';
       context.fillText(char, canvas.width / 2, canvas.height / 2);
 
-      // Create texture from canvas
+      // Create texture from canvas with anisotropic filtering
       const texture = new THREE.CanvasTexture(canvas);
       texture.colorSpace = THREE.SRGBColorSpace;
-      texture.minFilter = THREE.LinearFilter;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
       texture.magFilter = THREE.LinearFilter;
-      texture.generateMipmaps = false;
+      texture.generateMipmaps = true;
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
       // Use Mesh with PlaneGeometry - increase size to match info-link appearance
       const aspectRatio = canvas.width / canvas.height;
