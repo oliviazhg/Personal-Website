@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurosurgery Robot - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Neurosurgery Robot</h1>
+        <p class="project-subtitle">May - Aug 2024</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/main.JPG" alt="Neurosurgery robot prototype" class="project-img">
+          <figcaption>Concentric tube robot prototype for neurosurgical procedures</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>This project involved the design and prototyping of a concentric tube continuum robot for combined third ventricle biopsy and ventriculostomy procedures in pediatric neurosurgery. I worked on this as a research intern at Toronto's Hospital for Sick Children (SickKids) under Dr. James Drake, focusing on mechanism design, finite element analysis, and benchtop validation.</p>
+
+          <p>The system leverages the inherent compliance of nested elastic tubes with pre-curved geometries to achieve dexterous tip positioning within confined anatomical spaces. By controlling the relative axial translation and rotation of concentric tube pairs, the robot can navigate complex 3D trajectories while maintaining a sub-5mm outer diameter compatible with minimally invasive neurosurgical access ports.</p>
+        </section>
+
+        <!-- Robot CAD -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/robot_cad.png" alt="Complete robot CAD assembly" class="project-img">
+          <figcaption>Full CAD assembly showing actuation mechanism and tube deployment system</figcaption>
+        </figure>
+
+        <!-- Clinical Motivation -->
+        <section class="project-section">
+          <h2 class="section-title">Clinical Motivation</h2>
+
+          <h3 class="subsection-title">Third Ventricle Pathologies</h3>
+          <p>Third ventricular tumors and obstructive hydrocephalus represent challenging neurosurgical scenarios, particularly in pediatric patients. Current standard-of-care approaches include:</p>
+
+          <ul class="project-list">
+            <li><strong>Endoscopic third ventriculostomy (ETV)</strong>: Creates a fenestration in the third ventricle floor to bypass CSF flow obstruction. Requires precise navigation through Foramen of Monro with limited distal articulation.</li>
+            <li><strong>Stereotactic biopsy</strong>: Straight-line trajectory guided by preoperative imaging. Cannot adapt to anatomical variations or avoid critical structures once inserted.</li>
+            <li><strong>Open craniotomy</strong>: Provides direct visualization but requires significant tissue disruption and prolonged recovery.</li>
+          </ul>
+
+          <h3 class="subsection-title">Unmet Clinical Need</h3>
+          <p>Existing rigid endoscopes cannot simultaneously perform biopsy sampling and therapeutic fenestration in a single procedure. The concentric tube robot addresses this gap by enabling:</p>
+
+          <ul class="project-list">
+            <li><strong>Combined diagnostic and therapeutic capability</strong>: Single-pass access for tissue sampling followed by ventriculostomy</li>
+            <li><strong>Obstacle avoidance</strong>: Real-time trajectory adaptation to circumnavigate vessels and eloquent cortex</li>
+            <li><strong>Reduced patient burden</strong>: Elimination of multi-stage procedures and decreased operative time</li>
+          </ul>
+        </section>
+
+        <!-- Silicon Brain Model -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/silicon_brain.JPEG" alt="Silicon brain phantom model" class="project-img">
+          <figcaption>Custom silicone brain phantom for benchtop trajectory validation</figcaption>
+        </figure>
+
+        <!-- Mechanical Design -->
+        <section class="project-section">
+          <h2 class="section-title">Mechanical Design</h2>
+
+          <h3 class="subsection-title">Concentric Tube Mechanics</h3>
+          <p>The robot employs a three-tube nested configuration with the following specifications:</p>
+
+          <ul class="project-list">
+            <li><strong>Outer tube</strong>: Nitinol (NiTi) alloy, 3.5mm OD × 3.0mm ID, pre-curved radius 50mm, provides primary steering</li>
+            <li><strong>Middle tube</strong>: Nitinol 2.5mm OD × 2.0mm ID, pre-curved radius 30mm, enables secondary bending plane</li>
+            <li><strong>Inner tube</strong>: Stainless steel 1.5mm OD × 1.2mm ID, straight geometry, serves as biopsy instrument channel</li>
+          </ul>
+
+          <p>Tube pre-curvatures are thermally set using constrained-shape annealing at 500°C for 15 minutes, followed by quenching. The superelastic properties of Nitinol (austenite finish temperature Af ≈ 10°C below body temperature) ensure shape recovery after deployment.</p>
+
+          <h3 class="subsection-title">Actuation System</h3>
+          <p>Each tube is independently actuated through a cable-driven pulley mechanism that decouples axial translation and rotation:</p>
+
+          <ul class="project-list">
+            <li><strong>Linear actuation</strong>: Lead screw (2mm pitch) driven by NEMA 17 stepper motors, providing 0.01mm positional resolution via 1/16 microstepping</li>
+            <li><strong>Rotational actuation</strong>: Timing belt transmission (1:2 reduction) connected to tube-mounted pulleys, enabling ±180° rotation with 0.9° resolution</li>
+            <li><strong>Encoder feedback</strong>: Magnetic rotary encoders (12-bit, 0.088° resolution) mounted on each motor shaft for closed-loop position control</li>
+          </ul>
+        </section>
+
+        <!-- Pulley System -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/pulley_gear_sys.JPG" alt="Pulley and gear system" class="project-img">
+          <figcaption">Cable-driven pulley transmission system for independent tube actuation</figcaption>
+        </figure>
+
+        <!-- Concentric Tube Assembly -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/concentric_tube.JPG" alt="Concentric tube assembly" class="project-img">
+          <figcaption>Assembled concentric tube stack showing nested configuration</figcaption>
+        </figure>
+
+        <!-- Patterned Tube Innovation -->
+        <section class="project-section">
+          <h2 class="section-title">Patterned Tube Innovation</h2>
+
+          <h3 class="subsection-title">Motivation for Patterning</h3>
+          <p>Standard solid-wall Nitinol tubes exhibit limited curvature variability once manufactured. To enable adaptive stiffness profiles and enhanced compliance, I designed laser-cut patterned tubes with spatially varying bending stiffness.</p>
+
+          <h3 class="subsection-title">Pattern Design</h3>
+          <p>The pattern consists of helical cuts arranged in a periodic lattice structure:</p>
+
+          <ul class="project-list">
+            <li><strong>Cut geometry</strong>: 0.3mm kerf width, 60° helix angle, 5mm pitch</li>
+            <li><strong>Material removal ratio</strong>: 40% of tube wall in high-flexibility regions, tapering to 10% in proximal sections</li>
+            <li><strong>Fabrication</strong>: Fiber laser micromachining (1064 nm wavelength, 20 W average power, 50 kHz pulse rate)</li>
+          </ul>
+        </section>
+
+        <!-- Patterned Tubes CAD -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/patterned_tubes_cad.jpg" alt="Patterned tubes CAD design" class="project-img">
+          <figcaption>CAD model showing helical cut pattern design for variable stiffness tuning</figcaption>
+        </figure>
+
+        <!-- Patterned Tubes Printed -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/patterned_tubes_SLA_printed.JPEG" alt="SLA printed patterned tube prototypes" class="project-img">
+          <figcaption>Resin SLA prototypes for pattern validation before laser cutting Nitinol</figcaption>
+        </figure>
+
+        <!-- Finite Element Analysis -->
+        <section class="project-section">
+          <h2 class="section-title">Finite Element Analysis</h2>
+
+          <h3 class="subsection-title">Modeling Objectives</h3>
+          <p>FEA simulations were conducted to predict:</p>
+
+          <ul class="project-list">
+            <li><strong>Bending stiffness</strong>: Moment-curvature relationship for each tube configuration</li>
+            <li><strong>Stress concentration</strong>: Peak von Mises stress in patterned regions under physiological loading</li>
+            <li><strong>Failure prediction</strong>: Safety factors against yield (Nitinol: 195-690 MPa depending on phase) and fatigue (10^7 cycle endurance limit)</li>
+            <li><strong>Elastic shape deployment</strong>: Predicted deployed curvature as a function of tube extension and relative rotation</li>
+          </ul>
+
+          <h3 class="subsection-title">Simulation Parameters</h3>
+          <ul class="project-list">
+            <li><strong>Solver</strong>: ANSYS Mechanical APDL, nonlinear static structural analysis</li>
+            <li><strong>Material model</strong>: Superelastic Nitinol with stress-induced martensitic transformation (austenite E = 75 GPa, martensite E = 28 GPa)</li>
+            <li><strong>Mesh</strong>: Hexahedral elements (SOLID186), 0.1mm element size in cut regions, adaptive refinement at stress singularities</li>
+            <li><strong>Boundary conditions</strong>: Cantilevered proximal end, prescribed displacement at distal tip to simulate bending</li>
+          </ul>
+        </section>
+
+        <!-- FEA Stress Analysis -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/patterned_tube_fea_stress.jpg" alt="FEA stress analysis" class="project-img">
+          <figcaption>Von Mises stress distribution showing peak stress concentration at pattern vertices</figcaption>
+        </figure>
+
+        <!-- FEA Deformation Analysis -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/patterned_tube_fea_deformation.jpg" alt="FEA deformation analysis" class="project-img">
+          <figcaption>Simulated bending deformation demonstrating increased compliance in patterned regions</figcaption>
+        </figure>
+
+        <!-- Boroscope Handle -->
+        <section class="project-section">
+          <h2 class="section-title">Surgical Tool Integration</h2>
+
+          <h3 class="subsection-title">Borescope Handle Design</h3>
+          <p>To enable visual feedback during robot deployment, I designed a custom handle interface for integrating a medical-grade borescope (1.8mm diameter, 0° viewing angle) into the concentric tube assembly.</p>
+
+          <ul class="project-list">
+            <li><strong>Ergonomic handle</strong>: 3D-printed in biocompatible resin (Formlabs Surgical Guide), autoclavable geometry</li>
+            <li><strong>Sealed optics channel</strong>: O-ring sealed interface (Buna-N, -40 to 120°C) to prevent CSF ingress</li>
+            <li><strong>Working channel integration</strong>: 1.2mm lumen for irrigation, suction, or biopsy forceps deployment</li>
+            <li><strong>Fiber optic coupling</strong>: Standard SMA connector for external LED light source (5000K, 150 lumen output)</li>
+          </ul>
+        </section>
+
+        <!-- Boroscope Handle CAD -->
+        <figure class="project-media">
+          <img src="assets/projects/neurosurgery robot/boroscope_handle v4 v1 right.png" alt="Boroscope handle CAD" class="project-img">
+          <figcaption>Custom ergonomic handle design for borescope integration with concentric tubes</figcaption>
+        </figure>
+
+        <!-- Results & Validation -->
+        <section class="project-section">
+          <h2 class="section-title">Benchtop Validation & Results</h2>
+
+          <h3 class="subsection-title">Trajectory Accuracy Testing</h3>
+          <p>Workspace characterization performed in transparent silicone brain phantom:</p>
+
+          <ul class="project-list">
+            <li><strong>Reachable workspace</strong>: 45mm × 35mm × 30mm ellipsoidal volume centered at Foramen of Monro entry point</li>
+            <li><strong>Tip positioning accuracy</strong>: Mean error 2.3 ± 0.8 mm across 50 target points (measured via stereoscopic camera tracking)</li>
+            <li><strong>Deployment time</strong>: 45-60 seconds from cortical entry to third ventricle floor fenestration point</li>
+          </ul>
+
+          <h3 class="subsection-title">Patterned Tube Performance</h3>
+          <ul class="project-list">
+            <li><strong>Bending stiffness reduction</strong>: 65% decrease in effective EI (flexural rigidity) compared to solid tube of equivalent outer diameter</li>
+            <li><strong>Stress mitigation</strong>: Peak von Mises stress 340 MPa (safety factor 1.8 against Nitinol yield), validated by experimental strain gauge measurements</li>
+            <li><strong>Fatigue endurance</strong>: >1000 full-extension cycles without observable crack propagation (SEM microscopy confirmation)</li>
+          </ul>
+        </section>
+
+        <!-- Future Development -->
+        <section class="project-section">
+          <h2 class="section-title">Future Development & Translation</h2>
+
+          <h3 class="subsection-title">Technical Enhancements</h3>
+          <ul class="project-list">
+            <li><strong>Force sensing</strong>: Integrate fiber Bragg grating (FBG) strain sensors into tube walls for contact force estimation and collision avoidance</li>
+            <li><strong>Shape sensing</strong>: Multi-core fiber optic shape reconstruction (0.5mm resolution) for real-time 3D visualization overlaid on preoperative MRI</li>
+            <li><strong>MRI compatibility</strong>: Replace stepper motors with piezoelectric ultrasonic actuators to enable intraoperative imaging guidance</li>
+          </ul>
+
+          <h3 class="subsection-title">Clinical Translation Path</h3>
+          <ul class="project-list">
+            <li>Cadaver validation studies in collaboration with SickKids surgical simulation lab</li>
+            <li>FDA 510(k) regulatory pathway assessment (probable Class II medical device classification)</li>
+            <li>GLP toxicology testing of Nitinol and resin components per ISO 10993 biocompatibility standards</li>
+            <li>Design for Manufacturing (DFM) analysis to reduce per-unit cost from $8000 (prototype) to <$2000 (manufacturing scale)</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/neurosurgery-robot-background.js"></script>
+  <script src="js/neurosurgery-robot-scroll.js"></script>
+</body>
+</html>

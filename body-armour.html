@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Body Armour - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Body Armour</h1>
+        <p class="project-subtitle">Sep 2025</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/body armour/main (open state).JPG" alt="Body Armour kinetic fashion piece in open state" class="project-img">
+          <figcaption">Body Armour: Reactive kinetic fashion statement on harassment and personal boundaries</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>Body Armour is a wearable kinetic sculpture and fashion tech piece that physically manifests the invisible boundaries we maintain around our bodies. The garment responds to invasions of personal space by deploying mechanical defensive structures, transforming from an elegant articulated collar into an imposing barrier of radiating spines.</p>
+
+          <p>Created as both artistic statement and provocation, Body Armour explores themes of bodily autonomy, consent, and the psychological architecture of self-protection in contexts of harassment and unwanted touch. The piece literalizes the metaphorical "walls" and "armor" women describe adopting as defense mechanisms in hostile social environments.</p>
+        </section>
+
+        <!-- Closed State -->
+        <figure class="project-media">
+          <img src="assets/projects/body armour/closed_state.JPG" alt="Body Armour in closed/neutral state" class="project-img">
+          <figcaption>Closed state: Elegant articulated collar in neutral configuration</figcaption>
+        </figure>
+
+        <!-- Conceptual Framework -->
+        <section class="project-section">
+          <h2 class="section-title">Conceptual Framework</h2>
+
+          <h3 class="subsection-title">Context: Harassment & Bodily Autonomy</h3>
+          <p>Body Armour responds to pervasive experiences of boundary violation—unwanted touching, crowding, leering—that women navigate daily in public spaces, professional environments, and social situations. These violations exist on a spectrum from subtle encroachment to overt assault, unified by the fundamental disregard for consent and autonomy.</p>
+
+          <p><strong>Design as Commentary</strong>: By externalizing an internal defensive response, the garment makes visible what is normally psychological. The piece asks:</p>
+
+          <ul class="project-list">
+            <li>Why must individuals adopt defensive postures rather than aggressors modify behavior?</li>
+            <li>What does it mean that protection requires making oneself visibly uninviting rather than demanding respect?</li>
+            <li>How does the need for constant vigilance reshape identity and self-expression?</li>
+          </ul>
+
+          <h3 class="subsection-title">Fashion as Armor: Historical Precedents</h3>
+          <p>The garment draws inspiration from both functional protective wear and avant-garde fashion:</p>
+
+          <ul class="project-list">
+            <li><strong>Medieval Armor</strong>: Gorgets and pauldrons that shielded neck and shoulders, protecting vulnerable anatomical targets. Body Armour mirrors this protective geometry while subverting martial aesthetics into commentary on gendered violence.</li>
+            <li><strong>Haute Couture Provocation</strong>: Designers like Iris van Herpen, Neri Oxman, and Anouk Wipprecht use technology to create garments that challenge conventional relationship between body and clothing. Body Armour extends this tradition into explicitly political territory.</li>
+            <li><strong>Defensive Fashion</strong>: Anti-theft bags with slash-proof materials, pepper spray disguised as lipstick, personal safety alarms—commodified solutions that place burden of protection on potential victims. Body Armour satirizes this paradigm while earnestly engaging with its emotional reality.</li>
+          </ul>
+        </section>
+
+        <!-- Close-up Detail -->
+        <figure class="project-media">
+          <img src="assets/projects/body armour/close-up.JPG" alt="Close-up detail of mechanism" class="project-img">
+          <figcaption">Detail view of articulated spine mechanism and servo actuation linkage</figcaption>
+        </figure>
+
+        <!-- Technical Implementation -->
+        <section class="project-section">
+          <h2 class="section-title">Technical Implementation</h2>
+
+          <h3 class="subsection-title">Kinetic Mechanism Design</h3>
+          <p>The garment features 12 independently actuated articulated spines arranged in bilateral symmetry around a central collar structure:</p>
+
+          <p><strong>Spine Articulation</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Linkage System</strong>: Each spine consists of 5 rigid segments connected via compliant flexure hinges (laser-cut 1.5mm spring steel). Segments increase in length distally (40mm → 80mm) to create dramatic radiating profile when deployed.</li>
+            <li><strong>Actuation</strong>: Single servo motor (MG996R, 180° range) per spine drives cable-tendon system. Cable routed through guide channels in segments pulls distal tip, causing sequential flexure joint rotation and smooth spine extension.</li>
+            <li><strong>Materials</strong>: Spine segments fabricated from anodized aluminum (3mm thickness) for rigidity and aesthetic finish. Flexure hinges use tempered spring steel for durability through repeated flexion cycles.</li>
+            <li><strong>Range of Motion</strong>: Spines extend from folded 30° angle (closed state) to 120° deployed angle (open state), sweeping through 90° arc in 1.5 second actuation time.</li>
+          </ul>
+
+          <p><strong>Collar Base Structure</strong>:</p>
+          <ul class="project-list">
+            <li>3D-printed PLA framework (Prusa i3 MK3S, 0.2mm layer height, 40% infill) provides mounting points for 12 servo motors</li>
+            <li>Collar inner surface lined with soft neoprene padding for wearer comfort during extended wear</li>
+            <li>Adjustable closure system (hook-and-loop fasteners) accommodates range of neck sizes</li>
+          </ul>
+
+          <h3 class="subsection-title">Sensing & Interaction Modality</h3>
+          <p>Garment responds to proximity intrusion via ultrasonic distance sensors:</p>
+
+          <ul class="project-list">
+            <li><strong>Sensor Array</strong>: 4× HC-SR04 ultrasonic sensors (40 kHz, 2-400cm range) positioned at cardinal points around collar perimeter, providing 360° coverage</li>
+            <li><strong>Proximity Zones</strong>: Three concentric threshold zones trigger escalating defensive responses:
+              <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li>Zone 1 (100-60cm): Warning state - subtle LED pulsing, no mechanical motion</li>
+                <li>Zone 2 (60-30cm): Alert state - partial spine deployment (50%), amber LED illumination</li>
+                <li>Zone 3 (<30cm): Defense state - full spine deployment (100%), red LED, optional audible alarm</li>
+              </ul>
+            </li>
+            <li><strong>Directional Response</strong>: System identifies intrusion vector (front, back, left, right) and preferentially deploys spines on threatened side, creating asymmetric defensive posture</li>
+          </ul>
+
+          <h3 class="subsection-title">Control System</h3>
+          <ul class="project-list">
+            <li><strong>Microcontroller</strong>: Arduino Mega 2560 (16 MHz, 8 KB SRAM) selected for sufficient PWM channels (12 servos × 1 channel) and processing headroom for multi-sensor fusion</li>
+            <li><strong>Control Loop</strong>: 50 Hz update rate polls all sensors, computes threat assessment via weighted proximity score, commands servo positions via PID trajectory tracking</li>
+            <li><strong>State Machine</strong>: Finite state machine (5 states: idle, warning, alert, defense, cooldown) prevents rapid oscillation between states via hysteresis thresholds and minimum dwell times</li>
+            <li><strong>Power Management</strong>: 7.4V 2200 mAh LiPo battery worn at waist provides ~45 minutes continuous operation. Low-battery indicator (flashing LED) alerts wearer to recharge.</li>
+          </ul>
+        </section>
+
+        <!-- Demo Video -->
+        <figure class="project-media">
+          <video controls class="project-video">
+            <source src="assets/projects/body armour/demo_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Demonstration of deployment sequence responding to proximity intrusion</figcaption>
+        </figure>
+
+        <!-- Aesthetic & Wearability -->
+        <section class="project-section">
+          <h2 class="section-title">Aesthetic Design & Wearability</h2>
+
+          <h3 class="subsection-title">Visual Language</h3>
+          <p>Body Armour's aesthetic oscillates between elegance and aggression, beauty and menace:</p>
+
+          <ul class="project-list">
+            <li><strong>Closed State</strong>: Folded spines create Art Deco-inspired collar silhouette, metallic finish evokes jewelry/adornment, wearable in formal contexts without appearing threatening</li>
+            <li><strong>Open State</strong>: Radiating spines reference natural defensive structures (porcupine quills, sea urchin spines, cactus thorns), transforming wearer's profile into deterrent geometry</li>
+            <li><strong>Color Palette</strong>: Anodized aluminum in gunmetal gray maintains sophistication while signaling industrial/militaristic associations. Optional rose gold anodizing explored for subversive contrast (feminine-coded color in aggressive form).</li>
+          </ul>
+
+          <h3 class="subsection-title">Ergonomics & Comfort</h3>
+          <p>Despite mechanical complexity, garment designed for wearability in real-world contexts:</p>
+
+          <ul class="project-list">
+            <li><strong>Weight Distribution</strong>: Total system mass 1.8 kg distributed around shoulders and upper torso, comparable to heavy winter coat. Center of mass positioned close to body to minimize perceived weight.</li>
+            <li><strong>Range of Motion</strong>: Wearer can walk, sit, turn head without restriction when spines retracted. Deployed state limits arm overhead movement (by design—reinforces defensive posture).</li>
+            <li><strong>Thermal Considerations</strong>: Collar ventilation slots and breathable neoprene lining prevent excessive heat buildup during extended wear. Battery and electronics positioned away from direct skin contact.</li>
+            <li><strong>Maintenance</strong>: Modular spine design allows individual segment replacement if damaged. Servo motors externally accessible for troubleshooting without garment disassembly.</li>
+          </ul>
+        </section>
+
+        <!-- Public Reception & Exhibition -->
+        <section class="project-section">
+          <h2 class="section-title">Public Reception & Exhibition</h2>
+
+          <h3 class="subsection-title">Exhibition Context</h3>
+          <p>Body Armour premiered at a wearable technology fashion show and has been exhibited in gallery contexts exploring technology, gender, and embodiment:</p>
+
+          <ul class="project-list">
+            <li><strong>Fashion Show Presentation</strong>: Model wore garment down runway with staged proximity intrusion (assistant approaching from audience) triggering dramatic deployment. Audience response ranged from gasps to applause, fulfilling intent to provoke visceral reaction.</li>
+            <li><strong>Gallery Installation</strong>: Displayed on mannequin with motion sensor allowing visitors to trigger deployment by approaching. Accompanying wall text provided context on harassment statistics and artist statement on defensive labor.</li>
+            <li><strong>Interactive Workshop</strong>: Led discussion session where participants shared personal experiences with boundary violations, explored how design interventions can provoke conversations around consent culture.</li>
+          </ul>
+
+          <h3 class="subsection-title">Critical Dialogue</h3>
+          <p>The piece generated polarized but productive discourse:</p>
+
+          <p><strong>Supportive Interpretations</strong>:</p>
+          <ul class="project-list">
+            <li>"Externalizes the invisible emotional labor of constant vigilance"</li>
+            <li>"Reclaims agency by transforming defensive response from internal anxiety to external assertion"</li>
+            <li>"Beautiful and terrifying—captures duality of femininity under patriarchy"</li>
+          </ul>
+
+          <p><strong>Critical Interpretations</strong>:</p>
+          <ul class="project-list">
+            <li>"Reinforces victim-protection paradigm rather than addressing root causes of harassment"</li>
+            <li>"Aesthetic fetishization of violence/trauma may undermine critical message"</li>
+            <li>"Accessibility concerns—assumes threat is external stranger rather than familiar person in position of power"</li>
+          </ul>
+
+          <p><strong>Artist Response</strong>: Body Armour is intentionally ambivalent, oscillating between earnest protective fantasy and satirical critique of defensive fashion. The piece succeeds if it prompts reflection on why such a garment feels simultaneously absurd and necessary.</p>
+        </section>
+
+        <!-- Iterations & Technical Challenges -->
+        <section class="project-section">
+          <h2 class="section-title">Development Iterations & Technical Challenges</h2>
+
+          <h3 class="subsection-title">Design Evolution</h3>
+          <p>Body Armour underwent 3 major prototyping iterations:</p>
+
+          <ul class="project-list">
+            <li><strong>Prototype 1 (Cardboard Mockup)</strong>: Validated basic spine kinematics and aesthetic proportions. Revealed that initial 7-spine configuration lacked visual impact; increased to 12 spines.</li>
+            <li><strong>Prototype 2 (3D-Printed Spines)</strong>: First functional version with servo actuation. Identified fragility issues—PLA segments fractured at flexure hinges after ~50 cycles. Switched to metal construction.</li>
+            <li><strong>Final Version (Aluminum Spines)</strong>: Exhibition-ready garment with refined aesthetics, robust mechanics, and reliable electronics. Durability testing validated >1000 actuation cycles without failure.</li>
+          </ul>
+
+          <h3 class="subsection-title">Technical Challenges Overcome</h3>
+
+          <p><strong>Challenge 1: Servo Load Management</strong></p>
+          <ul class="project-list">
+            <li><strong>Problem</strong>: Simultaneous actuation of all 12 servos caused voltage sag (battery voltage dropped from 7.4V to 5.8V), triggering Arduino brownout reset</li>
+            <li><strong>Solution</strong>: Implemented sequential deployment algorithm—spines deploy in pairs with 200ms offset, reducing peak current draw from 18A to 6A. Added bulk capacitance (4× 1000μF) for transient load buffering.</li>
+          </ul>
+
+          <p><strong>Challenge 2: Sensor Interference</strong></p>
+          <ul class="project-list">
+            <li><strong>Problem</strong>: Ultrasonic sensors exhibited crosstalk—sensor A's transmitted pulse detected by sensor B, causing spurious distance readings and erratic behavior</li>
+            <li><strong>Solution</strong>: Multiplexed sensor operation (only 1 sensor active at a time), increased trigger spacing to 70ms per sensor. Also added angular baffles to direct ultrasonic beam and reduce side-lobe pickup.</li>
+          </ul>
+
+          <p><strong>Challenge 3: Wearability vs. Mechanical Strength</strong></p>
+          <ul class="project-list">
+            <li><strong>Problem</strong>: Metal spine segments provided necessary rigidity but excessive weight (initial version 2.8 kg) caused shoulder fatigue after 10 minutes wear</li>
+            <li><strong>Solution</strong>: Optimized spine cross-section (reduced thickness from 5mm to 3mm, added lightening cutouts in non-structural regions), achieved 36% mass reduction while maintaining stiffness via geometry rather than material thickness</li>
+          </ul>
+        </section>
+
+        <!-- Future Directions -->
+        <section class="project-section">
+          <h2 class="section-title">Future Directions</h2>
+
+          <h3 class="subsection-title">Technical Enhancements</h3>
+          <ul class="project-list">
+            <li><strong>Computer Vision Upgrade</strong>: Replace ultrasonic sensors with depth camera (Intel RealSense) for human pose estimation. Distinguish between threatening approach and incidental proximity based on body language analysis.</li>
+            <li><strong>Haptic Feedback</strong>: Add vibration motors (ERM or LRA) that alert wearer to proximity intrusion before visual deployment, creating layered sensory warning system</li>
+            <li><strong>Adaptive Response Profiles</strong>: Implement user-configurable sensitivity modes (defensive, moderate, passive) to accommodate different social contexts and personal comfort levels</li>
+            <li><strong>Data Logging</strong>: Record proximity events with timestamp and direction data, enabling wearer to visualize patterns of space invasion over time (e.g., heat map of most frequent intrusion vectors)</li>
+          </ul>
+
+          <h3 class="subsection-title">Artistic Extensions</h3>
+          <ul class="project-list">
+            <li><strong>Performance Collaboration</strong>: Commission contemporary dance piece where performers interact with Body Armour-equipped dancer, exploring themes of intimacy, consent, and negotiated boundaries through movement</li>
+            <li><strong>Public Intervention</strong>: Deploy garment in high-harassment contexts (nightlife districts, public transit) with wearer acting as provocateur, documenting reactions and conversations provoked by visible defensive technology</li>
+            <li><strong>Series Development</strong>: Create family of garments exploring different defensive modalities—inflatable barriers (personal space bubble), electromagnetic field generators (sensory deterrent), smoke/scent release (environmental barrier)</li>
+          </ul>
+
+          <h3 class="subsection-title">Social Impact Research</h3>
+          <ul class="project-list">
+            <li><strong>Behavioral Study</strong>: Systematic observation of how Body Armour affects social interactions—do people maintain greater distance? Do they vocalize awareness of boundaries? Does it reduce harassment incidents or displace behavior?</li>
+            <li><strong>Therapeutic Applications</strong>: Explore whether wearable boundary-assertion tools provide psychological benefit for trauma survivors, offering sense of control and agency in rebuilding comfort with proximity</li>
+            <li><strong>Design Justice Framework</strong>: Critical examination of whether defensive fashion empowers individuals or perpetuates victim-blaming narratives. How can design challenge systemic causes rather than merely treat symptoms?</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/body-armour-background.js"></script>
+  <script src="js/body-armour-scroll.js"></script>
+</body>
+</html>

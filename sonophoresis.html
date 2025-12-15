@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sonophoresis Wearable - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/sonophoresis.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Sonophoresis Wearable</h1>
+        <p class="project-subtitle">Aug 2025 - Present</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/sonophoresis/main.jpg" alt="Sonophoresis wearable device" class="project-img">
+          <figcaption>Wearable ultrasonic transdermal drug delivery system</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>The sonophoresis wearable is a closed-loop transdermal drug delivery system that leverages ultrasonic cavitation to enable non-invasive pharmaceutical transport across the skin barrier. This project explores the intersection of wearable bioelectronics, controlled substance delivery, and cognitive augmentation through on-demand therapeutic intervention.</p>
+
+          <p>The device employs low-frequency ultrasound (20-100 kHz) to temporarily disrupt stratum corneum lipid bilayers, creating transient aqueous pathways that facilitate molecular diffusion of active pharmaceutical ingredients. By integrating real-time biosensing feedback loops, the system adapts delivery parameters dynamically to maintain target therapeutic concentrations while minimizing dosing variability inherent in oral or transdermal patch administration.</p>
+        </section>
+
+        <!-- Technical Background -->
+        <section class="project-section">
+          <h2 class="section-title">Technical Background & Mechanism</h2>
+
+          <h3 class="subsection-title">Sonophoresis Principles</h3>
+          <p>Sonophoresis operates through several synergistic physical mechanisms that collectively enhance permeability:</p>
+
+          <ul class="project-list">
+            <li><strong>Cavitation</strong>: Oscillating pressure gradients nucleate microscopic gas bubbles within the coupling medium. Bubble collapse generates localized shear forces and microstreaming that mechanically disorganize intercellular lipid structures.</li>
+            <li><strong>Thermal Effects</strong>: Acoustic energy absorption elevates local tissue temperature (1-3°C), increasing lipid fluidity and accelerating molecular diffusion kinetics.</li>
+            <li><strong>Acoustic Streaming</strong>: Pressure-driven fluid convection creates directional transport vectors perpendicular to the skin surface, effectively "pumping" dissolved molecules through newly formed pores.</li>
+            <li><strong>Transient Pore Formation</strong>: Combined mechanical and thermal disruption creates reversible nanoscale defects in the stratum corneum (10-100 nm diameter), allowing passage of hydrophilic compounds normally excluded by the lipophilic barrier.</li>
+          </ul>
+
+          <h3 class="subsection-title">Target Applications</h3>
+          <p>The platform is designed for delivery of small-molecule nootropics and anxiolytics with established safety profiles:</p>
+
+          <ul class="project-list">
+            <li><strong>L-Theanine</strong>: GABA-modulating amino acid promoting alpha-wave activity and attentional focus without sedation (200-400 mg typical dosing)</li>
+            <li><strong>Caffeine</strong>: Adenosine receptor antagonist for alertness enhancement (50-200 mg controlled-release dosing to avoid jitter)</li>
+            <li><strong>CBD/CBG Cannabinoids</strong>: Non-psychoactive phytocannabinoids with anxiolytic and anti-inflammatory properties (10-50 mg)</li>
+            <li><strong>Nicotine (controlled contexts)</strong>: Acetylcholine agonist for attention and memory consolidation (1-4 mg transdermal equivalent)</li>
+          </ul>
+        </section>
+
+        <!-- System Architecture -->
+        <section class="project-section">
+          <h2 class="section-title">System Architecture</h2>
+
+          <h3 class="subsection-title">Hardware Components</h3>
+          <ul class="project-list">
+            <li><strong>Ultrasonic Transducer Array</strong>: Piezoelectric ceramic elements (PZT-5H) configured in annular geometry, driven at 40 kHz fundamental frequency with programmable duty cycle (10-50%) and acoustic power (0.5-2.5 W/cm²).</li>
+            <li><strong>Reservoir System</strong>: PDMS elastomer microfluidic chamber (5-10 mL capacity) with hydrogel-based drug suspension matrix to maintain saturation gradients.</li>
+            <li><strong>Coupling Medium</strong>: Glycerol-based ultrasound gel formulated with 0.1% hyaluronic acid to optimize acoustic impedance matching (Z ≈ 1.5 MRayl) while minimizing air gap losses.</li>
+            <li><strong>Biosensor Integration</strong>: Electrochemical impedance spectroscopy (EIS) electrodes for real-time measurement of skin permeability changes via stratum corneum resistance monitoring.</li>
+            <li><strong>Microcontroller</strong>: ESP32 with dedicated ADC channels for sensor acquisition and PWM outputs for transducer drive control (1 kHz control loop rate).</li>
+            <li><strong>Power System</strong>: 3.7V LiPo battery (1000 mAh) with boost converter to 12V rail for transducer excitation, estimated 4-6 hour continuous operation.</li>
+          </ul>
+
+          <h3 class="subsection-title">Control Algorithm</h3>
+          <p><strong>Adaptive Dosing Protocol</strong>: The system implements a closed-loop PID controller that modulates ultrasound intensity based on real-time impedance feedback. Initial calibration characterizes baseline skin resistance (typically 50-200 kΩ), then tracks resistance decay during sonication as a proxy for pore formation.</p>
+
+          <p><strong>Safety Interlocks</strong>:</p>
+          <ul class="project-list">
+            <li>Thermal monitoring via integrated thermistor; automatic shutdown if skin temperature exceeds 42°C</li>
+            <li>Maximum cumulative dose limits enforced via time-integrated flux calculations</li>
+            <li>Session time limits (15-30 minutes) to prevent overexposure and allow skin recovery</li>
+            <li>Accelerometer-based wear detection to halt operation if device is removed mid-session</li>
+          </ul>
+        </section>
+
+        <!-- Design Considerations -->
+        <section class="project-section">
+          <h2 class="section-title">Design Considerations & Challenges</h2>
+
+          <h3 class="subsection-title">Biocompatibility & Skin Safety</h3>
+          <ul class="project-list">
+            <li>All skin-contact materials selected from FDA-approved biocompatible polymers (medical-grade silicone, PDMS)</li>
+            <li>Acoustic intensities maintained below FDA diagnostic ultrasound limits (720 mW/cm² ISPTA) to prevent thermal injury</li>
+            <li>Formulation pH buffering (6.5-7.5) to avoid chemical irritation during prolonged wear</li>
+          </ul>
+
+          <h3 class="subsection-title">Pharmacokinetic Variability</h3>
+          <p>Transdermal absorption exhibits significant inter-individual variation due to factors including:</p>
+          <ul class="project-list">
+            <li><strong>Stratum corneum thickness</strong>: Ranges 10-40 μm across body sites and demographics</li>
+            <li><strong>Hydration state</strong>: Dehydrated skin exhibits 3-5x higher resistance</li>
+            <li><strong>Molecular properties</strong>: Lipophilicity (log P), molecular weight, and charge state dramatically affect permeability</li>
+          </ul>
+          <p>The adaptive control system mitigates these sources of variability by using impedance as a direct measure of barrier function rather than assuming population-average parameters.</p>
+
+          <h3 class="subsection-title">Wearability & Form Factor</h3>
+          <p>Current prototype dimensions: 60mm diameter × 15mm thickness. Design constraints include:</p>
+          <ul class="project-list">
+            <li>Adhesive interface optimization for multi-hour wear without skin irritation (medical-grade silicone adhesive with 30-40% tackiness)</li>
+            <li>Flexible PCB implementation to conform to body contours (forearm, upper arm, torso application sites)</li>
+            <li>Discreet aesthetics for social acceptability in professional/public contexts</li>
+          </ul>
+        </section>
+
+        <!-- Future Development -->
+        <section class="project-section">
+          <h2 class="section-title">Future Development</h2>
+
+          <h3 class="subsection-title">Multimodal Enhancement</h3>
+          <ul class="project-list">
+            <li><strong>Iontophoresis Integration</strong>: Add low-voltage DC current (0.1-0.5 mA/cm²) to create electrophoretic driving force for charged molecules, complementing acoustic permeabilization</li>
+            <li><strong>Microneedle Pre-Treatment</strong>: Dissolvable microneedle array (200-500 μm length) to create initial microchannels before sonophoretic delivery, reducing treatment time</li>
+          </ul>
+
+          <h3 class="subsection-title">Predictive Dosing</h3>
+          <ul class="project-list">
+            <li>Machine learning model trained on individual response patterns (impedance trajectories, subjective effects) to predict optimal dose timing and intensity</li>
+            <li>Integration with wearable physiological monitoring (HRV, EEG, cortisol via sweat sensing) to trigger delivery based on detected stress or cognitive load states</li>
+          </ul>
+
+          <h3 class="subsection-title">Pharmacological Expansion</h3>
+          <p>Explore delivery of additional compounds including:</p>
+          <ul class="project-list">
+            <li>Peptide therapeutics (BPC-157, thymosin beta-4) for tissue repair and anti-inflammatory effects</li>
+            <li>Hormone modulation (melatonin for circadian regulation)</li>
+            <li>Experimental nootropics pending safety characterization (racetams, semax, selank)</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/sonophoresis-background.js"></script>
+  <script src="js/sonophoresis-scroll.js"></script>
+</body>
+</html>

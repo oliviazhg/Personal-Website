@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+"""
+Restructure somatic-bloom.html to embed images within content sections
+"""
+
+# New HTML structure with embedded images
+new_html = '''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -228,3 +233,10 @@
   <script src="js/somatic-bloom-scroll.js"></script>
 </body>
 </html>
+'''
+
+# Write the new HTML
+with open('somatic-bloom.html', 'w', encoding='utf-8') as f:
+    f.write(new_html)
+
+print("somatic-bloom.html restructured successfully!")

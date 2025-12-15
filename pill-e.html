@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pill-E: Pill-Dispensing Robot - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Pill-E: Pill-Dispensing Robot</h1>
+        <p class="project-subtitle">Sep 2022</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/main.jpg" alt="Pill-E desktop companion robot" class="project-img">
+          <figcaption>Pill-E automated desktop pill-dispensing companion robot</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>Pill-E is an automated desktop medication management system designed to improve medication adherence through engaging human-robot interaction. Developed as a capstone project during my high school years, Pill-E combines mechanical dispensing mechanisms, computer vision, and affective computing to create a socially assistive robot that helps users maintain consistent medication schedules.</p>
+
+          <p>Medication non-adherence affects an estimated 50% of patients with chronic conditions, leading to $100-300 billion annually in preventable healthcare costs. Pill-E addresses this challenge by transforming routine medication intake from a tedious task into a positive interaction with an emotionally responsive companion.</p>
+        </section>
+
+        <!-- App Screens -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/app1.png" alt="Pill-E mobile app home screen" class="project-img">
+          <figcaption>Mobile app home screen showing medication schedule and robot status</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/app2.png" alt="Pill-E medication management interface" class="project-img">
+          <figcaption>Medication management interface for scheduling and dosage configuration</figcaption>
+        </figure>
+
+        <!-- System Architecture -->
+        <section class="project-section">
+          <h2 class="section-title">System Architecture</h2>
+
+          <h3 class="subsection-title">Hardware Components</h3>
+          <ul class="project-list">
+            <li><strong>Dispensing Mechanism</strong>: Rotating carousel with 7 pill compartments, each holding up to 30 standard tablets. Stepper motor-driven indexing (NEMA 17, 200 steps/rev with 1/8 microstepping) provides precise compartment alignment beneath dispense chute.</li>
+            <li><strong>Computer Vision System</strong>: Raspberry Pi Camera Module v2 (8MP, 1080p) positioned beneath dispense aperture for pill detection and count verification. OpenCV-based image processing pipeline detects dispensed pills via background subtraction and contour analysis.</li>
+            <li><strong>Display Interface</strong>: 7-inch capacitive touchscreen (800×480 resolution) running custom Qt/QML interface for medication schedule display, manual dispense controls, and robot emotion visualization.</li>
+            <li><strong>Actuated Expressions</strong>: Servo-driven mechanical eyelids (2× SG90 micro servos) enable blink animations and emotional state communication through lid position and movement dynamics.</li>
+            <li><strong>Audio Feedback</strong>: 3W speaker for voice prompts, confirmation sounds, and ambient interaction sounds (generated via Festival text-to-speech engine).</li>
+            <li><strong>Processing</strong>: Raspberry Pi 4 Model B (4GB RAM) running custom Python application stack with real-time scheduling daemon and web server for mobile app communication.</li>
+          </ul>
+
+          <h3 class="subsection-title">Software Architecture</h3>
+          <ul class="project-list">
+            <li><strong>Backend</strong>: Python 3.9 with Flask REST API framework for mobile app synchronization, SQLite database for medication schedules and adherence history</li>
+            <li><strong>Frontend</strong>: React Native mobile app (iOS/Android) with Firebase Cloud Messaging for push notification reminders</li>
+            <li><strong>Computer Vision</strong>: OpenCV 4.5 with custom pill detection pipeline (HSV color space filtering, morphological operations, connected component analysis)</li>
+            <li><strong>Scheduling Engine</strong>: APScheduler library with cron-like expressions for flexible dosing intervals (e.g., "every 8 hours", "twice daily with meals")</li>
+          </ul>
+        </section>
+
+        <!-- Mobile App Screens -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/app3.png" alt="Pill-E statistics and adherence tracking" class="project-img">
+          <figcaption>Statistics dashboard showing adherence trends and missed dose alerts</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/app4.png" alt="Pill-E settings and configuration" class="project-img">
+          <figcaption>Settings interface for robot customization and notification preferences</figcaption>
+        </figure>
+
+        <!-- Mechanical Design -->
+        <section class="project-section">
+          <h2 class="section-title">Mechanical Design</h2>
+
+          <h3 class="subsection-title">Dispenser Architecture</h3>
+          <p>The carousel dispenser employs a gravity-fed single-pill release mechanism inspired by bulk vending machines:</p>
+
+          <ul class="project-list">
+            <li><strong>Compartment Geometry</strong>: Each compartment features a tapered funnel (45° angle) leading to a gated aperture (8mm × 8mm opening). Pill stack height ≤ 50mm to prevent jamming under self-weight.</li>
+            <li><strong>Gate Mechanism</strong>: Solenoid-actuated sliding gate (5V, 0.5A pull) opens aperture for 800ms ± 50ms to release single pill. Gate timing calibrated experimentally for common tablet geometries (aspirin, ibuprofen, multivitamins).</li>
+            <li><strong>Indexing Precision</strong>: Optical interrupter sensor (ITR9608, 940nm IR LED + phototransistor) detects carousel home position. Hall effect sensor confirms stepper motor position between dispenses to detect skipped steps.</li>
+            <li><strong>Pill Detection</strong>: Camera positioned 12cm below dispense chute with 45° angled mirror for top-down pill imaging. Computer vision confirms pill count (1 pill dispensed = success, 0 = jam/empty, 2+ = double-dispense error).</li>
+          </ul>
+        </section>
+
+        <!-- Side View -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/dispenser_side.png" alt="Pill-E side view schematic" class="project-img">
+          <figcaption>Side view showing carousel rotation mechanism and dispense path geometry</figcaption>
+        </figure>
+
+        <!-- Top View -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/dispenser_top.png" alt="Pill-E top view schematic" class="project-img">
+          <figcaption>Top view showing 7-compartment carousel layout and indexing system</figcaption>
+        </figure>
+
+        <!-- Inner Architecture -->
+        <section class="project-section">
+          <h2 class="section-title">Internal Systems Integration</h2>
+
+          <h3 class="subsection-title">Electronics Layout</h3>
+          <p>Custom PCB integrates power distribution, motor drivers, and sensor interfaces:</p>
+
+          <ul class="project-list">
+            <li><strong>Power System</strong>: 5V/3A USB-C input, dual LDO regulators (3.3V for logic, 5V for servos/solenoid), overcurrent protection via PTC resettable fuses</li>
+            <li><strong>Motor Control</strong>: A4988 stepper driver with current limiting (0.8A per phase), microstepping configuration via GPIO jumpers</li>
+            <li><strong>Sensor Interfaces</strong>: I2C bus for optional environmental sensors (temperature, humidity for pill storage monitoring), GPIO expander (MCP23017) for 16 additional digital I/O</li>
+            <li><strong>Emergency Stop</strong>: Physical button triggers interrupt to halt all actuators and enter safe state (gate closed, carousel locked)</li>
+          </ul>
+        </section>
+
+        <!-- Inner Architecture Photo -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/inner_architecture.jpg" alt="Internal electronics and mechanics" class="project-img">
+          <figcaption>Internal view showing electronics integration, wiring harness, and carousel mechanism</figcaption>
+        </figure>
+
+        <!-- Inner Camera -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/inner_camera.jpg" alt="Camera system and pill detection setup" class="project-img">
+          <figcaption>Camera module and mirror setup for pill detection and counting verification</figcaption>
+        </figure>
+
+        <!-- Affective Computing -->
+        <section class="project-section">
+          <h2 class="section-title">Affective Computing & Social Interaction</h2>
+
+          <h3 class="subsection-title">Emotional Expression Design</h3>
+          <p>Pill-E employs minimalist mechanical animation to communicate internal state and build rapport:</p>
+
+          <ul class="project-list">
+            <li><strong>Idle State</strong>: Slow periodic blinks (0.3 Hz, 200ms close duration) with subtle eyelid droop during extended idle periods to convey "sleepiness"</li>
+            <li><strong>Medication Reminder</strong>: Rapid excited blinks (2 Hz, 3 cycles) followed by wide-open "alert" expression, accompanied by cheerful chime audio</li>
+            <li><strong>Successful Dispense</strong>: Slow satisfied blink (400ms duration) with upward lid curve to mimic smile, synchronized with positive voice feedback ("Well done!")</li>
+            <li><strong>Error State</strong>: Asymmetric lid positions (one eye partially closed) with intermittent rapid blinks to signal "confusion", paired with apologetic voice prompt</li>
+          </ul>
+
+          <h3 class="subsection-title">Adherence Gamification</h3>
+          <p>Mobile app implements behavioral reinforcement strategies to sustain engagement:</p>
+
+          <ul class="project-list">
+            <li><strong>Streak Tracking</strong>: Consecutive days without missed doses displayed prominently, with milestone badges (7-day, 30-day, 90-day streaks)</li>
+            <li><strong>Progress Visualization</strong>: Calendar heatmap showing adherence history, colored by on-time (green), late (yellow), or missed (red) doses</li>
+            <li><strong>Social Accountability</strong>: Optional sharing of adherence statistics with designated caregiver/family member for gentle peer pressure</li>
+            <li><strong>Reward System</strong>: Unlock custom robot personalities and voice packs upon achieving adherence milestones</li>
+          </ul>
+        </section>
+
+        <!-- Extra Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/extra1.jpg" alt="Pill-E detail view 1" class="project-img">
+          <figcaption>Close-up detail of facial expression mechanism and display interface</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/pill-E/extra2.jpg" alt="Pill-E detail view 2" class="project-img">
+          <figcaption">Alternative viewing angle showing compact desktop footprint</figcaption>
+        </figure>
+
+        <!-- User Testing & Evaluation -->
+        <section class="project-section">
+          <h2 class="section-title">User Testing & Results</h2>
+
+          <h3 class="subsection-title">Pilot Study Protocol</h3>
+          <p>Conducted 4-week user study with 8 participants (ages 22-67, mean 44 years) managing chronic conditions requiring daily medication:</p>
+
+          <ul class="project-list">
+            <li><strong>Baseline Period</strong>: 1 week self-reported adherence tracking without Pill-E intervention</li>
+            <li><strong>Intervention Period</strong>: 3 weeks using Pill-E for medication reminders and dispensing</li>
+            <li><strong>Metrics</strong>: Adherence rate (% doses taken on schedule ± 1 hour), subjective usability (System Usability Scale questionnaire), qualitative feedback via semi-structured interviews</li>
+          </ul>
+
+          <h3 class="subsection-title">Key Findings</h3>
+          <ul class="project-list">
+            <li><strong>Adherence Improvement</strong>: Mean adherence increased from 73% ± 18% (baseline) to 91% ± 9% (intervention), statistically significant improvement (paired t-test, p < 0.01)</li>
+            <li><strong>Usability</strong>: Average SUS score 78.5 (Grade B, "Good" usability), participants praised intuitive mobile app but noted occasional pill jamming in dispenser</li>
+            <li><strong>Engagement Sustainability</strong>: Adherence remained stable throughout 3-week period (no week-over-week decline), suggesting novelty effect did not dominate</li>
+            <li><strong>Emotional Response</strong>: 6/8 participants reported forming "attachment" to robot, describing it using terms like "helpful companion" and "my little medication buddy"</li>
+          </ul>
+
+          <h3 class="subsection-title">Failure Mode Analysis</h3>
+          <ul class="project-list">
+            <li><strong>Pill Jamming</strong>: Occurred in 3.2% of dispense attempts, primarily with oblong tablets (aspect ratio > 2:1). Solution: Increase gate aperture to 10mm × 8mm</li>
+            <li><strong>False Positive Detection</strong>: Computer vision occasionally detected shadows as pills in low ambient light. Solution: Add active LED ring illumination beneath chute</li>
+            <li><strong>Network Connectivity</strong>: Mobile app push notifications failed when home WiFi dropped. Solution: Implement local Bluetooth fallback for proximity-based alerts</li>
+          </ul>
+        </section>
+
+        <!-- Future Development -->
+        <section class="project-section">
+          <h2 class="section-title">Future Development</h2>
+
+          <h3 class="subsection-title">Technical Enhancements</h3>
+          <ul class="project-list">
+            <li><strong>Multi-Pill Dispense</strong>: Redesign gate mechanism to reliably dispense 1-4 pills simultaneously for multi-medication regimens</li>
+            <li><strong>Pharmacy Integration</strong>: API connection to electronic health records (EHR) for automatic schedule synchronization upon prescription refill</li>
+            <li><strong>Medication Identification</strong>: Train convolutional neural network (CNN) on NIH pill image dataset to verify correct medication dispensed via imprint/color recognition</li>
+            <li><strong>Environmental Sensing</strong>: Monitor storage temperature/humidity to alert user if medication storage conditions exceed pharmaceutical stability ranges</li>
+          </ul>
+
+          <h3 class="subsection-title">Expanded Applications</h3>
+          <ul class="project-list">
+            <li><strong>Pediatric Medication</strong>: Gamified robot personality for children's adherence, integration with parent dashboard for supervision</li>
+            <li><strong>Elderly Care</strong>: Larger display, voice-controlled interface, automatic caregiver notification for missed doses</li>
+            <li><strong>Clinical Settings</strong>: Multi-patient carousel dispenser for assisted living facilities, integration with electronic medication administration records (eMAR)</li>
+          </ul>
+
+          <h3 class="subsection-title">Commercialization Pathway</h3>
+          <ul class="project-list">
+            <li>Design for Manufacturing (DFM) analysis to reduce BOM cost from $180 (prototype) to target <$80 (volume production)</li>
+            <li>FDA regulatory assessment (likely Class I or II medical device depending on diagnostic claims)</li>
+            <li>Insurance reimbursement coding (CPE1 for remote patient monitoring durable medical equipment)</li>
+            <li>Partnership with pharmaceutical companies for medication adherence programs and patient support initiatives</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/pill-e-background.js"></script>
+  <script src="js/pill-e-scroll.js"></script>
+</body>
+</html>

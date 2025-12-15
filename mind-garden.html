@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mind Garden - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Mind Garden</h1>
+        <p class="project-subtitle">Nov 2024</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/mind_garden/main.jpg" alt="Mind Garden kinetic sculpture installation" class="project-img">
+          <figcaption>Mind Garden: Kinetic sculpture installation representing cognitive phenomena</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>Mind Garden is a kinetic sculpture installation that materializes invisible cognitive processes through choreographed mechanical motion. Exhibited at Waterloo Region Museum in November 2024, the piece transforms abstract neuroscience concepts—memory consolidation, creative insight, emotional regulation—into tangible, observable phenomena through a field of motorized mechanical flowers.</p>
+
+          <p>Each flower embodies a specific aspect of mental experience, executing unique motion patterns derived from computational models of neural dynamics. The installation invites viewers to contemplate the mechanistic underpinnings of consciousness while simultaneously experiencing the emergent beauty that arises from complex systems.</p>
+        </section>
+
+        <!-- Museum Exhibition -->
+        <figure class="project-media">
+          <img src="assets/projects/mind_garden/mind_garden_museum.jpg" alt="Mind Garden at Waterloo Museum" class="project-img">
+          <figcaption>Installation view at Waterloo Region Museum exhibition</figcaption>
+        </figure>
+
+        <!-- Conceptual Framework -->
+        <section class="project-section">
+          <h2 class="section-title">Conceptual Framework</h2>
+
+          <h3 class="subsection-title">Cognitive Neuroscience as Metaphor</h3>
+          <p>Mind Garden draws inspiration from contemporary research in cognitive neuroscience and dynamical systems theory of mind. Each flower represents a discrete cognitive module with characteristic temporal dynamics:</p>
+
+          <ul class="project-list">
+            <li><strong>Memory Flower (Blue)</strong>: Slow oscillations (0.1-0.3 Hz) mimicking hippocampal theta rhythms during memory encoding. Petals unfurl gradually then rapidly close, analogous to long-term potentiation followed by consolidation.</li>
+            <li><strong>Attention Flower (Red)</strong>: Rapid, stochastic movements representing attentional saccades and focus shifting. Motion driven by Poisson process (λ = 2 events/second) with brief periods of sustained stillness (sustained attention).</li>
+            <li><strong>Emotion Flower (Yellow)</strong>: Biphasic motion cycling between expansion (positive valence) and contraction (negative valence), modeled after bipolar affective oscillations with period ~15 seconds.</li>
+            <li><strong>Creativity Flower (Purple)</strong>: Chaotic trajectories interspersed with sudden coordinated movements, representing exploratory ideation punctuated by moments of insight (aha moments). Implemented via Lorenz attractor-driven servo trajectories.</li>
+            <li><strong>Decision Flower (Green)</strong>: Binary open/closed states with probabilistic transitions, visualizing drift-diffusion decision-making models. Transition probability modulated by accumulated evidence variable.</li>
+          </ul>
+
+          <h3 class="subsection-title">Systems-Level Emergence</h3>
+          <p>While each flower operates according to independent algorithms, collective dynamics exhibit emergent synchronization phenomena reminiscent of neural assemblies:</p>
+
+          <ul class="project-list">
+            <li><strong>Spontaneous Clustering</strong>: Flowers occasionally phase-lock into coordinated group motion despite lacking explicit inter-flower communication</li>
+            <li><strong>Critical Dynamics</strong>: System exhibits avalanche-like cascades where one flower's motion triggers neighboring responses, analogous to neuronal criticality</li>
+            <li><strong>Attractor States</strong>: Garden converges to recurring global configurations (all open, all closed, checkerboard patterns) representing cognitive "modes"</li>
+          </ul>
+
+          <p>These emergent properties were not explicitly programmed but arise naturally from the coupled dynamics, serving as metaphor for how consciousness emerges from unconscious neural mechanisms.</p>
+        </section>
+
+        <!-- Close-up Detail -->
+        <figure class="project-media">
+          <img src="assets/projects/mind_garden/mind_garden_close_up.JPG" alt="Mind Garden close-up detail" class="project-img">
+          <figcaption>Close-up detail of individual kinetic flower mechanism and petal structure</figcaption>
+        </figure>
+
+        <!-- Technical Implementation -->
+        <section class="project-section">
+          <h2 class="section-title">Technical Implementation</h2>
+
+          <h3 class="subsection-title">Mechanical Design</h3>
+          <p>Each flower consists of a 4-petal compliant mechanism actuated by a single servo motor:</p>
+
+          <ul class="project-list">
+            <li><strong>Petal Linkage</strong>: Four-bar linkage with flexure hinges (laser-cut 3mm acrylic) converts rotational servo motion into radial petal opening/closing</li>
+            <li><strong>Actuation</strong>: MG996R servo (180° range, 11 kg-cm torque) drives central cam mechanism that symmetrically actuates all four petals</li>
+            <li><strong>Materials</strong>: Petals fabricated from translucent acrylic (3mm thickness) with embedded RGB LED strips for chromatic expression synchronized to motion state</li>
+            <li><strong>Structural Base</strong>: 3D-printed PLA stem (20cm height) houses wiring and provides mounting interface to base platform</li>
+          </ul>
+
+          <h3 class="subsection-title">Control Architecture</h3>
+          <p>Distributed embedded control system with centralized coordination:</p>
+
+          <ul class="project-list">
+            <li><strong>Local Controllers</strong>: Each flower has dedicated Arduino Nano executing independent motion algorithm. Onboard 10-bit DAC generates analog servo control signals.</li>
+            <li><strong>Central Orchestrator</strong>: Raspberry Pi 4 runs master timing system and broadcasts synchronization signals via I2C bus (100 kHz clock). Also handles audio playback for ambient soundscape.</li>
+            <li><strong>Motion Algorithms</strong>: Implemented as finite state machines with stochastic transition probabilities. Servo trajectories generated via quintic polynomial interpolation for smooth, organic motion profiles.</li>
+            <li><strong>LED Control</strong>: WS2812B addressable RGB LEDs (60 LEDs/meter) controlled via FastLED library. Color and brightness modulated based on current petal position and velocity.</li>
+          </ul>
+
+          <h3 class="subsection-title">Power Distribution</h3>
+          <ul class="project-list">
+            <li><strong>Main Supply</strong>: 5V/40A switching power supply (200W rated capacity) with centralized distribution to all flowers</li>
+            <li><strong>Per-Flower Budget</strong>: Each flower draws 5-8W peak (servo + LEDs), total installation power consumption ~80W steady-state</li>
+            <li><strong>Voltage Regulation</strong>: Local LDO regulators (LM1117-3.3) for Arduino logic supply, separate 5V rail for servos to isolate switching noise</li>
+          </ul>
+        </section>
+
+        <!-- Work in Progress -->
+        <figure class="project-media">
+          <img src="assets/projects/mind_garden/mind_garden_wip.JPG" alt="Mind Garden work in progress 1" class="project-img">
+          <figcaption>Assembly and calibration during fabrication process</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/mind_garden/mind_garden_wip2.JPG" alt="Mind Garden work in progress 2" class="project-img">
+          <figcaption>Testing servo motion profiles and LED synchronization</figcaption>
+        </figure>
+
+        <!-- Motion Programming -->
+        <section class="project-section">
+          <h2 class="section-title">Motion Programming & Choreography</h2>
+
+          <h3 class="subsection-title">Trajectory Generation</h3>
+          <p>Servo motion profiles designed to evoke organic, lifelike quality rather than robotic precision:</p>
+
+          <p><strong>Sinusoidal Basis Functions</strong>: Position trajectories composed as weighted sums of sine waves with incommensurate periods to avoid exact repetition:</p>
+
+          <p class="equation">θ(t) = A₁·sin(ω₁·t + φ₁) + A₂·sin(ω₂·t + φ₂) + A₃·sin(ω₃·t + φ₃)</p>
+
+          <p>where amplitudes {A_i}, frequencies {ω_i}, and phases {φ_i} are tuned per flower type to achieve characteristic motion signatures.</p>
+
+          <p><strong>Noise Injection</strong>: Low-amplitude Perlin noise (amplitude ±5°) added to trajectories to simulate natural variability and prevent mechanical predictability</p>
+
+          <p><strong>Velocity Smoothing</strong>: S-curve acceleration profiles (7-segment polynomial interpolation) eliminate jerk at motion initiation/termination, critical for preventing vibration transmission to neighboring flowers</p>
+
+          <h3 class="subsection-title">Emergent Interaction Modes</h3>
+          <p>While flowers nominally operate independently, weak coupling arises through several mechanisms:</p>
+
+          <ul class="project-list">
+            <li><strong>Mechanical Coupling</strong>: Vibrations transmitted through shared base platform create subtle phase-locking between adjacent flowers</li>
+            <li><strong>Light Cross-Talk</strong>: LED illumination from neighboring flowers detected by onboard photoresistors, feeding into stochastic decision algorithms</li>
+            <li><strong>Programmed Responsiveness</strong>: 10% probability per timestep that a flower will mirror the motion state of nearest neighbor, creating avalanche propagation effects</li>
+          </ul>
+        </section>
+
+        <!-- Demo Video -->
+        <figure class="project-media">
+          <video controls class="project-video">
+            <source src="assets/projects/mind_garden/mind_garden_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Demonstration video showing synchronized motion choreography and LED patterns</figcaption>
+        </figure>
+
+        <!-- Audience Engagement -->
+        <section class="project-section">
+          <h2 class="section-title">Exhibition & Audience Engagement</h2>
+
+          <h3 class="subsection-title">Museum Context</h3>
+          <p>Mind Garden was exhibited at Waterloo Region Museum as part of a broader exhibition on "Technology and Human Experience." The installation occupied a dedicated gallery space (3m × 3m) with controlled lighting to emphasize LED chromatic effects.</p>
+
+          <p><strong>Interpretive Materials</strong>:</p>
+          <ul class="project-list">
+            <li>Wall-mounted didactic text explaining neuroscience conceptual framework in accessible language (8th-grade reading level)</li>
+            <li>QR code linking to supplementary website with technical documentation, motion algorithm visualizations, and artist statement</li>
+            <li>Interactive touchscreen displaying real-time data feed from flower controllers (servo positions, LED RGB values)</li>
+          </ul>
+
+          <h3 class="subsection-title">Visitor Responses</h3>
+          <p>Over 2-week exhibition period, ~800 visitors engaged with installation. Informal feedback collected via comment cards and docent observations:</p>
+
+          <ul class="project-list">
+            <li><strong>Aesthetic Appreciation</strong>: 92% of respondents described motion as "lifelike," "organic," or "natural" despite mechanical construction</li>
+            <li><strong>Conceptual Engagement</strong>: 68% reported thinking about relationship between brain and consciousness after viewing</li>
+            <li><strong>Emotional Response</strong>: Common descriptors included "calming," "meditative," "mesmerizing," suggesting successful affective engagement</li>
+            <li><strong>Demographic Reach</strong>: Installation particularly resonated with children (ages 6-12) and older adults (60+), suggesting broad accessibility</li>
+          </ul>
+
+          <h3 class="subsection-title">Educational Impact</h3>
+          <p>Museum partnered with local high schools to integrate Mind Garden into science curriculum:</p>
+
+          <ul class="project-list">
+            <li><strong>Biology Classes</strong>: Used as case study for neuroscience and cognitive systems (5 classes, ~125 students)</li>
+            <li><strong>Engineering Classes</strong>: Technical documentation studied as example of mechatronics system design (3 classes, ~80 students)</li>
+            <li><strong>Art Classes</strong>: Referenced in discussions of kinetic sculpture and technology-mediated expression (4 classes, ~100 students)</li>
+          </ul>
+        </section>
+
+        <!-- Design Evolution -->
+        <section class="project-section">
+          <h2 class="section-title">Design Evolution & Iteration</h2>
+
+          <h3 class="subsection-title">Prototyping Process</h3>
+          <p>Mind Garden underwent 4 major design iterations over 6-week development cycle:</p>
+
+          <ul class="project-list">
+            <li><strong>Prototype 1 (Week 1-2)</strong>: Single flower proof-of-concept using cardboard and hobby servos. Validated linkage kinematics and basic motion algorithms.</li>
+            <li><strong>Prototype 2 (Week 3)</strong>: Cluster of 3 flowers with independent Arduino controllers. Discovered mechanical vibration coupling issues requiring base redesign.</li>
+            <li><strong>Prototype 3 (Week 4-5)</strong>: Full-scale 12-flower array with acrylic petals and LED integration. Refined motion choreography based on PRISM team feedback sessions.</li>
+            <li><strong>Final Version (Week 6)</strong>: Museum-ready installation with improved cable management, emergency stop button, and exhibition-grade finish.</li>
+          </ul>
+
+          <h3 class="subsection-title">Technical Challenges Overcome</h3>
+          <ul class="project-list">
+            <li><strong>Servo Jitter</strong>: Initial implementation exhibited high-frequency oscillation due to PID tuning. Resolved via firmware deadband (±2°) and external RC low-pass filtering (fc = 5 Hz).</li>
+            <li><strong>Power Distribution Voltage Drop</strong>: Distant flowers experienced brownouts during simultaneous actuation. Fixed by upgrading to 12AWG power bus and implementing distributed decoupling capacitors (1000μF per flower).</li>
+            <li><strong>LED Interference</strong>: WS2812B data signal susceptible to servo PWM noise. Mitigated via shielded cabling and ferrite beads on signal lines.</li>
+            <li><strong>Synchronization Drift</strong>: Arduino real-time clocks exhibited cumulative timing error (~2 seconds/hour). Solved by implementing I2C time synchronization from Raspberry Pi NTP-corrected reference.</li>
+          </ul>
+        </section>
+
+        <!-- Future Development -->
+        <section class="project-section">
+          <h2 class="section-title">Future Development</h2>
+
+          <h3 class="subsection-title">Interactive Extensions</h3>
+          <ul class="project-list">
+            <li><strong>Biosignal Integration</strong>: Connect flower motion to visitor EEG or heart rate via wearable sensors, creating personalized "mind garden" reflecting individual's cognitive state</li>
+            <li><strong>Gesture Control</strong>: Implement Kinect depth camera for hand gesture recognition, allowing visitors to "conduct" garden motion like an orchestra</li>
+            <li><strong>Audio Reactivity</strong>: Add microphone input to make flowers responsive to ambient sound (speech, music, environmental noise)</li>
+          </ul>
+
+          <h3 class="subsection-title">Scaling & Permanence</h3>
+          <ul class="project-list">
+            <li><strong>Outdoor Installation</strong>: Weatherproof version for permanent public art placement, incorporating solar panels and environmental sensors (wind, temperature)</li>
+            <li><strong>Expanded Scale</strong>: 50-100 flower field creating immersive environment visitors can walk through, inspired by TeamLab Borderless installations</li>
+            <li><strong>Self-Sustaining Ecosystem</strong>: Integrate simulated resource dynamics (energy, nutrients) where flowers compete and cooperate, creating evolutionary selection pressure on motion behaviors</li>
+          </ul>
+
+          <h3 class="subsection-title">Research Applications</h3>
+          <ul class="project-list">
+            <li><strong>Collective Intelligence Testbed</strong>: Study emergent coordination algorithms by implementing various coupling strategies (attractive, repulsive, hierarchical)</li>
+            <li><strong>Public Understanding of Neuroscience</strong>: Systematic evaluation of whether kinetic metaphor improves comprehension of abstract cognitive concepts vs. traditional diagrams</li>
+            <li><strong>Affective Computing Validation</strong>: Use installation as stimulus set for measuring emotional responses (facial expression analysis, galvanic skin response) to different motion patterns</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/mind-garden-background.js"></script>
+  <script src="js/mind-garden-scroll.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prosthetic Finger Modelling - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Prosthetic Finger Modelling</h1>
+        <p class="project-subtitle">May - Aug 2024</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/single print hand modelling/CAD.jpg" alt="Single-print prosthetic finger CAD model" class="project-img">
+          <figcaption>CAD model of single-print compliant prosthetic finger mechanism</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>This project focused on developing comprehensive kinematic and kinetic models for single-print prosthetic fingers, enabling design space exploration and performance optimization before physical fabrication. I worked on this at Toronto's Hospital for Sick Children (SickKids) under Dr. James Drake, creating simulation frameworks to predict grasp mechanics and mechanical durability of low-cost 3D-printed hand prostheses.</p>
+
+          <p>Single-print prosthetic fingers leverage the compliance of flexible filament materials (TPU, TPE) to create integrated joint mechanisms without assembly. By modeling these devices as elastic linkage systems with distributed compliance, we can optimize geometric parameters to achieve target force-displacement profiles while maintaining printability constraints.</p>
+        </section>
+
+        <!-- Technical Background -->
+        <section class="project-section">
+          <h2 class="section-title">Technical Background</h2>
+
+          <h3 class="subsection-title">Single-Print Prosthetic Design Philosophy</h3>
+          <p>Traditional prosthetic hands require multi-component assembly with discrete joints (hinges, pins) that increase fabrication complexity and failure points. Single-print designs eliminate these constraints by exploiting material compliance to create monolithic structures with embedded flexure joints.</p>
+
+          <p><strong>Key advantages</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Manufacturing simplicity</strong>: Entire finger printed as single operation, no post-processing assembly required</li>
+            <li><strong>Reduced cost</strong>: Material cost <$2 per finger, enabling distribution in low-resource settings</li>
+            <li><strong>Customizability</strong>: Parametric CAD models enable rapid patient-specific scaling from 3D hand scans</li>
+            <li><strong>Durability</strong>: Elimination of discrete joints removes primary wear failure modes</li>
+          </ul>
+
+          <p><strong>Challenges addressed by modeling</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Unpredictable kinematics</strong>: Compliant joints exhibit nonlinear force-displacement relationships difficult to intuit</li>
+            <li><strong>Print parameter sensitivity</strong>: Mechanical properties vary significantly with infill density (20-100%), layer height (0.1-0.4mm), print orientation</li>
+            <li><strong>Grasp force limitations</strong>: Under-actuation and compliance limit achievable pinch forces compared to rigid linkage mechanisms</li>
+          </ul>
+        </section>
+
+        <!-- Mathematical Modeling -->
+        <section class="project-section">
+          <h2 class="section-title">Kinematic & Kinetic Modeling Approach</h2>
+
+          <h3 class="subsection-title">Pseudo-Rigid-Body Model (PRBM)</h3>
+          <p>Compliant joints are approximated as rigid links connected by torsional springs. For a single flexure hinge with thickness t, length l, and elastic modulus E:</p>
+
+          <p class="equation">K_θ = (E × w × t³) / (12 × l)</p>
+
+          <p>where K_θ is the rotational spring constant, w is flexure width, and geometric parameters are derived from CAD cross-sections. This model enables standard Denavit-Hartenberg kinematic analysis with elastic joint constraints.</p>
+
+          <h3 class="subsection-title">Forward Kinematics with Elastic Coupling</h3>
+          <p>Finger tip position is computed via composition of rotational transformations with joint angle constraints:</p>
+
+          <p class="equation">θ_i = f(τ_applied, K_θi, θ_coupling)</p>
+
+          <p>where each joint angle θ_i depends on applied cable tension τ, joint stiffness K_θi, and coupling from adjacent joint deflections. The resulting system of equations is solved iteratively using Newton-Raphson convergence.</p>
+        </section>
+
+        <!-- Math Diagram -->
+        <figure class="project-media">
+          <img src="assets/projects/single print hand modelling/math_diagram.jpg" alt="Kinematic modeling diagram" class="project-img">
+          <figcaption">Kinematic chain representation and force distribution analysis for compliant finger model</figcaption>
+        </figure>
+
+        <!-- Simulation Framework -->
+        <section class="project-section">
+          <h2 class="section-title">Simulation Framework Implementation</h2>
+
+          <h3 class="subsection-title">Software Architecture</h3>
+          <ul class="project-list">
+            <li><strong>Modeling environment</strong>: MATLAB R2023a with Robotics System Toolbox</li>
+            <li><strong>CAD integration</strong>: Automated STEP file import to extract geometric parameters (joint positions, flexure dimensions)</li>
+            <li><strong>Material characterization</strong>: Experimental tensile testing (ASTM D638) of printed TPU specimens to determine stress-strain curves, fit to hyperelastic Mooney-Rivlin model</li>
+            <li><strong>Validation</strong>: Motion capture comparison (OptiTrack 12-camera system, 0.3mm spatial resolution) between simulated and physical finger trajectories</li>
+          </ul>
+
+          <h3 class="subsection-title">Grasp Force Simulation</h3>
+          <p>Object interaction modeled as contact constraint optimization problem:</p>
+
+          <ol class="project-list">
+            <li><strong>Contact detection</strong>: Geometric intersection testing between finger surface mesh and primitive object geometries (sphere, cylinder, box)</li>
+            <li><strong>Normal force calculation</strong>: Penetration depth × contact stiffness (measured via indentation testing on printed finger pads)</li>
+            <li><strong>Friction cone constraints</strong>: Coulomb friction model with μ = 0.6 (experimentally determined for TPU-ABS contact)</li>
+            <li><strong>Equilibrium solver</strong>: Iterative force balance to determine stable grasp configurations and required cable tensions</li>
+          </ol>
+        </section>
+
+        <!-- Design Optimization -->
+        <section class="project-section">
+          <h2 class="section-title">Design Space Exploration & Optimization</h2>
+
+          <h3 class="subsection-title">Parametric Design Variables</h3>
+          <p>The simulation framework enables exploration of 12 geometric design parameters:</p>
+
+          <ul class="project-list">
+            <li><strong>Phalanx lengths</strong>: Proximal, middle, distal segment dimensions (3 parameters)</li>
+            <li><strong>Joint geometries</strong>: Flexure hinge thickness, length, radius of curvature (6 parameters, 2 per joint)</li>
+            <li><strong>Tendon routing</strong>: Cable attachment points and guide channel positions (3 parameters)</li>
+          </ul>
+
+          <h3 class="subsection-title">Multi-Objective Optimization</h3>
+          <p>Genetic algorithm (MATLAB ga function, population 100, generations 50) optimizing conflicting objectives:</p>
+
+          <ul class="project-list">
+            <li><strong>Maximize workspace</strong>: Reachable finger tip positions during actuation cycle</li>
+            <li><strong>Maximize grip force</strong>: Peak normal force achievable with 20N cable tension constraint</li>
+            <li><strong>Minimize stress</strong>: Peak von Mises stress in flexure regions (FEA validation)</li>
+            <li><strong>Printability constraint</strong>: Minimum feature size 1.5mm, maximum overhang angle 45°</li>
+          </ul>
+
+          <p>Resulting Pareto front identified design configurations spanning workspace-force tradeoff space, enabling clinician selection based on patient-specific functional requirements (e.g., prioritize power grasp vs. precision pinch).</p>
+        </section>
+
+        <!-- Results & Validation -->
+        <section class="project-section">
+          <h2 class="section-title">Results & Validation</h2>
+
+          <h3 class="subsection-title">Model Accuracy</h3>
+          <ul class="project-list">
+            <li><strong>Kinematic prediction</strong>: Mean tip position error 3.2 ± 1.1 mm across 8 test configurations (acceptable for grasp planning)</li>
+            <li><strong>Force prediction</strong>: Grip force estimates within 15% of experimental load cell measurements</li>
+            <li><strong>Stress validation</strong>: FEA-predicted flexure stresses matched digital image correlation (DIC) strain field data within 20% error</li>
+          </ul>
+
+          <h3 class="subsection-title">Design Insights</h3>
+          <ul class="project-list">
+            <li><strong>Flexure geometry sensitivity</strong>: Reducing hinge thickness from 2mm to 1.5mm decreased actuation force by 40% but increased stress by 60%, suggesting optimal thickness ≈1.7mm</li>
+            <li><strong>Tendon routing impact</strong>: Offsetting cable guide 2mm toward palmar surface increased distal joint flexion by 25°, improving pinch grasp capability</li>
+            <li><strong>Material selection</strong>: Shore 95A TPU provided best compromise between compliance (reduced actuation force) and structural rigidity (maintained phalanx shape under load)</li>
+          </ul>
+        </section>
+
+        <!-- Applications & Impact -->
+        <section class="project-section">
+          <h2 class="section-title">Applications & Clinical Impact</h2>
+
+          <h3 class="subsection-title">Rapid Customization Workflow</h3>
+          <p>The modeling framework enables streamlined patient-specific design:</p>
+
+          <ol class="project-list">
+            <li><strong>3D scanning</strong>: Capture residual limb and contralateral hand geometry (Structure Sensor scanner, 1mm resolution)</li>
+            <li><strong>Automated scaling</strong>: Script-based parametric CAD adjustment to match anatomical dimensions</li>
+            <li><strong>Simulation verification</strong>: Predict grasp performance for patient's target activities of daily living (ADLs)</li>
+            <li><strong>Iterative refinement</strong>: Adjust design parameters if simulation reveals insufficient force or range of motion</li>
+            <li><strong>Fabrication</strong>: Export optimized STL for overnight 3D printing (8-hour print time per finger)</li>
+          </ol>
+
+          <p><strong>Time savings</strong>: Reduced design iteration cycle from 2-3 days (physical prototyping) to 2-3 hours (simulation-guided design)</p>
+
+          <h3 class="subsection-title">Humanitarian Engineering Context</h3>
+          <p>Models deployed in collaboration with e-NABLE volunteer network, enabling distributed prosthetic fabrication:</p>
+
+          <ul class="project-list">
+            <li><strong>Design standardization</strong>: Simulation-validated reference designs shared as open-source CAD library</li>
+            <li><strong>Quality control</strong>: Volunteers can verify prints meet performance specifications without instrumented testing</li>
+            <li><strong>Material substitution guidance</strong>: Model retuning for locally-available filaments (e.g., predicting performance with PETG vs. TPU)</li>
+          </ul>
+        </section>
+
+        <!-- Future Work -->
+        <section class="project-section">
+          <h2 class="section-title">Future Development</h2>
+
+          <h3 class="subsection-title">Enhanced Physics Modeling</h3>
+          <ul class="project-list">
+            <li><strong>Viscoelastic material models</strong>: Incorporate time-dependent creep and stress relaxation observed in thermoplastics</li>
+            <li><strong>Multi-physics coupling</strong>: Thermal effects from body heat on material stiffness (TPU modulus decreases 15% at 37°C vs. 20°C room temp)</li>
+            <li><strong>Fatigue prediction</strong>: Cumulative damage modeling to estimate functional lifespan (current empirical data: 6-12 months typical use)</li>
+          </ul>
+
+          <h3 class="subsection-title">Machine Learning Integration</h3>
+          <ul class="project-list">
+            <li><strong>Surrogate modeling</strong>: Train neural network to approximate simulation results, enabling real-time design exploration</li>
+            <li><strong>Inverse design</strong>: Given target grasp force profile, automatically synthesize optimal joint geometry via gradient-based optimization</li>
+            <li><strong>Print defect compensation</strong>: Predict and pre-compensate for geometric errors from FDM printer calibration drift</li>
+          </ul>
+
+          <h3 class="subsection-title">Clinical Validation Studies</h3>
+          <ul class="project-list">
+            <li>Patient outcome assessment with simulation-optimized vs. empirically-designed prostheses</li>
+            <li>Longitudinal durability tracking to validate fatigue life predictions</li>
+            <li>User satisfaction surveys correlated to simulated functional performance metrics</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/prosthetic-finger-modelling-background.js"></script>
+  <script src="js/prosthetic-finger-modelling-scroll.js"></script>
+</body>
+</html>

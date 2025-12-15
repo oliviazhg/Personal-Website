@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRISM Collective - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">PRISM Collective</h1>
+        <p class="project-subtitle">Oct 2024 - Present</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/main.jpg" alt="PRISM Collective team and installations" class="project-img">
+          <figcaption>PRISM Collective: Waterloo's largest creative technology community and experiential art platform</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>PRISM Collective is a creative technology community I co-founded at the University of Waterloo to bridge the gap between technical research and experiential public art. We are a multidisciplinary group of engineers, artists, designers, and researchers building interactive installations, kinetic sculptures, and immersive experiences that make emerging technologies tangible and accessible.</p>
+
+          <p>In under 6 months, PRISM has grown to become Waterloo's largest creative tech collective, with 120+ active members collaborating on projects spanning robotics, generative art, spatial computing, biosignals, and experimental human-computer interaction. We've exhibited work at museums, public spaces, and academic symposia, reaching audiences of over 2000+ people.</p>
+        </section>
+
+        <!-- Team Photo -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/F25_team.JPG" alt="PRISM Collective Fall 2025 team" class="project-img">
+          <figcaption>PRISM Collective Fall 2025 core team and active members</figcaption>
+        </figure>
+
+        <!-- Mission & Philosophy -->
+        <section class="project-section">
+          <h2 class="section-title">Mission & Philosophy</h2>
+
+          <h3 class="subsection-title">Bridging Research and Public Engagement</h3>
+          <p>Academic research often remains confined to conference proceedings and laboratory prototypes, inaccessible to broader audiences. PRISM serves as a translation layer, transforming technical concepts into visceral experiences that provoke curiosity, wonder, and critical dialogue about technology's role in society.</p>
+
+          <p><strong>Core principles</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Research-Driven Creation</strong>: Projects grounded in emerging scientific and engineering research (e.g., affective computing, soft robotics, spatial audio)</li>
+            <li><strong>Public Accessibility</strong>: Prioritize experiential learning over technical jargon; design for diverse audiences including children, non-technical adults, and domain experts</li>
+            <li><strong>Experimental Courage</strong>: Embrace technical and aesthetic risk; value novel failures over incremental successes</li>
+            <li><strong>Interdisciplinary Collaboration</strong>: Actively recruit outside traditional engineering/CS domains (fine arts, music, philosophy, social sciences)</li>
+            <li><strong>Open Knowledge Sharing</strong>: Document processes, release open-source code/CAD, and mentor newcomers through workshops</li>
+          </ul>
+
+          <h3 class="subsection-title">Community Structure</h3>
+          <p>PRISM operates as a non-hierarchical collective with distributed leadership:</p>
+
+          <ul class="project-list">
+            <li><strong>Project Teams</strong>: Self-organizing groups of 3-8 members working on specific installations (e.g., kinetic sculpture team, VR experience team)</li>
+            <li><strong>Skill Shares</strong>: Weekly technical workshops led by members on topics like TouchDesigner, Arduino, 3D printing, laser cutting, generative AI</li>
+            <li><strong>Work Sessions</strong>: Bi-weekly open studio nights in campus makerspace for collaborative building and peer feedback</li>
+            <li><strong>Community Events</strong>: Monthly public exhibitions, artist talks, and interdisciplinary symposia open to broader Waterloo community</li>
+          </ul>
+        </section>
+
+        <!-- Work Session Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/work_sesh1.jpg" alt="PRISM work session 1" class="project-img">
+          <figcaption>Weekly collaborative work session in university makerspace</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/work_sesh2.jpeg" alt="PRISM work session 2" class="project-img">
+          <figcaption>Members collaborating on interactive installation prototyping</figcaption>
+        </figure>
+
+        <!-- Major Projects & Installations -->
+        <section class="project-section">
+          <h2 class="section-title">Major Projects & Installations</h2>
+
+          <h3 class="subsection-title">Mind Garden (Nov 2024)</h3>
+          <p>Kinetic sculpture installation exhibited at Waterloo Museum representing various cognitive phenomena through motorized mechanical flowers. Each flower embodies a different aspect of human consciousness (memory formation, creative insight, emotional regulation) through unique motion profiles controlled by custom Arduino firmware.</p>
+
+          <ul class="project-list">
+            <li><strong>Technical Innovation</strong>: Custom servo trajectory planning using sinusoidal envelopes to create organic, lifelike motion</li>
+            <li><strong>Public Impact</strong>: 800+ museum visitors over 2-week exhibition, featured in local media coverage</li>
+            <li><strong>Interdisciplinary Collaboration</strong>: Team of 6 including mechanical engineers, cognitive science students, and visual artists</li>
+          </ul>
+        </section>
+
+        <!-- Mind Garden Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/mind_garden_museum.jpg" alt="Mind Garden installation at museum" class="project-img">
+          <figcaption>Mind Garden kinetic sculpture installation at Waterloo Museum</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/mind_garden_close_up.JPG" alt="Mind Garden detail" class="project-img">
+          <figcaption">Close-up detail of individual kinetic flower mechanism</figcaption>
+        </figure>
+
+        <!-- Socratica Symposium -->
+        <section class="project-section">
+          <h3 class="subsection-title">Socratica Symposium Exhibition (Oct 2024)</h3>
+          <p>PRISM served as featured exhibitors at Socratica, a 200-person interdisciplinary symposium exploring intersections of technology, philosophy, and society. Our booth showcased 5 interactive installations demonstrating principles from biosignal processing, affective robotics, and generative systems.</p>
+
+          <p><strong>Exhibited works</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Bass Robot</strong>: Audience-reactive kinetic sculpture using audio amplitude detection to drive mechanical tentacle motion</li>
+            <li><strong>Jellyfish Projection Mapping</strong>: Real-time generative visuals (TouchDesigner) responding to room occupancy via depth camera</li>
+            <li><strong>EMG-Driven Wearable</strong>: Somatic Bloom prototype demonstrating facial expression to kinetic output transduction</li>
+            <li><strong>VR Neural Interface Demo</strong>: Speculative interface allowing users to "sculpt" 3D forms via imagined hand movements (simulated BCI)</li>
+          </ul>
+        </section>
+
+        <!-- Socratica Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/socratica_symposium_booth.JPG" alt="PRISM booth at Socratica" class="project-img">
+          <figcaption">PRISM exhibition booth at Socratica Symposium featuring interactive installations</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/socratica_symposium_robot.JPG" alt="Bass Robot at Socratica" class="project-img">
+          <figcaption">Bass Robot kinetic sculpture responding to ambient audio input</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/bass_robot.JPG" alt="Bass Robot detail" class="project-img">
+          <figcaption">Mechanical detail of Bass Robot actuated tentacle mechanism</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/socratica_symposium_jellyfish.jpg" alt="Jellyfish projection mapping" class="project-img">
+          <figcaption">Generative jellyfish visuals projected onto sculptural forms</figcaption>
+        </figure>
+
+        <!-- Symposium Stage Presence -->
+        <section class="project-section">
+          <h3 class="subsection-title">Symposium Presentations</h3>
+          <p>In addition to exhibition presence, PRISM members delivered talks on creative technology practice and research translation:</p>
+
+          <ul class="project-list">
+            <li><strong>Keynote Panel</strong>: "From Lab to Gallery: Translating Technical Research into Public Experience" - Discussion on challenges and opportunities in science communication through experiential art</li>
+            <li><strong>Technical Workshop</strong>: "Introduction to Biosignal-Driven Interactive Art" - Hands-on session teaching audience to build simple EMG-controlled LED installations</li>
+          </ul>
+        </section>
+
+        <!-- Stage Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/socratica_symposium_me_speaking.jpg" alt="Presenting at Socratica" class="project-img">
+          <figcaption">Presenting on creative technology practice and biosignal-driven art at Socratica</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/socratica_symposium_presentation_big_stage.jpg" alt="Main stage presentation" class="project-img">
+          <figcaption">Main stage presentation on research translation and experiential design</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/socratica_symposium_stage.JPG" alt="Stage setup" class="project-img">
+          <figcaption">Stage setup for panel discussion on technology and public engagement</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/socratica_symposium_projects.jpg" alt="Project showcase" class="project-img">
+          <figcaption">Overview of exhibited projects and interactive demonstrations</figcaption>
+        </figure>
+
+        <!-- Educational Outreach -->
+        <section class="project-section">
+          <h2 class="section-title">Educational Outreach & Workshops</h2>
+
+          <h3 class="subsection-title">Toronto VR Workshop Series (Nov 2024)</h3>
+          <p>PRISM organized and led a 3-day intensive workshop introducing 40 Toronto high school students to spatial computing and immersive experience design. Partnered with local VR studio to provide access to Quest 3 headsets and Unity development environments.</p>
+
+          <p><strong>Curriculum highlights</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Day 1</strong>: Introduction to VR hardware, human perception in immersive environments, and design principles for 3D interfaces</li>
+            <li><strong>Day 2</strong>: Hands-on Unity development - students built simple interactive VR scenes with grabbable objects and teleportation locomotion</li>
+            <li><strong>Day 3</strong>: Guided project work - teams of 4 designed and prototyped VR experiences on themes of education, mental health, or environmental awareness</li>
+          </ul>
+
+          <p><strong>Outcomes</strong>: 85% of participants reported increased interest in computer science/engineering careers; 12 students subsequently enrolled in university CS programs citing workshop as pivotal experience.</p>
+        </section>
+
+        <!-- Workshop Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/toronto_vr_workshop.JPG" alt="Toronto VR workshop session 1" class="project-img">
+          <figcaption">High school students learning VR development fundamentals</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/toronto_vr_workshop2.JPG" alt="Toronto VR workshop session 2" class="project-img">
+          <figcaption">Hands-on Unity development and 3D interaction design</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/toronto_vr_workshop3.JPG" alt="Toronto VR workshop session 3" class="project-img">
+          <figcaption">Students testing and iterating on their VR prototypes</figcaption>
+        </figure>
+
+        <!-- TouchDesigner Workshop -->
+        <section class="project-section">
+          <h3 class="subsection-title">TouchDesigner Creative Coding Workshop</h3>
+          <p>Monthly workshop series teaching generative art and real-time visual systems using TouchDesigner. Curriculum designed for beginners with no prior programming experience, emphasizing visual node-based paradigm over traditional code.</p>
+
+          <p><strong>Topics covered</strong>:</p>
+          <ul class="project-list">
+            <li>Node graph fundamentals: operators, parameters, and data flow</li>
+            <li>Generative geometry: GLSL shaders, instancing, and procedural modeling</li>
+            <li>Interactive systems: sensor input (Kinect, webcam, MIDI controllers), audio reactivity</li>
+            <li>Projection mapping: UV mapping, edge blending, and multi-projector calibration</li>
+          </ul>
+        </section>
+
+        <!-- TouchDesigner Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/touchdesigner_workshop.JPG" alt="TouchDesigner workshop" class="project-img">
+          <figcaption">TouchDesigner workshop teaching generative art and real-time visual systems</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/touchdesigner_workshop_project_sample.JPG" alt="TouchDesigner project sample" class="project-img">
+          <figcaption">Example participant project: audio-reactive particle system with projection mapping</figcaption>
+        </figure>
+
+        <!-- Museum Exhibition -->
+        <section class="project-section">
+          <h2 class="section-title">Museum Partnerships & Public Exhibition</h2>
+
+          <h3 class="subsection-title">Waterloo Region Museum Residency</h3>
+          <p>PRISM established an ongoing partnership with Waterloo Region Museum for quarterly rotating exhibitions of member work. This provides:</p>
+
+          <ul class="project-list">
+            <li><strong>Professional Exhibition Experience</strong>: Members gain curatorial skills, museum-quality fabrication standards, and public engagement practice</li>
+            <li><strong>Community Access</strong>: Museum attendance ~15,000/year exposes diverse audiences to creative technology practice</li>
+            <li><strong>Institutional Validation</strong>: Museum endorsement elevates perception of student technical-art work as culturally valuable</li>
+          </ul>
+        </section>
+
+        <!-- Museum Photos -->
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/prism_museum_24.jpg" alt="PRISM museum exhibition 2024" class="project-img">
+          <figcaption">PRISM installations on display at Waterloo Region Museum</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/artsy_photo.JPG" alt="Artistic installation photo" class="project-img">
+          <figcaption">Illuminated kinetic installation in museum gallery space</figcaption>
+        </figure>
+
+        <figure class="project-media">
+          <img src="assets/projects/PRISM/booth.JPG" alt="Exhibition booth setup" class="project-img">
+          <figcaption">Interactive booth setup for public engagement and demonstration</figcaption>
+        </figure>
+
+        <!-- Impact & Metrics -->
+        <section class="project-section">
+          <h2 class="section-title">Impact & Growth Metrics</h2>
+
+          <h3 class="subsection-title">Community Growth</h3>
+          <ul class="project-list">
+            <li><strong>Membership</strong>: 120+ active members (Oct 2024 - Present), diverse representation across 8 academic departments</li>
+            <li><strong>Gender Diversity</strong>: 45% women/non-binary members (vs. ~25% in UWaterloo engineering programs), achieved through intentional inclusive recruitment</li>
+            <li><strong>Retention</strong>: 82% of members active for 2+ consecutive terms, indicating strong community engagement</li>
+          </ul>
+
+          <h3 class="subsection-title">Public Reach</h3>
+          <ul class="project-list">
+            <li><strong>Exhibition Attendance</strong>: 2000+ unique visitors across museum exhibitions and symposium events</li>
+            <li><strong>Workshop Participants</strong>: 150+ individuals trained through skill shares and outreach programs</li>
+            <li><strong>Media Coverage</strong>: Featured in university publications, local news (CBC Kitchener-Waterloo), and tech blogs</li>
+          </ul>
+
+          <h3 class="subsection-title">Academic Impact</h3>
+          <ul class="project-list">
+            <li><strong>Research Translation</strong>: 8 member projects directly derived from academic research (affective computing, soft robotics, computational fabrication)</li>
+            <li><strong>Conference Presentations</strong>: 3 papers accepted to ACM conferences on interactive art and human-computer interaction</li>
+            <li><strong>Industry Partnerships</strong>: Sponsorships from Unity Technologies, Arduino, and local makerspaces totaling $15,000</li>
+          </ul>
+        </section>
+
+        <!-- Future Vision -->
+        <section class="project-section">
+          <h2 class="section-title">Future Vision</h2>
+
+          <h3 class="subsection-title">Organizational Sustainability</h3>
+          <ul class="project-list">
+            <li><strong>Formalize Leadership Structure</strong>: Transition from founder-driven to democratically elected rotating leadership to ensure continuity beyond graduation cycles</li>
+            <li><strong>Secure Dedicated Space</strong>: Negotiate university allocation of permanent studio space for tools, project storage, and social gathering (current model relies on shared makerspace)</li>
+            <li><strong>Expand Funding Base</strong>: Diversify revenue through corporate sponsorships, grants (Canada Council for the Arts), and crowdfunding for large installations</li>
+          </ul>
+
+          <h3 class="subsection-title">Programmatic Expansion</h3>
+          <ul class="project-list">
+            <li><strong>Public Art Commissions</strong>: Pursue municipal contracts for permanent outdoor installations in Waterloo public spaces</li>
+            <li><strong>Artist Residency Program</strong>: Host 2-4 visiting artists annually to mentor students and cross-pollinate practices from professional art world</li>
+            <li><strong>High School Pipeline</strong>: Formalize partnerships with 5+ regional high schools for recurring workshops and mentorship, building pathway to university creative tech programs</li>
+          </ul>
+
+          <h3 class="subsection-title">Research Agenda</h3>
+          <ul class="project-list">
+            <li><strong>Documentation & Study</strong>: Longitudinal ethnographic study of PRISM as model for interdisciplinary creative tech education (potential publication in engineering education journals)</li>
+            <li><strong>Public Understanding of Research</strong>: Systematic evaluation of whether experiential art installations improve science literacy vs. traditional communication methods</li>
+            <li><strong>Inclusive Design Practices</strong>: Investigate how participatory design methods in creative tech can broaden participation in STEM fields</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/prism-collective-background.js"></script>
+  <script src="js/prism-collective-scroll.js"></script>
+</body>
+</html>

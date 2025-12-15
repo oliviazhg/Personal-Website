@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLC Resonant Converter - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">LLC Resonant Converter</h1>
+        <p class="project-subtitle">Feb - May 2024</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/LLC Converter/final PCB.jpg" alt="Completed LLC resonant converter PCB" class="project-img">
+          <figcaption>Final LLC resonant converter PCB with integrated gate drivers and planar transformer</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>This project involved the complete design, simulation, fabrication, and bring-up of a high-efficiency LLC resonant converter for DC-DC power conversion. Developed as part of a university power electronics course, the converter achieves >94% efficiency across a wide load range while maintaining excellent electromagnetic compatibility (EMC) through careful PCB layout and resonant topology selection.</p>
+
+          <p>LLC resonant converters are the dominant topology in modern server power supplies, telecom rectifiers, and electric vehicle charging systems due to their ability to achieve zero-voltage switching (ZVS) across the entire operating range. This project provided hands-on experience with magnetic component design, high-frequency power electronics, and thermal management—skills critical for energy-efficient system design.</p>
+        </section>
+
+        <!-- Technical Specifications -->
+        <section class="project-section">
+          <h2 class="section-title">Design Specifications</h2>
+
+          <h3 class="subsection-title">Performance Targets</h3>
+          <ul class="project-list">
+            <li><strong>Input voltage</strong>: 400V DC (nominal), 360-440V range</li>
+            <li><strong>Output voltage</strong>: 48V DC regulated (±2% tolerance)</li>
+            <li><strong>Output power</strong>: 200W (4.17A rated current)</li>
+            <li><strong>Efficiency</strong>: >93% at full load, >90% at 20% load</li>
+            <li><strong>Switching frequency</strong>: 80-120 kHz (variable for regulation)</li>
+            <li><strong>Resonant frequency</strong>: 100 kHz (tank circuit design point)</li>
+            <li><strong>Isolation</strong>: 3 kV reinforced insulation per IEC 60950-1</li>
+            <li><strong>EMI compliance</strong>: Target CISPR 32 Class B conducted emissions limits</li>
+          </ul>
+
+          <h3 class="subsection-title">Topology Selection Rationale</h3>
+          <p>LLC resonant topology selected over alternatives (phase-shifted full bridge, active clamp forward) based on multi-criteria decision matrix:</p>
+
+          <ul class="project-list">
+            <li><strong>Zero-voltage switching (ZVS)</strong>: Primary-side MOSFETs commutate at zero voltage across entire load range, eliminating switching losses and reducing EMI</li>
+            <li><strong>Low secondary-side rectifier stress</strong>: Resonant current shaping reduces diode reverse recovery losses compared to hard-switched topologies</li>
+            <li><strong>Magnetic integration</strong>: Series resonant inductor can be integrated into transformer leakage inductance, reducing component count</li>
+            <li><strong>Wide regulation range</strong>: Frequency modulation enables 10:1 load variation without sacrificing efficiency</li>
+          </ul>
+        </section>
+
+        <!-- Magnetic Design -->
+        <section class="project-section">
+          <h2 class="section-title">Magnetic Component Design</h2>
+
+          <h3 class="subsection-title">Planar Transformer Development</h3>
+          <p>Custom planar transformer designed for high power density and thermal performance:</p>
+
+          <p><strong>Core Selection</strong>: Ferroxcube E64/10/50 ferrite core (N87 material), selected for:</p>
+          <ul class="project-list">
+            <li>Low core losses at 100 kHz (150 mW/cm³ at 100 mT, 100°C)</li>
+            <li>Planar form factor compatible with low-profile PCB-mounted windings</li>
+            <li>Center leg area 420 mm², sufficient for 200W power handling without excessive flux density</li>
+          </ul>
+
+          <p><strong>Winding Design</strong>: 4-layer PCB-integrated windings using 2oz copper (70 μm thickness):</p>
+          <ul class="project-list">
+            <li><strong>Primary winding</strong>: 20 turns distributed across 2 layers (10 turns/layer), interleaved with secondary for reduced leakage inductance</li>
+            <li><strong>Secondary winding</strong>: 2 turns × 2 layers (4 turns total), wide copper traces (8mm width) to minimize I²R losses at high secondary current</li>
+            <li><strong>Turns ratio</strong>: N_p:N_s = 20:4 = 5:1, providing nominal voltage step-down accounting for LLC resonant gain</li>
+          </ul>
+
+          <p><strong>Leakage Inductance Tuning</strong>: LLC topology requires precise control of transformer leakage inductance L_lk (serves as series resonant inductor):</p>
+
+          <ul class="project-list">
+            <li>Target L_lk = 180 μH (calculated from resonant frequency f_r = 1/(2π√(L_lk × C_r)) with C_r = 15 nF)</li>
+            <li>Achieved L_lk = 175 μH through layer spacing optimization (0.4mm primary-secondary separation) and winding interleaving pattern</li>
+            <li>Validated via impedance analyzer measurement (Wayne Kerr 6500B, 1 kHz - 1 MHz sweep)</li>
+          </ul>
+
+          <p><strong>Thermal Considerations</strong>:</p>
+          <ul class="project-list">
+            <li>Estimated copper losses: P_cu = I_rms² × R_dc × F_r = 3.5W (accounting for skin effect via Dowell method, F_r ≈ 1.8 at 100 kHz)</li>
+            <li>Estimated core losses: P_core = 2.2W (calculated via Steinmetz equation with manufacturer datasheet parameters)</li>
+            <li>Total transformer losses: ~5.8W → ΔT ≈ 35°C temperature rise with natural convection (measured via thermal camera validation)</li>
+          </ul>
+        </section>
+
+        <!-- Schematic 1 -->
+        <figure class="project-media">
+          <img src="assets/projects/LLC Converter/schematic_1.jpg" alt="LLC converter schematic page 1" class="project-img">
+          <figcaption>Primary-side half-bridge topology with resonant tank and gate drive circuitry</figcaption>
+        </figure>
+
+        <!-- Schematic 2 -->
+        <figure class="project-media">
+          <img src="assets/projects/LLC Converter/schematic_2.jpg" alt="LLC converter schematic page 2" class="project-img">
+          <figcaption">Secondary-side synchronous rectification and output filtering stage</figcaption>
+        </figure>
+
+        <!-- Resonant Tank Design -->
+        <section class="project-section">
+          <h2 class="section-title">Resonant Tank Circuit Design</h2>
+
+          <h3 class="subsection-title">Component Selection & Optimization</h3>
+          <p>The LLC resonant tank consists of series resonant inductor L_r, series resonant capacitor C_r, and magnetizing inductance L_m:</p>
+
+          <p><strong>Series Resonant Capacitor (C_r)</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Capacitance</strong>: 15 nF (3× 5 nF film capacitors in parallel for current sharing and redundancy)</li>
+            <li><strong>Type</strong>: Polypropylene film (WIMA MKP4), chosen for low ESR (<10 mΩ at 100 kHz) and excellent temperature stability</li>
+            <li><strong>Voltage rating</strong>: 630V DC (safety factor 1.4 against 440V max input with resonant voltage multiplication)</li>
+            <li><strong>Current stress</strong>: RMS current ~6A at full load, film capacitors easily handle thermal dissipation (I²R × ESR ≈ 0.4W)</li>
+          </ul>
+
+          <p><strong>Series Resonant Inductor (L_r)</strong>:</p>
+          <ul class="project-list">
+            <li>Implemented via controlled transformer leakage inductance as described previously (L_r = L_lk = 175 μH)</li>
+            <li>Alternative approach: External discrete inductor adds BOM cost and PCB area; integrated approach preferred for this power level</li>
+          </ul>
+
+          <p><strong>Magnetizing Inductance (L_m)</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Value</strong>: L_m = 350 μH (ratio L_m/L_r ≈ 2, chosen to achieve desired gain characteristics)</li>
+            <li>Determined by transformer core gapping: 0.8mm air gap in center leg reduces effective permeability and sets magnetizing inductance</li>
+            <li>Larger L_m/L_r ratio provides wider ZVS range but reduces voltage gain at light load; chosen value balances tradeoffs</li>
+          </ul>
+
+          <h3 class="subsection-title">Frequency Response Analysis</h3>
+          <p>LLC converter gain (output/input voltage ratio) varies with switching frequency relative to resonant frequency:</p>
+
+          <ul class="project-list">
+            <li><strong>Below resonance (f < f_r)</strong>: Inductive operating mode, gain >1, not typically used (risk of losing ZVS)</li>
+            <li><strong>At resonance (f = f_r = 100 kHz)</strong>: Maximum gain ≈ N × Q (where Q = √(L_r/C_r)/R_load, quality factor). Designed for Q ≈ 0.4 at full load.</li>
+            <li><strong>Above resonance (f > f_r)</strong>: Capacitive operating mode, gain <1, used for voltage regulation by increasing frequency to reduce gain</li>
+          </ul>
+
+          <p>Control loop modulates switching frequency from 80 kHz (full load, minimum frequency for maximum gain) to 120 kHz (light load, higher frequency reduces gain to maintain 48V output).</p>
+        </section>
+
+        <!-- Power Stage & Control -->
+        <section class="project-section">
+          <h2 class="section-title">Power Stage & Control Implementation</h2>
+
+          <h3 class="subsection-title">Primary-Side Half-Bridge</h3>
+          <ul class="project-list">
+            <li><strong>MOSFETs</strong>: Infineon IPP60R099C6 (650V, 99 mΩ R_ds(on), TO-220 package). Selected for low on-resistance to minimize conduction losses and adequate voltage margin.</li>
+            <li><strong>Gate Drivers</strong>: UCC27211 half-bridge driver IC with bootstrap supply for high-side MOSFET. 4A peak source/sink current ensures fast switching transitions (<30 ns rise/fall times).</li>
+            <li><strong>Bootstrap Capacitor</strong>: 1 μF ceramic (X7R dielectric) with 100V rating, sized for gate charge refresh during minimum on-time operation.</li>
+            <li><strong>Dead Time</strong>: 200 ns implemented via driver IC internal logic to prevent shoot-through while ensuring body diode conduction period for ZVS.</li>
+          </ul>
+
+          <h3 class="subsection-title">Secondary-Side Synchronous Rectification</h3>
+          <ul class="project-list">
+            <li><strong>Synchronous Rectifier MOSFETs</strong>: Infineon BSC050N10NS5 (100V, 5 mΩ, PowerPAK SO-8). Low R_ds(on) critical at high secondary current (4A) to minimize I²R losses.</li>
+            <li><strong>SR Controller</strong>: NCP4305 adaptive gate drive IC automatically times SR MOSFET conduction based on body diode voltage drop detection, eliminating need for secondary-side PWM signal isolation.</li>
+            <li><strong>Efficiency Gain</strong>: Synchronous rectification reduces rectifier losses from ~4W (Schottky diodes) to ~0.8W (SR MOSFETs), improving overall efficiency by ~1.6 percentage points.</li>
+          </ul>
+
+          <h3 class="subsection-title">Voltage Regulation & Feedback</h3>
+          <ul class="project-list">
+            <li><strong>Isolated Feedback</strong>: TL431 shunt regulator on secondary side provides voltage reference; optocoupler (PC817) transmits error signal across isolation barrier to primary controller.</li>
+            <li><strong>PWM Controller</strong>: L6599 resonant controller IC specifically designed for LLC topologies. Integrated VCO (voltage-controlled oscillator) adjusts switching frequency based on feedback signal.</li>
+            <li><strong>Soft-Start</strong>: Controller initiates operation at high frequency (150 kHz) then ramps down to resonant frequency over 50 ms, limiting inrush current during startup.</li>
+            <li><strong>Protection Features</strong>: Overcurrent protection via current-sense resistor (0.1Ω, 1W), overvoltage protection via TL431 clamp, overtemperature shutdown via NTC thermistor mounted on transformer.</li>
+          </ul>
+        </section>
+
+        <!-- PCB Design -->
+        <section class="project-section">
+          <h2 class="section-title">PCB Layout & EMI Mitigation</h2>
+
+          <h3 class="subsection-title">High-Frequency Layout Considerations</h3>
+          <ul class="project-list">
+            <li><strong>4-Layer Stackup</strong>: Top (signal/power), Layer 2 (ground plane), Layer 3 (power plane), Bottom (signal/power). Continuous ground plane on Layer 2 provides low-impedance return path for high-frequency currents.</li>
+            <li><strong>Critical Current Loops</strong>: Minimized area of high di/dt loops (MOSFET source → resonant capacitor → MOSFET drain) to reduce magnetic field radiation. Components placed within 5mm proximity.</li>
+            <li><strong>Via Stitching</strong>: Ground plane stitched to top/bottom layers via array of vias (1 via per cm²) to maintain plane integrity and reduce impedance discontinuities.</li>
+            <li><strong>Kelvin Sensing</strong>: Output voltage feedback taken via dedicated traces routed away from power path to eliminate voltage drop errors from PCB trace resistance.</li>
+          </ul>
+
+          <h3 class="subsection-title">Thermal Management</h3>
+          <ul class="project-list">
+            <li><strong>Copper Pours</strong>: Large copper areas on top/bottom layers connected to MOSFET drain/source pads for heat spreading. 2oz copper (70 μm) provides 1.2°C/W thermal resistance per square.</li>
+            <li><strong>Thermal Vias</strong>: MOSFETs and transformer have thermal via arrays (9× 0.3mm vias) connecting top layer to internal ground plane for vertical heat conduction to PCB bulk.</li>
+            <li><strong>Heatsink Interface</strong>: TO-220 MOSFETs mounted with thermal pads (Bergquist Sil-Pad K10, 3 W/mK) to aluminum heatsink (120 mm × 50 mm × 25 mm, estimated R_θ ≈ 5°C/W with natural convection).</li>
+          </ul>
+
+          <h3 class="subsection-title">EMI Filtering</h3>
+          <ul class="project-list">
+            <li><strong>Input Filter</strong>: Two-stage LC filter (common-mode choke + differential capacitors) attenuates conducted emissions from switching harmonics. Cutoff frequency 10 kHz (well below 80 kHz switching frequency).</li>
+            <li><strong>Y-Capacitors</strong>: 2× 2.2 nF ceramic capacitors (Y1-rated, 4 kV surge) from primary-side DC bus to chassis ground for common-mode noise suppression.</li>
+            <li><strong>Snubber Networks</strong>: RC snubbers (100Ω + 1 nF) across primary MOSFETs damp high-frequency ringing from parasitic resonances, reducing radiated emissions above 150 MHz.</li>
+          </ul>
+        </section>
+
+        <!-- Testing & Bring-Up -->
+        <section class="project-section">
+          <h2 class="section-title">Testing, Bring-Up & Validation</h2>
+
+          <h3 class="subsection-title">Staged Bring-Up Procedure</h3>
+          <p>Systematic testing protocol to identify faults before applying full power:</p>
+
+          <ol class="project-list">
+            <li><strong>Visual Inspection</strong>: PCB examined under microscope for solder bridges, tombstoning, insufficient solder joints. All 247 components verified against BOM and placement drawing.</li>
+            <li><strong>Continuity Testing</strong>: Multimeter checks for shorts between power rails, isolation barrier integrity (>10 MΩ primary-to-secondary resistance).</li>
+            <li><strong>Low-Voltage Functional Test</strong>: Controller powered from bench supply at 15V (bypassing 400V input), gate drive waveforms verified on oscilloscope. Confirmed 50/50 duty cycle, correct dead time, frequency modulation response.</li>
+            <li><strong>No-Load Power-Up</strong>: Input voltage ramped from 100V to 400V in 50V increments with current limit set to 0.5A. Monitored for abnormal current draw indicating component failure.</li>
+            <li><strong>Resistive Load Testing</strong>: Electronic load connected at output, power ramped from 10W to 200W in 25W steps. Efficiency measured at each point via power analyzer (Yokogawa WT310).</li>
+          </ol>
+
+          <h3 class="subsection-title">Performance Validation Results</h3>
+          <ul class="project-list">
+            <li><strong>Efficiency</strong>: Peak efficiency 94.2% at 150W load, full-load efficiency 93.7%, exceeding target specification. Efficiency remains >90% down to 40W (20% load).</li>
+            <li><strong>Regulation</strong>: Output voltage 48.0V ±0.5% across 10-100% load range with 400V input. Line regulation: ±1.2% for input variation 360-440V.</li>
+            <li><strong>ZVS Operation</strong>: Oscilloscope captures confirm zero-voltage turn-on of primary MOSFETs across full load range. Drain-source voltage transitions occur at <2V, validating soft-switching operation.</li>
+            <li><strong>Thermal Performance</strong>: Maximum component temperatures at 200W, 25°C ambient: Primary MOSFETs 78°C, transformer 68°C, synchronous rectifiers 61°C. All below maximum ratings with margin.</li>
+          </ul>
+
+          <h3 class="subsection-title">EMI Compliance Testing</h3>
+          <p>Conducted emissions tested using LISN (line impedance stabilization network) and spectrum analyzer per CISPR 32:</p>
+
+          <ul class="project-list">
+            <li><strong>Quasi-Peak Measurements</strong>: All harmonics below Class B limits (56-66 dBμV depending on frequency) with 6-10 dB margin in 150 kHz - 30 MHz range</li>
+            <li><strong>Critical Frequencies</strong>: Switching fundamental (100 kHz) and harmonics (200 kHz, 300 kHz) well-attenuated by input filter, measuring 45-52 dBμV (limit 66 dBμV)</li>
+            <li><strong>Radiated Emissions</strong>: Informal near-field probe testing indicates low radiation, though formal 3m OATS chamber testing not performed (beyond course scope)</li>
+          </ul>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section class="project-section">
+          <h2 class="section-title">Troubleshooting & Failure Analysis</h2>
+
+          <h3 class="subsection-title">Major Issues Encountered</h3>
+
+          <p><strong>Issue 1: Intermittent Startup Failure</strong></p>
+          <ul class="project-list">
+            <li><strong>Symptom</strong>: Converter failed to start ~30% of power-up attempts, drawing excessive input current (>2A) with no output voltage</li>
+            <li><strong>Root Cause</strong>: Insufficient bootstrap capacitor charge time during soft-start phase. High-side MOSFET remained off, causing half-bridge to operate as buck converter into short circuit</li>
+            <li><strong>Solution</strong>: Increased bootstrap capacitor from 0.47 μF to 1 μF, added 10Ω gate resistor to slow MOSFET turn-on and extend bootstrap refresh period</li>
+          </ul>
+
+          <p><strong>Issue 2: Transformer Saturation Under Light Load</strong></p>
+          <ul class="project-list">
+            <li><strong>Symptom</strong>: At <10% load, transformer exhibited audible noise and temperature rise >80°C despite low power throughput</li>
+            <li><strong>Root Cause</strong>: Frequency modulation at light load increased to 140 kHz (beyond designed range), causing operation near subharmonic resonance that drove transformer into saturation</li>
+            <li><strong>Solution</strong>: Implemented frequency clamping in controller (maximum 120 kHz) and added minimum load requirement (10W dummy resistor) to prevent extreme light-load operation</li>
+          </ul>
+
+          <p><strong>Issue 3: Synchronous Rectifier Shoot-Through</strong></p>
+          <ul class="project-list">
+            <li><strong>Symptom</strong>: SR MOSFETs exhibited excessive heating (~90°C) and occasional catastrophic failure (drain-source short)</li>
+            <li><strong>Root Cause</strong>: NCP4305 SR controller detection threshold misaligned with actual secondary voltage waveform, causing both SR MOSFETs to conduct simultaneously during transitions (shoot-through)</li>
+            <li><strong>Solution</strong>: Adjusted detection threshold via external resistor divider, added RC snubber across secondary winding to damp voltage ringing that triggered false detections</li>
+          </ul>
+        </section>
+
+        <!-- Lessons Learned -->
+        <section class="project-section">
+          <h2 class="section-title">Lessons Learned & Future Improvements</h2>
+
+          <h3 class="subsection-title">Key Takeaways</h3>
+          <ul class="project-list">
+            <li><strong>Magnetic Design Criticality</strong>: Transformer performance fundamentally determines converter efficiency and power density. Investing time in FEA simulation and prototype iteration for magnetics pays substantial dividends.</li>
+            <li><strong>Layout = Circuit</strong>: At 100 kHz+ switching frequencies, PCB parasitic inductance and capacitance significantly impact performance. Cannot treat layout as afterthought; must co-design circuit topology with physical implementation.</li>
+            <li><strong>Measurement Infrastructure</strong>: High-bandwidth oscilloscope (≥500 MHz), current probes, and power analyzer essential for meaningful characterization. Cannot validate resonant converter performance with multimeter alone.</li>
+            <li><strong>Datasheet Limitations</strong>: Manufacturer specifications often incomplete or idealized. Real-world behavior (MOSFET gate charge variation with temperature, transformer leakage inductance tolerance) requires empirical validation.</li>
+          </ul>
+
+          <h3 class="subsection-title">Potential Enhancements</h3>
+          <ul class="project-list">
+            <li><strong>Digital Control</strong>: Replace analog L6599 controller with digital signal processor (DSP) or FPGA for advanced features: adaptive dead-time tuning, burst mode for light-load efficiency, predictive control algorithms</li>
+            <li><strong>Planar PCB Transformer</strong>: Fully integrate transformer windings into PCB (no discrete core) for extreme power density, at cost of increased design complexity</li>
+            <li><strong>Gallium Nitride (GaN) MOSFETs</strong>: Replace silicon MOSFETs with GaN HEMTs (e.g., GaN Systems GS61008T) for reduced switching losses, enabling higher switching frequency (200-500 kHz) and smaller magnetics</li>
+            <li><strong>Multi-Phase Interleaving</strong>: Parallel two LLC stages with 180° phase offset to halve input/output ripple current and improve transient response</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/llc-converter-background.js"></script>
+  <script src="js/llc-converter-scroll.js"></script>
+</body>
+</html>

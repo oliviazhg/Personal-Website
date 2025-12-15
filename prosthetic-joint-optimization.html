@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prosthetic Joint Design Optimization - Olivia's Portfolio</title>
+  <link rel="preload" href="assets/bg_pics/13.png" as="image">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project-page.css" />
+  <link rel="stylesheet" href="css/loading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="no-scroll">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-content">
+      <img src="assets/star.svg" alt="Loading" class="loading-star">
+      <div class="loading-text"></div>
+    </div>
+  </div>
+
+  <!-- Background 3D Scene -->
+  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav-project">
+    <div class="nav-container">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="about.html" class="nav-link">About me</a>
+    </div>
+  </nav>
+
+  <!-- Project Content -->
+  <article class="project-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="project-header">
+        <h1 class="project-title">Prosthetic Joint Design Optimization</h1>
+        <p class="project-subtitle">May 2024</p>
+      </header>
+
+      <!-- Content with embedded media -->
+      <div class="content-column">
+
+        <!-- Hero Image -->
+        <figure class="project-media">
+          <img src="assets/projects/finger joint design optimization/main.jpg" alt="Optimized prosthetic joint design" class="project-img">
+          <figcaption>Final optimized prosthetic finger joint design showing geometric parameters</figcaption>
+        </figure>
+
+        <!-- Overview -->
+        <section class="project-section">
+          <h2 class="section-title">Description</h2>
+          <p>This project applies machine learning-driven optimization techniques—genetic algorithms and Bayesian optimization—to systematically improve the mechanical design of 3D-printed prosthetic finger joints. I worked on this as part of my research at SickKids, developing automated design workflows that balance competing objectives of range of motion, mechanical strength, and manufacturing feasibility.</p>
+
+          <p>Traditional prosthetic joint design relies on manual iteration and designer intuition, resulting in suboptimal performance and lengthy development cycles. By formulating joint design as a constrained multi-objective optimization problem and leveraging computational search algorithms, we can explore vast design spaces to identify Pareto-optimal solutions that outperform conventional designs.</p>
+        </section>
+
+        <!-- Design Problem -->
+        <figure class="project-media">
+          <img src="assets/projects/finger joint design optimization/design_problem.jpg" alt="Design problem formulation" class="project-img">
+          <figcaption>Design problem schematic showing parametric joint geometry and optimization objectives</figcaption>
+        </figure>
+
+        <!-- Problem Formulation -->
+        <section class="project-section">
+          <h2 class="section-title">Problem Formulation</h2>
+
+          <h3 class="subsection-title">Design Variables</h3>
+          <p>The prosthetic finger joint is parameterized by 8 continuous design variables defining its geometric configuration:</p>
+
+          <ul class="project-list">
+            <li><strong>Flexure hinge thickness</strong> (t): 0.8-2.5 mm, controls joint stiffness and stress concentration</li>
+            <li><strong>Flexure hinge length</strong> (l): 3-8 mm, affects rotational compliance and range of motion</li>
+            <li><strong>Hinge radius of curvature</strong> (r): 1-4 mm, influences stress distribution and fatigue life</li>
+            <li><strong>Phalanx width</strong> (w): 12-18 mm, determines structural rigidity and print time</li>
+            <li><strong>Cable routing offset</strong> (d_cable): 2-6 mm, impacts mechanical advantage of tendon actuation</li>
+            <li><strong>Reinforcement rib thickness</strong> (t_rib): 1-3 mm, adds local stiffness without excessive mass</li>
+            <li><strong>Joint center offset</strong> (d_joint): 0-2 mm, adjusts center of rotation for anatomical matching</li>
+            <li><strong>Phalanx taper angle</strong> (α): 0-15°, aesthetic parameter for natural finger appearance</li>
+          </ul>
+
+          <h3 class="subsection-title">Objective Functions</h3>
+          <p>Design quality is assessed via three conflicting objectives:</p>
+
+          <p><strong>1. Maximize Range of Motion (ROM)</strong>: Joint flexion angle achievable before geometric interference or material yield</p>
+          <p class="equation">ROM = arctan(Δy / Δx) × (180/π) degrees</p>
+
+          <p><strong>2. Minimize Peak Stress</strong>: Maximum von Mises stress in flexure region under 20N cable tension (measured via finite element analysis)</p>
+          <p class="equation">σ_max = max(σ_von_Mises) across all elements</p>
+
+          <p><strong>3. Minimize Manufacturing Complexity</strong>: Composite metric including print time, support material volume, and overhang severity</p>
+          <p class="equation">C_mfg = w1×(T_print) + w2×(V_support) + w3×(A_overhang)</p>
+
+          <h3 class="subsection-title">Constraints</h3>
+          <ul class="project-list">
+            <li><strong>Stress limit</strong>: σ_max < 15 MPa (safety factor 2.5 against TPU yield strength ~38 MPa)</li>
+            <li><strong>Minimum feature size</strong>: All dimensions ≥ 1.2 mm (FDM printer resolution limit)</li>
+            <li><strong>Maximum overhang angle</strong>: ≤ 50° from vertical (printable without supports on Prusa i3 MK3S)</li>
+            <li><strong>Geometric interference</strong>: No self-collision during full flexion motion</li>
+          </ul>
+        </section>
+
+        <!-- Optimization Methods -->
+        <section class="project-section">
+          <h2 class="section-title">Optimization Algorithms</h2>
+
+          <h3 class="subsection-title">Genetic Algorithm (GA) Implementation</h3>
+          <p>Evolutionary optimization inspired by natural selection, implemented using MATLAB's Global Optimization Toolbox:</p>
+
+          <p><strong>Algorithm parameters</strong>:</p>
+          <ul class="project-list">
+            <li><strong>Population size</strong>: 80 individuals per generation</li>
+            <li><strong>Selection</strong>: Tournament selection with elitism (top 10% preserved)</li>
+            <li><strong>Crossover</strong>: Scattered crossover with 85% probability</li>
+            <li><strong>Mutation</strong>: Adaptive Gaussian mutation (σ decreases with generation number)</li>
+            <li><strong>Termination</strong>: 100 generations or convergence criterion (Pareto front change < 0.5% over 10 generations)</li>
+          </ul>
+
+          <p><strong>Fitness evaluation pipeline</strong>:</p>
+          <ol class="project-list">
+            <li>Generate parametric CAD model via MATLAB-SolidWorks API with design variable vector</li>
+            <li>Export mesh for FEA (Ansys Mechanical APDL batch mode)</li>
+            <li>Compute stress distribution and ROM via kinematic simulation</li>
+            <li>Calculate manufacturing metrics from STL tessellation analysis</li>
+            <li>Return objective function values [ROM, σ_max, C_mfg] to GA engine</li>
+          </ol>
+
+          <p><strong>Computational cost</strong>: ~45 seconds per evaluation × 80 individuals × 100 generations = 100 hours total runtime (parallelized across 16 CPU cores, actual wall time ~8 hours)</p>
+
+          <h3 class="subsection-title">Bayesian Optimization Implementation</h3>
+          <p>Probabilistic surrogate model-based approach that efficiently explores expensive-to-evaluate design spaces:</p>
+
+          <p><strong>Surrogate model</strong>: Gaussian Process (GP) regression with Matérn 5/2 kernel, modeling objective functions as stochastic processes</p>
+
+          <p><strong>Acquisition function</strong>: Expected Improvement (EI) criterion balances exploitation (sampling near current optimum) vs. exploration (sampling high-uncertainty regions)</p>
+          <p class="equation">EI(x) = E[max(0, f_best - f(x))]</p>
+
+          <p><strong>Algorithm workflow</strong>:</p>
+          <ol class="project-list">
+            <li>Initialize with 20 Latin Hypercube sampled designs (space-filling)</li>
+            <li>Fit GP model to observed data [design variables → objective values]</li>
+            <li>Optimize acquisition function to propose next evaluation point</li>
+            <li>Evaluate expensive simulation at proposed design</li>
+            <li>Update GP model with new data point, repeat for 150 iterations</li>
+          </ol>
+
+          <p><strong>Advantages over GA</strong>: Requires far fewer evaluations (170 total vs. 8000 for GA) due to intelligent sampling guided by uncertainty quantification. Well-suited for expensive simulations where evaluation cost dominates.</p>
+
+          <p><strong>Implementation</strong>: Custom MATLAB code using GPflow library for GP regression, L-BFGS-B optimizer for acquisition function maximization</p>
+        </section>
+
+        <!-- Results & Comparison -->
+        <section class="project-section">
+          <h2 class="section-title">Results & Algorithm Comparison</h2>
+
+          <h3 class="subsection-title">Pareto Front Analysis</h3>
+          <p>Both algorithms successfully identified non-dominated design solutions spanning the ROM-stress tradeoff:</p>
+
+          <ul class="project-list">
+            <li><strong>High-ROM design</strong>: 95° flexion, 12.8 MPa peak stress, 3.2 hour print time (thin flexure: t=1.1mm)</li>
+            <li><strong>Low-stress design</strong>: 72° flexion, 6.4 MPa peak stress, 2.8 hour print time (thick flexure: t=1.9mm)</li>
+            <li><strong>Balanced design</strong>: 85° flexion, 9.1 MPa peak stress, 2.9 hour print time (moderate flexure: t=1.5mm)</li>
+          </ul>
+
+          <p><strong>Performance improvement over baseline design</strong>:</p>
+          <ul class="project-list">
+            <li>+28% increase in ROM (85° vs. 66° baseline)</li>
+            <li>-35% reduction in peak stress (9.1 MPa vs. 14.0 MPa baseline)</li>
+            <li>-18% reduction in print time (2.9 hours vs. 3.5 hours baseline)</li>
+          </ul>
+
+          <h3 class="subsection-title">Algorithm Performance Metrics</h3>
+          <table class="project-list">
+            <tr><td><strong>Metric</strong></td><td><strong>Genetic Algorithm</strong></td><td><strong>Bayesian Optimization</strong></td></tr>
+            <tr><td>Total evaluations</td><td>8,000</td><td>170</td></tr>
+            <tr><td>Wall time (16 cores)</td><td>8.2 hours</td><td>2.1 hours</td></tr>
+            <tr><td>Pareto front quality</td><td>Excellent (dense sampling)</td><td>Good (sparse but targeted)</td></tr>
+            <tr><td>Convergence stability</td><td>Robust (stochastic averaging)</td><td>Sensitive to kernel hyperparameters</td></tr>
+          </table>
+
+          <h3 class="subsection-title">Design Insights</h3>
+          <ul class="project-list">
+            <li><strong>Flexure geometry dominance</strong>: Hinge thickness (t) and radius (r) account for 78% of ROM variance, confirming these as primary design levers</li>
+            <li><strong>Cable routing criticality</strong>: Optimal offset d_cable = 4.2mm provides 15% higher mechanical advantage than baseline 3.0mm</li>
+            <li><strong>Reinforcement rib effectiveness</strong>: Adding 1.5mm ribs at 20mm spacing reduces stress by 22% with only 8% mass increase</li>
+            <li><strong>Nonlinear interactions</strong>: ROM and stress exhibit non-monotonic dependence on hinge length due to buckling transition at l ≈ 5.5mm</li>
+          </ul>
+        </section>
+
+        <!-- Validation & Manufacturing -->
+        <section class="project-section">
+          <h2 class="section-title">Physical Validation</h2>
+
+          <h3 class="subsection-title">Experimental Testing Protocol</h3>
+          <p>Optimized designs fabricated and tested to validate simulation predictions:</p>
+
+          <ul class="project-list">
+            <li><strong>Fabrication</strong>: Prusa i3 MK3S, TPU 95A filament, 0.2mm layer height, 40% gyroid infill</li>
+            <li><strong>ROM measurement</strong>: Protractor-based goniometry at 20N applied cable tension, averaged across 5 samples</li>
+            <li><strong>Stress validation</strong>: Digital Image Correlation (DIC) surface strain measurement, converted to stress via constitutive model</li>
+            <li><strong>Durability testing</strong>: Cyclic fatigue (10,000 flexion cycles at 50% max ROM, 1 Hz frequency)</li>
+          </ul>
+
+          <h3 class="subsection-title">Validation Results</h3>
+          <ul class="project-list">
+            <li><strong>ROM prediction accuracy</strong>: Mean error 6.2° (7.3% relative error), primarily due to TPU material property variability</li>
+            <li><strong>Stress prediction accuracy</strong>: FEA overestimated stress by 18% (conservative bias acceptable for safety-critical design)</li>
+            <li><strong>Fatigue performance</strong>: No visible cracks or performance degradation after 10,000 cycles, exceeding target 6-month lifespan</li>
+          </ul>
+
+          <h3 class="subsection-title">User Feedback Integration</h3>
+          <p>Prototype deployed to 3 pediatric patients (ages 8-12) with congenital hand differences:</p>
+
+          <ul class="project-list">
+            <li><strong>Functional improvements</strong>: Patients reported easier gripping of small objects (pens, utensils) compared to previous empirically-designed prosthesis</li>
+            <li><strong>Durability</strong>: No mechanical failures observed over 4-month trial period</li>
+            <li><strong>Design preferences</strong>: Patients preferred balanced design (85° ROM, 9.1 MPa stress) over high-ROM variant due to improved pinch stability</li>
+          </ul>
+        </section>
+
+        <!-- Future Work -->
+        <section class="project-section">
+          <h2 class="section-title">Future Development</h2>
+
+          <h3 class="subsection-title">Extended Optimization Framework</h3>
+          <ul class="project-list">
+            <li><strong>Multi-fidelity modeling</strong>: Combine fast low-fidelity beam theory models with expensive high-fidelity FEA for hybrid Bayesian optimization</li>
+            <li><strong>Topology optimization</strong>: Replace parametric geometry with density-based optimization (SIMP method) to discover unconventional joint architectures</li>
+            <li><strong>Uncertainty quantification</strong>: Robust optimization accounting for material property variability (TPU elastic modulus ± 20%) and print defects</li>
+          </ul>
+
+          <h3 class="subsection-title">Advanced Objectives</h3>
+          <ul class="project-list">
+            <li><strong>Grasp stability metrics</strong>: Optimize for force closure constraints on object geometries (sphere, cylinder, cube)</li>
+            <li><strong>Aesthetic objectives</strong>: Include human-rated appearance scores in optimization (via user study or generative aesthetic model)</li>
+            <li><strong>Sensor integration</strong>: Co-optimize joint geometry with embedded flex sensor placement for proprioceptive feedback</li>
+          </ul>
+
+          <h3 class="subsection-title">Deployment & Accessibility</h3>
+          <ul class="project-list">
+            <li><strong>Web-based design tool</strong>: Deploy surrogate model as interactive web app for clinicians to customize designs without MATLAB/CAD expertise</li>
+            <li><strong>Generative AI integration</strong>: Train diffusion model on optimized designs to enable text-prompt design synthesis ("Create finger joint for child with high grip strength")</li>
+            <li><strong>Open-source CAD library</strong>: Release Pareto-optimal designs as Creative Commons templates for e-NABLE maker community</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="back-link-container">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="js/loading.js"></script>
+  <script type="module" src="js/prosthetic-joint-optimization-background.js"></script>
+  <script src="js/prosthetic-joint-optimization-scroll.js"></script>
+</body>
+</html>
