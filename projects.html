@@ -4,11 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects - Olivia's Portfolio</title>
-  <link rel="preload" href="assets/bg_pics/13.png" as="image">
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/projects.css" />
   <link rel="stylesheet" href="css/loading.css" />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #d5dad4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+    }
+    .message {
+      text-align: center;
+      color: #1105dc;
+    }
+    .message h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .message p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      opacity: 0.7;
+    }
+    .message a {
+      color: #1105dc;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+    .message a:hover {
+      opacity: 0.7;
+    }
+  </style>
 </head>
 <body class="no-scroll">
   <!-- Loading Screen -->
@@ -19,429 +52,11 @@
     </div>
   </div>
 
-
-  <!-- Background 3D Scene -->
-  <canvas class="background-canvas" id="backgroundWebgl"></canvas>
-
-  <!-- Top Navigation -->
-  <nav class="top-nav-projects">
-    <div class="nav-container">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="about.html" class="nav-link">About me</a>
-    </div>
-  </nav>
-
-  <!-- Projects Gallery -->
-  <section class="projects-gallery">
-    <div class="container">
-
-      <div class="gallery-grid">
-
-                <!-- Project 1 -->
-        <a href="somatic-bloom.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2025</span>
-            <span class="year-label-bottom">Jul '25 - Pres.</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/somatic_bloom/main.JPEG" alt="somatic bloom" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">somatic bloom</h3>
-            <p class="project-descriptor">multisensory cyborg for exploring affective biosignal-art embodiment</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Neural Interfacing</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Affective</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Hardware Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 87%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Biosignals</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Machine Learning</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 80%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Cyborgism</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Human-Computer Interface</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                <!-- Project 2 -->
-        <a href="supernumerary-finger.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2025</span>
-            <span class="year-label-bottom">Sep '25 - Pres.</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/supernumerary_finger/main.jpg" alt="supernumerary finger" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">supernumerary finger system</h3>
-            <p class="project-descriptor">EMG-controlled robotic sixth finger for exploring embodiment and neural plasticity</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Neural Interfacing</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Control Paradigm Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Machine Learning</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Hardware Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Human-Computer Interface</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 82%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Cyborgism</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                <!-- Project 3 -->
-        <a href="sonophoresis.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2025</span>
-            <span class="year-label-bottom">Aug '25 - Pres.</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/sonophoresis/main.jpg" alt="sonophoresis" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">sonophoresis wearable</h3>
-            <p class="project-descriptor">a wearable for closed-loop targeted transdermal drug delivery</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Wearables</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Hardware Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Drug Delivery</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Cognitive Augmentation</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Cyborgism</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 75%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                <!-- Project 4 -->
-        <a href="neurosurgery-robot.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2024</span>
-            <span class="year-label-bottom">May - Aug '24</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/neurosurgery_robot/main.JPG" alt="neurosurgery robot r&d" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">neurosurgery robot</h3>
-            <p class="project-descriptor">a concentric tube robot prototype for combined third ventricle biopsy and ventriculostomy</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Medical Robotics</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Soft Robotics R&D</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Ergonomics</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Clinical Research</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 82%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Electromechanical Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                <!-- Project 5 -->
-        <a href="prosthetic-finger-modelling.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2024</span>
-            <span class="year-label-bottom">May - Aug '24</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/single_print_hand_modelling/CAD.jpg" alt="single-print prosthetic finger" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">prosthetic finger modelling</h3>
-            <p class="project-descriptor">development of kinematic and kinetic models for simulating single-print prosthetic fingers</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Kinematic/Kinetic Modelling</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Design Space Simulation</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">3D Printing</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Prosthetics R&D</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                <!-- Project 6 -->
-        <a href="prosthetic-joint-optimization.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2024</span>
-            <span class="year-label-bottom">May '24</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/finger_joint_design_optimization/design_problem_small.jpg" alt="prosthetic finger joint optimization" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">prosthetic joint design optimization</h3>
-            <p class="project-descriptor">optimizing the design of a prosthetic 3D-printed finger joint using genetic algorithms and bayesian optimization</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Genetic Algorithms</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 93%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Bayesian Optimization</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Design Simulation</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Design Optimization</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-                <!-- Project 9 -->
-        <a href="prism-collective.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2024</span>
-            <span class="year-label-bottom">Oct '24 - Pres.</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/PRISM/main.jpg" alt="PRISM Collective" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">PRISM Collective</h3>
-            <p class="project-descriptor">founding and growth of Waterloo's largest creative tech collective</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Community</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Public Installations</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Creative Incubator</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Collective Building</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Research Translation</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Experimental</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                <!-- Project 10 -->
-        <a href="mind-garden.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2024</span>
-            <span class="year-label-bottom">Nov '24</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/mind_garden/main.jpg" alt="mind garden" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">mind garden</h3>
-            <p class="project-descriptor">kinetic sculpture representing various wonders of the human mind</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Kinetic Sculpture</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Interactive Installation</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Art-Tech</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Electromechanical Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                        <!-- Project 8 -->
-        <a href="pill-e.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2022</span>
-            <span class="year-label-bottom">Sep '22</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/pill-E/main.jpg" alt="pill-e" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">pill-e: pill-dispensing robot</h3>
-            <p class="project-descriptor">automated desktop pill-dispensing companion robot</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Social Robotics</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Human-Assistive Robotics</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Human-Computer Interaction</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Electromechanical Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <!-- Project 7 -->
-        <a href="llc-converter.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2024</span>
-            <span class="year-label-bottom">Feb - May '24</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/LLC_Converter/final_PCB.jpg" alt="llc resonant converter" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">llc resonant converter</h3>
-            <p class="project-descriptor">design and bring-up of an LLC converter</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Power Electronics</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">PCB Design</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 90%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Electromagnetics</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">PCB Bringup</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-                <!-- Project 11 -->
-        <a href="body-armour.html" class="project-card">
-          <div class="year-labels-container">
-            <span class="year-label-top">2025</span>
-            <span class="year-label-bottom">Sep '25</span>
-          </div>
-          <div class="project-image-wrapper">
-            <img src="assets/projects/body_armour/main_open_state.JPG" alt="body armour" class="project-img">
-          </div>
-          <div class="project-info">
-            <h3 class="project-title">body armour</h3>
-            <p class="project-descriptor">fashion tech statement on harassment and boundaries</p>
-            <div class="properties">
-              <div class="property">
-                <span class="property-label">Fashion Tech</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 95%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Kinetic Fashion</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 92%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Reactive Fashion</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 88%;"><div class="slider-thumb"></div></div></div>
-              </div>
-              <div class="property">
-                <span class="property-label">Social Commentary</span>
-                <div class="slider-track"><div class="slider-fill" style="width: 85%;"><div class="slider-thumb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-
-      </div>
-    </div>
-  </section>
+  <div class="message">
+    <h1>projects to be added soon</h1>
+    <p><a href="index.html">back to home</a></p>
+  </div>
 
   <script src="js/loading.js"></script>
-  <script type="module" src="js/projects-background.js"></script>
-  <script src="js/projects-scroll.js"></script>
 </body>
 </html>

@@ -850,9 +850,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .info-description {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 300;
-  color: #3e4b5e;
+  color: #1105dc;
   line-height: 1.6;
   margin-bottom: 1rem;
   letter-spacing: 0.02em;
@@ -869,9 +869,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .info-link {
   font-family: 'Instrument Serif', serif;
-  font-size: 2rem;
+  font-size: 2.7rem;
   font-weight: 800;
-  color: #3e4b5e;
+  color: #1105dc;
   line-height: 1.6;
   text-decoration: none;
   transition: font-weight 0.2s, opacity 0.2s;

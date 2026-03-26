@@ -6,7 +6,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: url('../assets/bg_pics/13.png') center center / cover no-repeat;
+  background: #d5dad4;
   display: flex;
   justify-content: center;
   align-items: center;

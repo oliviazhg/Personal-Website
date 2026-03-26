@@ -12,7 +12,7 @@ html {
 
 body {
   font-family: 'JetBrains Mono', 'Courier New', monospace !important;
-  background: url('../assets/bg_pics/13.png') center/cover no-repeat fixed #ced7e8 !important;
+  background: #d5dad4 !important;
   overflow-x: hidden;
 }
 
@@ -57,7 +57,7 @@ body {
   font-family: 'Instrument Serif', serif !important;
   font-size: 1.5rem;
   font-weight: 800;
-  color: #3e4b5e;
+  color: #1105dc;
   text-decoration: none;
   transition: font-weight 0.2s, opacity 0.2s;
   letter-spacing: 0.02em;
@@ -67,12 +67,12 @@ body {
 }
 
 .top-nav-about .nav-link:visited {
-  color: #3e4b5e;
+  color: #1105dc;
   text-decoration: none;
 }
 
 .top-nav-about .nav-link:hover {
-  color: #3e4b5e;
+  color: #1105dc;
   text-decoration: none;
   font-weight: 500;
   opacity: 1.0;
@@ -96,7 +96,7 @@ body {
 }
 
 .about-content .container {
-  max-width: 1200px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 0;
 }
@@ -106,23 +106,26 @@ body {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: none;
+  text-align: center;
 }
 
 .about-title {
   font-family: 'Instrument Serif', serif !important;
   font-size: 2rem;
   font-weight: 800;
-  color: #3e4b5e;
+  color: #1105dc;
   opacity: 1.0;
   margin-bottom: 0.5rem;
   letter-spacing: 0.02em;
   text-transform: none;
+  text-align: center;
 }
 
 .social-links {
   display: flex;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
@@ -131,7 +134,7 @@ body {
   font-family: 'Instrument Serif', serif !important;
   font-size: 1rem;
   font-weight: 800;
-  color: #3e4b5e;
+  color: #1105dc;
   opacity: 1.0;
   text-decoration: none;
   transition: font-weight 0.2s, opacity 0.2s;
@@ -148,40 +151,32 @@ body {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.75rem;
   font-weight: 400;
-  color: #3e4b5e;
+  color: #1105dc;
   opacity: 1.0;
 }
 
-/* Content Sections - Glassmorphism */
+/* Content Sections - Clean, no boxes */
 .about-section {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
   border-radius: 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 2.5rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
-/* Gradient overlay effect */
+/* Remove gradient overlay */
 .about-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-  pointer-events: none;
-  z-index: 0;
+  content: none;
 }
 
 .about-section.with-image {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 1fr 200px;
   grid-template-rows: auto 1fr;
   gap: 0 2rem;
   align-items: start;
@@ -205,12 +200,13 @@ body {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.9rem;
   font-weight: 400;
-  color: #3e4b5e;
+  color: #1105dc;
   margin-bottom: 1rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  text-align: left;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(62, 75, 94, 0.3);
+  border-bottom: none;
   position: relative;
   z-index: 1;
 }
@@ -219,7 +215,7 @@ body {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.8rem;
   font-weight: 300;
-  color: #3e4b5e;
+  color: #2e2e3a;
   line-height: 1.6;
   margin-bottom: 0.75rem;
   text-align: left;
@@ -235,7 +231,7 @@ body {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.8rem;
   font-weight: 300;
-  color: #3e4b5e;
+  color: #2e2e3a;
   line-height: 1.6;
   margin-bottom: 0;
   margin-left: 0;
@@ -251,7 +247,7 @@ body {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.8rem;
   font-weight: 300;
-  color: #3e4b5e;
+  color: #2e2e3a;
   line-height: 1.6;
   margin-bottom: 0.5rem;
 }
@@ -260,9 +256,27 @@ body {
   margin-bottom: 0;
 }
 
+/* Back to home link */
+.back-home-link {
+  display: inline-block;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #1105dc;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  transition: opacity 0.2s;
+}
+
+.back-home-link:hover {
+  opacity: 0.7;
+}
+
 .content-link {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  color: #3e4b5e;
+  color: #2e2e3a;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
@@ -276,9 +290,9 @@ body {
 /* Profile Image */
 .profile-image-wrapper {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(17, 5, 220, 0.2);
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.05);
+  background: none;
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -295,11 +309,11 @@ body {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.65rem;
   font-weight: 300;
-  color: #555555;
+  color: #1105dc;
   text-align: center;
   padding: 0.5rem;
-  border-top: 1px solid #000000;
-  background: #ffffff;
+  border-top: 1px solid #1105dc;
+  background: none;
   font-style: italic;
 }
 
@@ -322,10 +336,6 @@ body {
 
   .social-link {
     font-size: 0.7rem;
-  }
-
-  .about-section {
-    padding: 1.25rem;
   }
 
   .about-section.with-image {
@@ -376,10 +386,6 @@ body {
 
   .social-link {
     font-size: 0.65rem;
-  }
-
-  .about-section {
-    padding: 1rem;
   }
 
   .profile-image-wrapper {
