@@ -50,6 +50,16 @@ function samplePalette(t) {
 
 // Main function to initialize everything
 async function init() {
+  // Preload Harnold Pixel font so canvas can use it
+  try {
+    const harnoldFont = new FontFace('Harnold Pixel', "url('./assets/fonts/HARNOLDPIXEL-REGULAR_DEMO.OTF')");
+    await harnoldFont.load();
+    document.fonts.add(harnoldFont);
+    console.log('Harnold Pixel font loaded');
+  } catch (e) {
+    console.warn('Could not preload Harnold Pixel font:', e);
+  }
+
   // Import Three.js with error handling
   let THREE;
   let GLTFLoader;
@@ -165,8 +175,8 @@ async function init() {
 
   // Function to create orbiting text sprites
   function createOrbitingText() {
-    const text = "hello! i'm olivia, welcome to my website! ";
-    const repeatCount = 6; // Repeat the sentence 8 times to fill the circle
+    const text = "OLIVIA ZHENG ENGINEER RESEARCHER ARTIST ";
+    const repeatCount = 4; // Repeat the sentence 8 times to fill the circle
     const fullText = text.repeat(repeatCount);
     const chars = Array.from(fullText).reverse(); // Reverse so text reads correctly when facing outward
     const angleStep = (Math.PI * 2) / chars.length;
@@ -181,27 +191,17 @@ async function init() {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
 
-      // Set font and measure text
-      const fontSize = 64;
-      context.font = `600 ${fontSize}px "Instrument Serif", serif`;
+      // Set font and measure text — use exact canvas size (no power-of-2 rounding)
+      const fontSize = 128;
+      context.font = `600 ${fontSize}px "Harnold Pixel", "Instrument Serif", serif`;
       const metrics = context.measureText(char);
-      const textWidth = Math.ceil(metrics.width);
-      const textHeight = Math.ceil(fontSize * 1.2); // 20% extra height for descenders
+      const padding = Math.ceil(fontSize * 0.3);
+      canvas.width = Math.ceil(metrics.width) + padding * 2;
+      canvas.height = Math.ceil(fontSize * 1.3) + padding * 2;
 
-      // Create high-resolution canvas with power-of-2 dimensions for better GPU performance
-      const padding = 20;
-      const scale = 2; // Render at 2x resolution for better quality
-      canvas.width = Math.pow(2, Math.ceil(Math.log2((textWidth + padding * 2) * scale)));
-      canvas.height = Math.pow(2, Math.ceil(Math.log2((textHeight + padding * 2) * scale)));
-
-      // Enable font smoothing and high-quality rendering
-      context.imageSmoothingEnabled = true;
-      context.imageSmoothingQuality = 'high';
-      context.font = `600 ${fontSize * scale}px "Instrument Serif", serif`;
+      context.font = `600 ${fontSize}px "Harnold Pixel", "Instrument Serif", serif`;
       context.textAlign = 'center';
       context.textBaseline = 'middle';
-
-      // Improve text rendering quality
       context.fillStyle = '#1105dc';
       context.fillText(char, canvas.width / 2, canvas.height / 2);
 
@@ -213,9 +213,8 @@ async function init() {
       texture.generateMipmaps = true;
       texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-      // Use Mesh with PlaneGeometry - increase size to match info-link appearance
       const aspectRatio = canvas.width / canvas.height;
-      const planeSize = 3.6; // Increased to make text larger
+      const planeSize = 2.9;
       const planeGeometry = new THREE.PlaneGeometry(planeSize * aspectRatio, planeSize);
       const planeMaterial = new THREE.MeshBasicMaterial({
         map: texture,
@@ -263,7 +262,7 @@ async function init() {
       }
 
       lines.forEach((line, index) => {
-        // Skip ~30% of points to reduce density
+        // Skip ~60% of points to reduce density
         if (index % 10 < 6) return;
 
         const parts = line.trim().split(/\s+/);
